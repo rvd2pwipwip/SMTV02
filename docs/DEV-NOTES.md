@@ -1,88 +1,92 @@
 # Development Notes
 
-## React-Vite Learning Progress
+## State Management
 
-### Key Concepts to Master
-- [ ] React Hooks
-  - useState
-  - useEffect
-  - useContext
-  - useRef
-  - Custom hooks
+### Decision: React Context
+We've decided to use React Context for state management in our TV application. This decision was made after careful consideration of our requirements and future scalability needs.
 
-- [ ] Vite Features
-  - Hot Module Replacement (HMR)
-  - Build optimization
-  - Environment variables
-  - Plugin system
+### Implementation Guidelines
 
-- [ ] TV App Specific
-  - Focus management
-  - Remote control navigation
-  - Performance optimization
-  - TV-specific event handling
+#### 1. Context Structure
+- Create separate contexts for different domains:
+  ```jsx
+  // Example structure
+  src/contexts/
+    ├── ThemeContext.jsx
+    ├── UserContext.jsx
+    ├── NavigationContext.jsx
+    └── SettingsContext.jsx
+  ```
 
-### TypeScript Learning Strategy
-- Start with pure JavaScript
-- Focus on React and TV-specific implementation first
-- Gradually introduce TypeScript concepts as needed
-- Use JSDoc comments for type hints during transition
-- Plan to migrate to TypeScript when core functionality is stable
+#### 2. Context Provider Pattern
+- Use a provider component for each context
+- Implement custom hooks for consuming contexts
+- Example:
+  ```jsx
+  // ThemeContext.jsx
+  export const ThemeProvider = ({ children }) => {
+    const [theme, setTheme] = useState('dark');
+    return (
+      <ThemeContext.Provider value={{ theme, setTheme }}>
+        {children}
+      </ThemeContext.Provider>
+    );
+  };
 
-## Technical Decisions Log
+  // Custom hook
+  export const useTheme = () => {
+    const context = useContext(ThemeContext);
+    if (!context) {
+      throw new Error('useTheme must be used within a ThemeProvider');
+    }
+    return context;
+  };
+  ```
 
-### Architecture Decisions
-- Component structure
-- State management approach
-- Routing solution
-- Styling methodology
-- JavaScript-first approach with gradual TypeScript adoption
+#### 3. Performance Considerations
+- Use `useMemo` for context values to prevent unnecessary re-renders
+- Split contexts by domain to avoid unnecessary re-renders
+- Implement `useCallback` for context methods
+- Example:
+  ```jsx
+  const value = useMemo(() => ({
+    theme,
+    setTheme,
+    toggleTheme: useCallback(() => {
+      setTheme(prev => prev === 'dark' ? 'light' : 'dark');
+    }, [])
+  }), [theme]);
+  ```
 
-### Performance Optimizations
-- Code splitting
-- Lazy loading
-- Asset optimization
-- Caching strategies
+#### 4. Testing
+- Create test utilities for context providers
+- Mock contexts in component tests
+- Test context hooks independently
 
-## Development Workflow
-1. **Setup Phase**
-   - [ ] Initialize Vite project
-   - [ ] Configure ESLint and Prettier
-   - [ ] Set up Git hooks
-   - [ ] Configure development environment
+### When to Use Context
+- Global UI state (theme, layout)
+- User preferences
+- Authentication state
+- App-wide settings
+- Navigation state
 
-2. **Development Phase**
-   - [ ] Create component library
-   - [ ] Implement routing
-   - [ ] Set up state management
-   - [ ] Add testing framework
+### When Not to Use Context
+- Component-local state (use useState)
+- Form state (use form libraries)
+- Complex data fetching (use React Query/SWR)
+- Temporary UI state
 
-3. **Testing Phase**
-   - [ ] Unit tests
-   - [ ] Integration tests
-   - [ ] E2E tests
-   - [ ] Performance testing
+### Migration Path
+If we need to scale our state management in the future:
+1. Evaluate performance metrics
+2. Identify pain points
+3. Consider Redux or other solutions
+4. Plan gradual migration strategy
 
-## Resources and References
-- React documentation
-- Vite documentation
-- TV app development guides
-- Performance optimization guides
-
-## Common Issues and Solutions
-- Focus management challenges
-- Performance bottlenecks
-- Build optimization
-- Testing strategies
-
-## Next Steps
-1. Set up development environment
-2. Create initial project structure
-3. Implement basic navigation
-4. Build core components
-
-## Notes
-- Keep track of important decisions
-- Document solutions to common problems
-- Update learning progress regularly
-- Track performance metrics 
+### Best Practices
+1. Keep contexts focused and minimal
+2. Use TypeScript for better type safety
+3. Document context APIs
+4. Implement error boundaries
+5. Monitor performance impact
+6. Use React DevTools for debugging 

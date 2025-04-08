@@ -27,10 +27,11 @@
 
 ## Component Design
 ### Focus States
-- High visibility focus rings
+See [STYLING.md](./STYLING.md) for detailed focus state specifications including:
+- Focus ring implementation
 - Scale transformations
 - Color changes
-- Subtle animations
+- Animation timing
 
 ### Typography
 - Minimum font size: 24px
@@ -38,11 +39,8 @@
 - Clear hierarchy
 - Limited font families
 
-### Color Palette
-- High contrast combinations
-- Limited color palette
-- Consistent semantic usage
-- Dark mode optimization
+### Design System
+- For detailed styling information, including color palette, typography, spacing, and component styling, refer to [STYLING.md](./STYLING.md)
 
 ## Interaction Patterns
 1. **Remote Control Navigation**
@@ -52,27 +50,27 @@
    - Quick access shortcuts
 
 2. **Content Browsing**
-   - Smooth scrolling
+   - Smooth scrolling (see [STYLING.md](./STYLING.md) for animation specs)
    - Lazy loading
    - Clear loading states
    - Infinite scroll where appropriate
 
 ## Performance Considerations
-- Smooth animations (60fps)
+- Smooth animations (see [STYLING.md](./STYLING.md) for specifications)
 - Quick response times
 - Efficient loading
 - Minimal layout shifts
 
 ## Testing Guidelines
 - Remote control testing
-- Different TV sizes
-- Various viewing distances
+- Fixed viewport testing (1920x1080)
+- Viewing distance testing (10ft)
 - Accessibility testing
 - Performance benchmarking
 
 ## Design System
 - Component library
-- Style guide
+- Style guide (see [STYLING.md](./STYLING.md))
 - Animation library
 - Icon system
 

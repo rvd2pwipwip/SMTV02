@@ -1,64 +1,108 @@
 # TV App Components
 
 ## Component Library Overview
-This document catalogs and describes the reusable components used in our TV application.
+This document outlines the planned component structure for our TV application. Detailed implementations will be added as we develop each component.
 
 ## Component Categories
 
 ### 1. Navigation Components
 - **TVMenu**
   - Purpose: Main navigation menu
-  - Props: items, onSelect, currentFocus
-  - TV-specific: Focus management, keyboard navigation
+  - Key Features:
+    - Focus management
+    - Keyboard navigation
+    - Visual feedback
+  - Planned Props:
+    - items: Array of menu items
+    - onSelect: Selection handler
+    - currentFocus: Active item
 
 - **TVMenuItem**
   - Purpose: Individual menu item
-  - Props: label, icon, isSelected, onSelect
-  - TV-specific: Focus styles, selection feedback
+  - Key Features:
+    - Focus styles
+    - Selection feedback
+    - Icon support
+  - Planned Props:
+    - label: Item text
+    - icon: Optional icon
+    - isSelected: Selection state
+    - onSelect: Click handler
 
 ### 2. Content Components
 - **TVCard**
   - Purpose: Content container
-  - Props: title, content, image, metadata
-  - TV-specific: Focus scaling, image optimization
+  - Key Features:
+    - Focus scaling
+    - Image optimization
+    - Metadata display
+  - Planned Props:
+    - title: Card title
+    - content: Main content
+    - image: Optional image
+    - metadata: Additional info
 
 - **TVGrid**
   - Purpose: Grid layout for content
-  - Props: items, columns, onItemSelect
-  - TV-specific: Focus navigation, lazy loading
+  - Key Features:
+    - Focus navigation
+    - Lazy loading
+    - Responsive grid
+  - Planned Props:
+    - items: Grid items
+    - columns: Grid columns
+    - onItemSelect: Selection handler
 
 ### 3. Interactive Components
 - **TVButton**
   - Purpose: Interactive button
-  - Props: label, onClick, variant, size
-  - TV-specific: Focus states, keyboard interaction
+  - Key Features:
+    - Focus states
+    - Keyboard interaction
+    - Visual feedback
+  - Planned Props:
+    - label: Button text
+    - onClick: Click handler
+    - variant: Style variant
+    - size: Button size
 
 - **TVModal**
   - Purpose: Modal dialog
-  - Props: isOpen, onClose, content
-  - TV-specific: Focus trap, escape handling
+  - Key Features:
+    - Focus trap
+    - Escape handling
+    - Backdrop
+  - Planned Props:
+    - isOpen: Visibility state
+    - onClose: Close handler
+    - content: Modal content
 
 ## Component Guidelines
 
 ### 1. Focus Management
 - Every interactive component must handle focus
 - Implement focus trap for modals
-- Provide visual feedback for focus state
+- Follow focus state specifications from [STYLING.md](./STYLING.md)
+- Support keyboard navigation
 
 ### 2. Keyboard Navigation
 - Support arrow key navigation
 - Implement Enter/Space for selection
 - Handle Escape for closing/canceling
+- Maintain focus history
 
 ### 3. Accessibility
 - Include ARIA labels
 - Support screen readers
 - Maintain proper focus order
+- Ensure keyboard accessibility
 
 ### 4. Performance
 - Implement lazy loading
 - Use React.memo when appropriate
 - Optimize re-renders
+- Handle large lists efficiently
+- Follow animation guidelines from [STYLING.md](./STYLING.md)
 
 ## Component Development Process
 1. Create component file
@@ -73,4 +117,5 @@ This document catalogs and describes the reusable components used in our TV appl
 - Unit tests for component logic
 - Integration tests for navigation
 - Accessibility testing
-- Performance testing 
+- Performance testing
+- Remote control testing 

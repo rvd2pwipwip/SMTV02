@@ -1,62 +1,124 @@
-# TV App Styling Guide
+# TV App Design System
 
-## Design System Overview
-This document outlines the styling guidelines and theme system for our TV application.
+## Color Palette
 
-## Viewport Considerations
+### Primary Colors
+- **Primary Blue**: `#007AFF` - Main brand color, used for primary actions and highlights
+- **Secondary Blue**: `#0056B3` - Used for hover states and secondary elements
+
+### Neutral Colors
+- **Background Dark**: `#121212` - Main background color
+- **Surface Dark**: `#1E1E1E` - Card and component backgrounds
+- **Text Primary**: `#FFFFFF` - Primary text color
+- **Text Secondary**: `#B3B3B3` - Secondary text color
+
+### Accent Colors
+- **Success Green**: `#34C759` - Success states and confirmations
+- **Warning Yellow**: `#FFD60A` - Warning states and notifications
+- **Error Red**: `#FF3B30` - Error states and critical alerts
+
+### Focus States
+- **Focus Ring**: `#007AFF` with 2px width
+- **Focus Background**: `rgba(0, 122, 255, 0.1)` - Subtle highlight for focused elements
+
+## Typography
+
+### Font Families
+- **Primary Font**: `Inter` - Clean, modern sans-serif
+- **Secondary Font**: `SF Pro Display` - For headings and emphasis
+
+### Font Sizes
+- **Heading 1**: 48px
+- **Heading 2**: 36px
+- **Heading 3**: 24px
+- **Body Text**: 18px
+- **Small Text**: 14px
+
+### Font Weights
+- **Regular**: 400
+- **Medium**: 500
+- **Bold**: 700
+
+## Spacing System
+- **Base Unit**: 8px
+- **Spacing Scale**:
+  - xs: 4px
+  - sm: 8px
+  - md: 16px
+  - lg: 24px
+  - xl: 32px
+  - xxl: 48px
+
+## Component Styling
+
+### Buttons
+- **Height**: 48px
+- **Padding**: 16px 24px
+- **Border Radius**: 8px
+- **Focus Ring**: 2px solid #007AFF
+
+### Cards
+- **Padding**: 24px
+- **Border Radius**: 12px
+- **Background**: #1E1E1E
+- **Shadow**: 0 4px 6px rgba(0, 0, 0, 0.1)
+
+### Input Fields
+- **Height**: 48px
+- **Padding**: 12px 16px
+- **Border Radius**: 8px
+- **Border**: 1px solid #333333
+
+## Animation Guidelines
+
+### Performance Specifications
+- Target frame rate: 60fps
+- Maximum animation duration: 300ms
+- Minimum animation duration: 150ms
+- Preferred easing: cubic-bezier(0.4, 0, 0.2, 1)
+
+### Transitions
+- **Duration**: 200-300ms
+- **Easing**: cubic-bezier(0.4, 0, 0.2, 1)
+- **Focus Transitions**: 150ms
+
+### Hover Effects
+- **Scale**: 1.05
+- **Brightness**: 1.1
+- **Transition**: 200ms
+
+## Accessibility
+
+### Color Contrast
+- **Text on Dark**: Minimum 4.5:1 contrast ratio
+- **Interactive Elements**: Minimum 3:1 contrast ratio
+- **Large Text**: Minimum 3:1 contrast ratio
+
+### Focus Indicators
+- **Visible Focus Ring**: 2px solid #007AFF
+- **Focus Background**: Subtle highlight
+- **Focus Scale**: 1.05
+
+## Responsive Design
+
+### Viewport
 - Fixed viewport size: 1920x1080 (FHD)
 - Safe area margins: 48px on all sides
 - Optimal viewing distance: 10ft
 - No responsive design needed - TV apps are fixed viewport
 
-## Color Palette
+## Icon System
 
-### Primary Colors
-- Primary: `#007AFF`
-- Secondary: `#5856D6`
-- Accent: `#FF2D55`
+### Icon Sizes
+- **Small**: 16px
+- **Medium**: 24px
+- **Large**: 32px
+- **XLarge**: 48px
 
-### Neutral Colors
-- Background: `#000000`
-- Surface: `#1C1C1E`
-- Text: `#FFFFFF`
-- Text Secondary: `#8E8E93`
-
-### State Colors
-- Success: `#34C759`
-- Warning: `#FF9500`
-- Error: `#FF3B30`
-
-## Typography
-
-### Font Family
-- Primary: System UI
-- Monospace: SF Mono
-
-### Font Sizes (Fixed for 1080p)
-- Heading 1: 48px
-- Heading 2: 36px
-- Heading 3: 24px
-- Body: 20px
-- Small: 16px (minimum size for TV)
-
-### Font Weights
-- Regular: 400
-- Medium: 500
-- Bold: 700
-
-## Spacing
-
-### Base Unit
-- 4px (0.25rem)
-
-### Spacing Scale
-- xs: 4px
-- sm: 8px
-- md: 16px
-- lg: 24px
-- xl: 32px
-- xxl: 48px
+### Icon Styles
+- **Filled**: Primary style
+- **Outlined**: Secondary style
+- **Color**: Inherit from parent or use semantic colors
 
 ## TV-Specific Styles
 

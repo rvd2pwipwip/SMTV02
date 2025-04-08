@@ -1,5 +1,10 @@
 # TV App UI Layout Reference
 
+## Viewport Specifications
+- Fixed resolution: 1920x1080 (Full HD)
+- Safe area margins: 48px on all sides
+- Optimal viewing distance: 10ft
+
 ## Header Layout
 - Company logo (left)
 - Music/Radio mode switcher (center)
@@ -48,12 +53,14 @@ The original design reference image is stored in:
    - Departure from traditional vertical menu
    - Better suited for TV navigation
    - Optimized for remote control
+   - Fixed width calculations based on 1920px viewport
 
 2. **Swimlane Layout**
    - Single row per category
    - Focus on current selection
    - Smooth scrolling animation
    - Clear focus states
+   - Fixed width calculations for 1920px viewport
 
 3. **Mode Switcher**
    - Prominent position in header
@@ -61,7 +68,7 @@ The original design reference image is stored in:
    - Easy toggle between Music/Radio
 
 4. **Accessibility**
-   - Clear focus indicators
+   - Clear focus indicators (see [STYLING.md](./STYLING.md))
    - Logical tab order
    - High contrast for text
    - Adequate spacing for TV viewing 
