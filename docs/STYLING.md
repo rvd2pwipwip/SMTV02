@@ -3,6 +3,12 @@
 ## Design System Overview
 This document outlines the styling guidelines and theme system for our TV application.
 
+## Viewport Considerations
+- Fixed viewport size: 1920x1080 (FHD)
+- Safe area margins: 48px on all sides
+- Optimal viewing distance: 10ft
+- No responsive design needed - TV apps are fixed viewport
+
 ## Color Palette
 
 ### Primary Colors
@@ -27,12 +33,12 @@ This document outlines the styling guidelines and theme system for our TV applic
 - Primary: System UI
 - Monospace: SF Mono
 
-### Font Sizes
+### Font Sizes (Fixed for 1080p)
 - Heading 1: 48px
 - Heading 2: 36px
 - Heading 3: 24px
 - Body: 20px
-- Small: 16px
+- Small: 16px (minimum size for TV)
 
 ### Font Weights
 - Regular: 400
@@ -72,59 +78,81 @@ This document outlines the styling guidelines and theme system for our TV applic
 - Grid gap: 24px
 - Content padding: 32px
 - Safe area margins: 48px
+- Fixed card sizes (no responsive scaling)
 
 ## Component Styles
 
 ### Cards
+- Fixed width: 200px
+- Fixed height: 200px
 - Border radius: 8px
 - Padding: 16px
 - Background: Surface color
-- Hover scale: 1.02
+- Focus scale: 1.05
 
 ### Buttons
 - Height: 48px
 - Padding: 0 24px
 - Border radius: 8px
 - Focus ring: 2px
+- Minimum width: 120px
 
 ### Navigation
 - Item height: 56px
 - Icon size: 24px
 - Active indicator: 4px
+- Fixed positioning
 
-## Responsive Design
-- Base size: 1920x1080
-- Scale factor: 1.5x for 4K
-- Minimum text size: 16px
-- Maximum container width: 1440px
+## TV Optimization
+- No hover states (TV has no mouse)
+- Clear focus indicators
+- Large touch targets
+- Fixed dimensions
+- No media queries needed
+- No mobile/tablet considerations
 
 ## Accessibility
 - Minimum contrast ratio: 4.5:1
 - Focus visible: Always
-- Text scaling: Supported
-- High contrast mode: Supported
+- Large text for viewing distance
+- Clear focus indicators
+- Remote-friendly navigation
 
 ## Implementation
 
-### CSS Modules
+### CSS Variables
 ```css
-/* Component.module.css */
-.container {
-  padding: var(--spacing-lg);
-  background: var(--color-surface);
-}
-
-.focused {
-  transform: scale(1.05);
-  box-shadow: 0 0 0 2px var(--color-primary);
+:root {
+  /* Colors */
+  --color-primary: #007AFF;
+  --color-surface: #1C1C1E;
+  
+  /* Spacing */
+  --spacing-lg: 24px;
+  --safe-area: 48px;
+  
+  /* Fixed Sizes */
+  --card-width: 200px;
+  --button-height: 48px;
+  --nav-height: 56px;
+  
+  /* Focus */
+  --focus-scale: 1.05;
+  --focus-ring: 2px;
 }
 ```
 
-### Theme Variables
+### Component Example
 ```css
-:root {
-  --color-primary: #007AFF;
-  --spacing-lg: 24px;
-  /* ... other variables */
+.card {
+  width: var(--card-width);
+  height: var(--card-width);
+  margin: var(--spacing-lg);
+  background: var(--color-surface);
+}
+
+.card:focus-visible {
+  transform: scale(var(--focus-scale));
+  box-shadow: 0 0 0 var(--focus-ring) var(--color-primary);
 }
 ``` 

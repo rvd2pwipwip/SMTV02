@@ -1,19 +1,19 @@
 # TV App Project
 
 ## Project Context
-This is a modern TV application built with React and Vite, focusing on providing an exceptional user experience through careful UX design and implementation.
+This is a modern TV application built with React and Vite, focusing on providing an exceptional user experience through careful UX design and implementation. The app is designed specifically for TV displays with a fixed 1920x1080 viewport.
 
 ## Tech Stack
 - React (Latest version)
 - Vite (Build tool)
 - HTML5
 - CSS3
-- JavaScript/TypeScript
+- JavaScript/TypeScript (gradual adoption)
 
 ## Project Goals
-- Create a modern, responsive TV application
-- Implement best practices in UX design
-- Learn and apply React-Vite development patterns
+- Create a TV-optimized application
+- Implement TV-specific UX patterns
+- Learn and apply React-Vite development
 - Build a maintainable and scalable codebase
 
 ## Development Guidelines
@@ -22,24 +22,26 @@ This is a modern TV application built with React and Vite, focusing on providing
    - Maintain clear separation of concerns
    - Use modern React patterns and hooks
 
-2. **Styling Approach**
-   - Implement responsive design principles
-   - Follow a consistent design system
-   - Use CSS modules or styled-components for styling
+2. **TV-Specific Styling**
+   - Fixed 1920x1080 viewport
+   - Focus-driven navigation
+   - Remote control optimization
+   - No responsive design needed
 
 3. **UX Principles**
-   - Focus on intuitive navigation
-   - Ensure accessibility standards
-   - Optimize for TV viewing experience
-   - Implement smooth transitions and animations
+   - Optimize for 10ft viewing distance
+   - Focus on remote control navigation
+   - Ensure clear focus states
+   - Implement smooth transitions
+   - Maintain safe area margins (48px)
 
 ## Project Structure
 ```
 src/
   ├── components/     # Reusable UI components
-  ├── pages/         # Page components
-  ├── styles/        # Global styles and themes
+  ├── layouts/       # Layout components
   ├── hooks/         # Custom React hooks
+  ├── styles/        # Global styles and themes
   ├── utils/         # Utility functions
   └── assets/        # Images, fonts, and other static files
 ```
@@ -50,12 +52,13 @@ src/
 3. Start development server: `npm run dev`
 4. Build for production: `npm run build`
 
-## Learning Resources
+## TV Development Resources
 - [React Documentation](https://react.dev/)
 - [Vite Documentation](https://vitejs.dev/)
 - [TV App UX Best Practices](https://www.w3.org/TR/2016/REC-html51-20161101/semantics.html#the-article-element)
 
 ## Notes
-- Keep this README updated as the project evolves
-- Document important decisions and their rationale
-- Track UX improvements and iterations 
+- Keep documentation updated
+- Document UX decisions
+- Track focus management patterns
+- Consider TV-specific performance optimizations 
