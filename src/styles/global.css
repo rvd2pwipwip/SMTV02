@@ -1,0 +1,149 @@
+/* Reset and Base Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Spacing */
+  --spacing-xs: 8px;
+  --spacing-sm: 16px;
+  --spacing-md: 24px;
+  --spacing-lg: 32px;
+
+  /* Colors - keeping it simple for prototype */
+  --color-background: #000000;
+  --color-surface: #1C1C1E;
+  --color-primary: #0066FF;
+  --color-text: #FFFFFF;
+  --color-text-secondary: rgba(255, 255, 255, 0.7);
+
+  /* Focus state for TV */
+  --focus-border-color: #0066FF;
+  --focus-scale: 1.05;
+  
+  /* Transitions */
+  --transition-speed: 200ms;
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-text);
+  font-family: system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  overflow-x: hidden; /* Prevent horizontal scroll on main body */
+}
+
+/* Layout Containers */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Navigation */
+.category-nav {
+  display: flex;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-lg);
+  overflow-x: auto;
+  scrollbar-width: none; /* Hide scrollbar Firefox */
+}
+
+.category-nav::-webkit-scrollbar {
+  display: none; /* Hide scrollbar Chrome/Safari */
+}
+
+/* Category Pills */
+.category-pill {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: transparent;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+
+.category-pill.active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+/* Content Swimlanes */
+.swimlane {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.swimlane::-webkit-scrollbar {
+  display: none;
+}
+
+.swimlane-content {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+
+/* Cards */
+.card {
+  flex: 0 0 auto;
+  width: 200px; /* Adjust based on your needs */
+  aspect-ratio: 1;
+  background: var(--color-surface);
+  border-radius: 8px;
+}
+
+/* Player Bar */
+.player-bar {
+  margin-top: auto; /* Push to bottom */
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--color-surface);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+/* Focus States for TV */
+[tabindex]:focus-visible {
+  outline: none;
+  transform: scale(var(--focus-scale));
+  transition: transform var(--transition-speed) ease;
+}
+
+.category-pill:focus-visible {
+  box-shadow: 0 0 0 2px var(--focus-border-color);
+}
+
+.card:focus-visible {
+  box-shadow: 0 0 0 3px var(--focus-border-color);
+}
+
+/* Mode Toggle */
+.mode-toggle {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 2px;
+}
+
+.mode-toggle button {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: 18px;
+  border: none;
+  background: transparent;
+  color: var(--color-text);
+}
+
+.mode-toggle button.active {
+  background: var(--color-primary);
+} 
