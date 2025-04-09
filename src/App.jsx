@@ -15,6 +15,14 @@ function App() {
           title="Sample Channel" 
           onSelect={handleChannelSelect} 
         />
+        <ChannelCard 
+          title="Sample Channel" 
+          onSelect={handleChannelSelect} 
+        />
+        <ChannelCard 
+          title="Sample Channel" 
+          onSelect={handleChannelSelect} 
+        />
       </div>
     </div>
   );

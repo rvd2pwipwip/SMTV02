@@ -94,6 +94,7 @@ html, body {
   align-items: center;
   width: 100%;
   max-width: 1200px;
+  gap: var(--spacing-lg);
 }
 
 /* Ensure proper focus navigation */
