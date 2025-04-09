@@ -13,6 +13,7 @@
   background-color: #808080; /* Gray placeholder */
   border-radius: var(--card-radius);
   margin-bottom: var(--spacing-md);
+  transition: all var(--transition-duration) var(--transition-timing);
 }
 
 .channel-title {
@@ -30,7 +31,13 @@
   max-height: calc(var(--font-size-h3) * 1.5 * 2);
 }
 
+/* Remove focus from the entire card */
 .channel-card:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
+  outline: none;
+}
+
+/* Add focus only to the thumbnail */
+.channel-card:focus-visible .channel-thumbnail {
+  outline: var(--focus-outline-width) solid var(--color-focus-ring);
   transform: scale(var(--focus-scale));
 } 

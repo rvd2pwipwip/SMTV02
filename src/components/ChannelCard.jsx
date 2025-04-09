@@ -4,7 +4,7 @@ import './ChannelCard.css';
 const ChannelCard = ({ title, onSelect }) => {
   return (
     <div 
-      className="channel-card tv-focus" 
+      className="channel-card" 
       tabIndex="0"
       onClick={onSelect}
       onKeyDown={(e) => {

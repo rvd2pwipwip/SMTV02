@@ -11,7 +11,7 @@
   --color-success: #34C759;
   --color-warning: #FFD60A;
   --color-error: #FF3B30;
-  --color-focus-ring: #007AFF;
+  --color-focus-ring: #fff;
   --color-focus-bg: rgba(0, 122, 255, 0.1);
 
   /* Typography */
@@ -49,7 +49,10 @@
   /* Animation */
   --transition-duration: 200ms;
   --transition-timing: cubic-bezier(0.4, 0, 0.2, 1);
-  --focus-scale: 1.05;
+  --focus-scale: 1.02;
+  
+  /* Focus */
+  --focus-outline-width: 10px;
 }
 
 /* Base Styles */
