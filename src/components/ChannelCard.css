@@ -32,12 +32,16 @@
 }
 
 /* Remove focus from the entire card */
-.channel-card:focus-visible {
+.channel-card:focus-visible,
+.channel-card:active,
+.channel-card:focus {
   outline: none;
 }
 
-/* Add focus only to the thumbnail */
-.channel-card:focus-visible .channel-thumbnail {
+/* Add focus only to the thumbnail for both keyboard and mouse */
+.channel-card:focus-visible .channel-thumbnail,
+.channel-card:active .channel-thumbnail,
+.channel-card:focus .channel-thumbnail {
   outline: var(--focus-outline-width) solid var(--color-focus-ring);
   transform: scale(var(--focus-scale));
 } 

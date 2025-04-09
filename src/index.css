@@ -18,4 +18,9 @@ body {
 
 :focus-visible {
   outline: var(--focus-outline-width) solid var(--color-focus-ring);
+}
+
+/* Remove outline on active elements */
+:active {
+  outline: none;
 } 
