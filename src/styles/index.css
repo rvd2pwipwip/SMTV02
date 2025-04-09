@@ -1,12 +1,3 @@
-:root {
-  /* Colors from STYLING.md */
-  --color-primary: #007AFF;
-  --color-surface: #1E1E1E;
-  --color-background: #121212;
-  --color-text-primary: #FFFFFF;
-  --color-text-secondary: #B3B3B3;
-}
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -54,12 +45,12 @@ body {
 
 /* TV-specific: ensure all interactive elements are focusable */
 :focus {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid var(--color-focus-ring);
   outline-offset: 2px;
 }
 
 /* TV-specific: larger text for viewing distance */
 body {
-  font-size: 24px;
+  font-size: var(--font-size-body);
   line-height: 1.5;
 } 
