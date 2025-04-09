@@ -21,7 +21,7 @@
 
 ## Navigation Patterns
 - Horizontal scrolling for main navigation
-- Vertical scrolling for content lists
+- Vertical scrolling only for content lists
 - Clear focus indicators
 - Consistent back/forward navigation
 

@@ -33,7 +33,9 @@ This document outlines the planned component structure for our TV application. D
 - **TVCard**
   - Purpose: Content container
   - Key Features:
+    - Focus display around thumbnail only
     - Focus scaling
+    - Card label left aligned below thumbnail
     - Image optimization
     - Metadata display
   - Planned Props:
@@ -43,7 +45,7 @@ This document outlines the planned component structure for our TV application. D
     - metadata: Additional info
 
 - **TVGrid**
-  - Purpose: Grid layout for content
+  - Purpose: Grid layout for content, not used on Home screen content
   - Key Features:
     - Focus navigation
     - Lazy loading

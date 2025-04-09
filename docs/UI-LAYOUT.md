@@ -2,7 +2,6 @@
 
 ## Viewport Specifications
 - Fixed resolution: 1920x1080 (Full HD)
-- Safe area margins: 48px on all sides
 - Optimal viewing distance: 10ft
 
 ## Header Layout
@@ -14,39 +13,37 @@
   - Settings
 
 ## Navigation Pattern
-- Horizontal category navigation below header
-  - History
+- Horizontal category-genre navigation below header
+  - Favorites (only when populated)
+  - History (only when populated)
   - Pop
-  - Wellness
-  - Rock
-  - Hip-Hop
-  - Country & Folk
-  - Soul & R&B
   - Decades
-  - Dance & Electronic
+  - Rock
+  - Dance
+  - Country
+  - Extra
+  - Jazz
+  - Classical
+  - World Music
+  - Multicultural
+  - Hip-Hop
 
 ## Content Layout
 - Horizontal swimlanes for channel cards
-  - Single row per category
+  - Single row of channels from currently selected category-genre
   - Smooth horizontal scrolling
-  - Categories:
-    - Adult Alternative US
-    - Pop Adult
-    - Hit List
-    - Easy Listening
-    - Maximum Party
-    - Greatest Hits
 
-## Player Bar
+## Mini Player Bar
 - Fixed position at bottom
 - Album art thumbnail
 - Song title
 - Artist name
-- Playback controls
+- Playback controls (play/pause, skip)
 
 ## Design Assets
 The original design reference image is stored in:
 `docs/assets/design-reference/home-layout.png`
+This layout png is in light mode but the app will be developed in dark mode
 
 ## Key UI Decisions
 1. **Horizontal Navigation**
@@ -56,7 +53,7 @@ The original design reference image is stored in:
    - Fixed width calculations based on 1920px viewport
 
 2. **Swimlane Layout**
-   - Single row per category
+   - Single row per category-genre
    - Focus on current selection
    - Smooth scrolling animation
    - Clear focus states
