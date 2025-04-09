@@ -1,6 +1,6 @@
 import React from 'react';
 import ChannelCard from './components/ChannelCard';
-import './App.css';
+import './styles/App.css';
 
 function App() {
   const handleChannelSelect = () => {

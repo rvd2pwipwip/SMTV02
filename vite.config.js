@@ -5,10 +5,9 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   server: {
-    // TV apps typically don't need hot module replacement
-    hmr: false,
-    // Disable automatic opening of browser
-    open: false
+    // HMR is enabled for development
+    // Automatically open browser
+    open: true
   },
   build: {
     // Optimize for TV viewing
