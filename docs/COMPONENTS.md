@@ -33,9 +33,10 @@ This document outlines the planned component structure for our TV application. D
 - **TVCard**
   - Purpose: Content container
   - Key Features:
+    - Rounded corners square aspect ratio thumbnail
     - Focus display around thumbnail only
-    - Focus scaling
-    - Card label left aligned below thumbnail
+    - Card label text left aligned below thumbnail
+    - 2-line max text label
     - Image optimization
     - Metadata display
   - Planned Props:
