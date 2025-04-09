@@ -3,7 +3,6 @@
   flex-direction: column;
   width: 300px;
   cursor: pointer;
-  border-radius: var(--card-radius);
   transition: all var(--transition-duration) var(--transition-timing);
 }
 
