@@ -53,7 +53,7 @@
   --focus-scale: 1.02;
   
   /* Focus */
-  --focus-outline-width: 2px;
+  --focus-outline-width: 10px;
   --focus-outline-offset: 2px;
   
   /* TV-specific */
@@ -141,7 +141,6 @@ h3 { font-size: var(--font-size-h3); }
   background-color: var(--color-surface);
   padding: var(--card-padding);
   border-radius: var(--card-radius);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .card:focus-visible {

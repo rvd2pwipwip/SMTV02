@@ -1,32 +1,11 @@
 import React from 'react';
-import ChannelCard from './components/ChannelCard';
-import Header from './components/Header';
+import Home from './screens/Home';
 import './styles/App.css';
 
 function App() {
-  const handleChannelSelect = () => {
-    console.log('Channel selected');
-  };
-
   return (
-    <div className="app">
-      <Header title="TV App" />
-      <div className="content-swimlane">
-        <ChannelCard 
-          title="Sample Channel" 
-          onSelect={handleChannelSelect} 
-        />
-        <ChannelCard 
-          title="Sample Channel" 
-          onSelect={handleChannelSelect} 
-        />
-        <ChannelCard 
-          title="Sample Channel" 
-          onSelect={handleChannelSelect} 
-        />
-      </div>
-    </div>
+    <Home />
   );
 }
 
-export default App; 
+export default App;
