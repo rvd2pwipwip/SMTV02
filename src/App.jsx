@@ -1,5 +1,6 @@
 import React from 'react';
 import ChannelCard from './components/ChannelCard';
+import Header from './components/Header';
 import './styles/App.css';
 
 function App() {
@@ -9,8 +10,8 @@ function App() {
 
   return (
     <div className="app">
-      <h1 className="app-title">TV App</h1>
-      <div className="content-container">
+      <Header title="TV App" />
+      <div className="content-swimlane">
         <ChannelCard 
           title="Sample Channel" 
           onSelect={handleChannelSelect} 
