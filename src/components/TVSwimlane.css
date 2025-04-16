@@ -1,0 +1,27 @@
+.tv-swimlane {
+  padding: var(--spacing-lg);
+  background: transparent;
+}
+
+.tv-swimlane__title {
+  font-family: var(--font-primary);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.tv-swimlane__container {
+  display: flex;
+  gap: var(--spacing-lg);
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  padding: var(--spacing-md) 0;
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.tv-swimlane__container::-webkit-scrollbar {
+  display: none;
+} 
