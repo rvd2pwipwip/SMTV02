@@ -20,6 +20,8 @@
 ### Focus States
 - **Focus Ring**: `#007AFF` with 2px width
 - **Focus Background**: `rgba(0, 122, 255, 0.1)` - Subtle highlight for focused elements
+- **Focus Scale**: 1.05 - Scale factor for focused elements
+- **Focus Transition**: 200ms - Duration for focus transitions
 
 ## Typography
 
@@ -56,12 +58,26 @@
 - **Padding**: 16px 24px
 - **Border Radius**: 8px
 - **Focus Ring**: 2px solid #007AFF
+- **Focus Scale**: 1.05
+- **Focus Transition**: 200ms
 
 ### Cards
 - **Padding**: 24px
 - **Border Radius**: 12px
 - **Background**: #1E1E1E
 - **Shadow**: 0 4px 6px rgba(0, 0, 0, 0.1)
+- **Focus Ring**: 2px solid #007AFF
+- **Focus Scale**: 1.05
+- **Focus Transition**: 200ms
+
+### Swimlanes
+- **Height**: 300px
+- **Padding**: 24px
+- **Background**: Transparent
+- **Focus Ring**: 2px solid #007AFF
+- **Focus Scale**: 1.05
+- **Focus Transition**: 200ms
+- **Scroll Behavior**: Smooth
 
 ### Input Fields
 - **Height**: 48px
@@ -81,11 +97,14 @@
 - **Duration**: 200-300ms
 - **Easing**: cubic-bezier(0.4, 0, 0.2, 1)
 - **Focus Transitions**: 150ms
+- **Spatial Navigation Transitions**: 200ms
 
-### Hover Effects
+### Focus Effects
 - **Scale**: 1.05
 - **Brightness**: 1.1
 - **Transition**: 200ms
+- **Focus Ring**: 2px solid #007AFF
+- **Focus Background**: rgba(0, 122, 255, 0.1)
 
 ## Accessibility
 
@@ -98,27 +117,8 @@
 - **Visible Focus Ring**: 2px solid #007AFF
 - **Focus Background**: Subtle highlight
 - **Focus Scale**: 1.05
-
-## Responsive Design
-
-### Viewport
-- Fixed viewport size: 1920x1080 (FHD)
-- Safe area margins: 48px on all sides
-- Optimal viewing distance: 10ft
-- No responsive design needed - TV apps are fixed viewport
-
-## Icon System
-
-### Icon Sizes
-- **Small**: 16px
-- **Medium**: 24px
-- **Large**: 32px
-- **XLarge**: 48px
-
-### Icon Styles
-- **Filled**: Primary style
-- **Outlined**: Secondary style
-- **Color**: Inherit from parent or use semantic colors
+- **Focus Transition**: 200ms
+- **Focus Tree**: Proper hierarchy
 
 ## TV-Specific Styles
 
@@ -141,6 +141,28 @@
 - Content padding: 32px
 - Safe area margins: 48px
 - Fixed card sizes (no responsive scaling)
+
+## Spatial Navigation Styles
+
+### Focus Tree
+- Root container: Header
+- Child containers: Category navigation, Swimlanes
+- Leaf nodes: Cards, Buttons
+- Proper focus restoration
+- Clear focus indicators
+
+### Focus Transitions
+- Smooth transitions between focus states
+- Clear visual feedback
+- Proper focus restoration
+- Directional navigation support
+
+### Focus Indicators
+- Clear focus ring
+- Subtle background highlight
+- Scale effect
+- Smooth transitions
+- Proper focus tree hierarchy
 
 ## Component Styles
 
@@ -187,7 +209,7 @@
 :root {
   /* Colors */
   --color-primary: #007AFF;
-  --color-surface: #1C1C1E;
+  --color-surface: #1E1E1E;
   
   /* Spacing */
   --spacing-lg: 24px;
@@ -201,6 +223,7 @@
   /* Focus */
   --focus-scale: 1.05;
   --focus-ring: 2px;
+  --focus-transition: 200ms;
 }
 ```
 
@@ -216,5 +239,6 @@
 .card:focus-visible {
   transform: scale(var(--focus-scale));
   box-shadow: 0 0 0 var(--focus-ring) var(--color-primary);
+  transition: all var(--focus-transition) ease-in-out;
 }
 ``` 

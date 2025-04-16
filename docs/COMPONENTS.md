@@ -9,13 +9,17 @@ This document outlines the planned component structure for our TV application. D
 - **TVMenu**
   - Purpose: Main navigation menu
   - Key Features:
-    - Focus management
+    - Focus management using Norigin Spatial Navigation
     - Keyboard navigation
     - Visual feedback
   - Planned Props:
     - items: Array of menu items
     - onSelect: Selection handler
     - currentFocus: Active item
+  - Spatial Navigation:
+    - Uses `useFocusable` hook
+    - Implements focus tree structure
+    - Handles directional navigation
 
 - **TVMenuItem**
   - Purpose: Individual menu item
@@ -28,8 +32,29 @@ This document outlines the planned component structure for our TV application. D
     - icon: Optional icon
     - isSelected: Selection state
     - onSelect: Click handler
+  - Spatial Navigation:
+    - Leaf node in focus tree
+    - Handles enter/select actions
+    - Manages focus state
 
 ### 2. Content Components
+- **TVSwimlane**
+  - Purpose: Horizontal scrollable content container
+  - Key Features:
+    - Single row of focusable items
+    - Smooth horizontal scrolling
+    - Focus management with Norigin
+    - Category-specific content
+  - Planned Props:
+    - title: Category title
+    - items: Array of content items
+    - onItemSelect: Selection handler
+  - Spatial Navigation:
+    - Container node in focus tree
+    - Manages child focus items
+    - Handles horizontal navigation
+    - Implements focus restoration
+
 - **TVCard**
   - Purpose: Content container
   - Key Features:
@@ -44,17 +69,11 @@ This document outlines the planned component structure for our TV application. D
     - content: Main content
     - image: Optional image
     - metadata: Additional info
-
-- **TVGrid**
-  - Purpose: Grid layout for content, not used on Home screen content
-  - Key Features:
-    - Focus navigation
-    - Lazy loading
-    - Responsive grid
-  - Planned Props:
-    - items: Grid items
-    - columns: Grid columns
-    - onItemSelect: Selection handler
+  - Spatial Navigation:
+    - Leaf node in focus tree
+    - Handles enter/select actions
+    - Manages focus state
+    - Implements focus styles
 
 ### 3. Interactive Components
 - **TVButton**
@@ -68,44 +87,58 @@ This document outlines the planned component structure for our TV application. D
     - onClick: Click handler
     - variant: Style variant
     - size: Button size
-
-- **TVModal**
-  - Purpose: Modal dialog
-  - Key Features:
-    - Focus trap
-    - Escape handling
-    - Backdrop
-  - Planned Props:
-    - isOpen: Visibility state
-    - onClose: Close handler
-    - content: Modal content
+  - Spatial Navigation:
+    - Leaf node in focus tree
+    - Handles enter/select actions
+    - Manages focus state
 
 ## Component Guidelines
 
 ### 1. Focus Management
-- Every interactive component must handle focus
-- Implement focus trap for modals
+- Every interactive component must use Norigin Spatial Navigation
+- Implement proper focus tree structure
 - Follow focus state specifications from [STYLING.md](./STYLING.md)
 - Support keyboard navigation
+- Handle focus restoration
 
 ### 2. Keyboard Navigation
-- Support arrow key navigation
+- Support arrow key navigation through Norigin
 - Implement Enter/Space for selection
 - Handle Escape for closing/canceling
 - Maintain focus history
+- Support directional navigation
 
 ### 3. Accessibility
 - Include ARIA labels
 - Support screen readers
 - Maintain proper focus order
-- Ensure keyboard accessibility
+- Ensure clear focus indicators
+- Follow TV-specific accessibility guidelines
 
-### 4. Performance
-- Implement lazy loading
-- Use React.memo when appropriate
-- Optimize re-renders
-- Handle large lists efficiently
-- Follow animation guidelines from [STYLING.md](./STYLING.md)
+### 4. Spatial Navigation Integration
+- Use `useFocusable` hook for focusable components
+- Implement `FocusContext.Provider` for containers
+- Handle focus tree hierarchy
+- Manage focus restoration
+- Support directional navigation
+- Implement proper focus styles
+
+## Implementation Notes
+
+### Norigin Spatial Navigation
+- Each focusable component must use `useFocusable`
+- Containers must provide `FocusContext`
+- Focus tree must be properly structured
+- Focus styles must be consistent
+- Navigation must be smooth and intuitive
+
+### Swimlane Implementation
+- Single row of focusable items
+- Horizontal scrolling
+- Focus restoration on mount
+- Clear focus indicators
+- Smooth transitions
+- Proper focus tree structure
 
 ## Component Development Process
 1. Create component file
