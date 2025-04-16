@@ -1,4 +1,4 @@
-/* Design System - Based on STYLING.md */
+/* Design System - Single Source of Truth */
 
 :root {
   /* Color Palette */
@@ -60,8 +60,6 @@
   --tv-width: 1920px;
   --tv-height: 1080px;
   --tv-base-font-size: 16px;
-  
-  /* Note: Safe zones will be managed manually */
 }
 
 /* Reset */
@@ -107,7 +105,27 @@ h1 { font-size: var(--font-size-h1); }
 h2 { font-size: var(--font-size-h2); }
 h3 { font-size: var(--font-size-h3); }
 
-/* Focus Styles */
+/* TV-specific optimizations */
+body {
+  width: var(--tv-width);
+  height: var(--tv-height);
+}
+
+/* TV-specific optimizations for font sizing */
+@media (min-width: var(--tv-width)) and (min-height: var(--tv-height)) {
+  html {
+    font-size: var(--tv-base-font-size); /* Base font size for 1920x1080 */
+  }
+}
+
+/* Ensure text remains readable on smaller screens */
+@media (max-width: var(--tv-width)), (max-height: var(--tv-height)) {
+  html {
+    font-size: calc(var(--tv-base-font-size) * min(calc(100vw / var(--tv-width)), calc(100vh / var(--tv-height))));
+  }
+}
+
+/* Focus Styles - Global */
 :focus-visible {
   outline: var(--focus-outline-width) solid var(--color-focus-ring);
   outline-offset: var(--focus-outline-offset);

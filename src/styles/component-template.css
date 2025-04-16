@@ -1,0 +1,29 @@
+/* Component Name CSS */
+
+/* Use BEM naming convention for component-specific styles */
+.component-name {
+  /* Base styles */
+}
+
+.component-name__element {
+  /* Element styles */
+}
+
+.component-name--modifier {
+  /* Modifier styles */
+}
+
+/* TV-specific focus styles */
+.component-name:focus-visible {
+  /* Focus styles */
+}
+
+/* Media queries if needed */
+@media (max-width: var(--tv-width)) {
+  /* Responsive styles */
+}
+
+/* Animation if needed */
+@keyframes component-animation {
+  /* Animation keyframes */
+} 

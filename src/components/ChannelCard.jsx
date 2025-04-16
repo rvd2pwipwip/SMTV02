@@ -16,8 +16,8 @@ const ChannelCard = ({ title, onSelect }) => {
       role="button"
       aria-label={title}
     >
-      <div className="channel-thumbnail"></div>
-      <div className="channel-title">{title}</div>
+      <div className="channel-card__thumbnail"></div>
+      <div className="channel-card__title">{title}</div>
     </div>
   );
 };
