@@ -1,3 +1,5 @@
+@import '@smtv/design-tokens/dist/design-tokens.css';
+
 /* Force 16:9 aspect ratio (1920:1080) */
 html, body {
   margin: 0;
