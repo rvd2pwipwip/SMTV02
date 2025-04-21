@@ -55,6 +55,8 @@
     "vitest": "^3.1.1"
   },
   "dependencies": {
-    "@noriginmedia/norigin-spatial-navigation": "^2.3.0"
+    "@noriginmedia/norigin-spatial-navigation": "^2.3.0",
+    "@smtv/design-tokens": "^1.0.1",
+    "@smtv/tv-component-library": "^1.0.1"
   }
 }
