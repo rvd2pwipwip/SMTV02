@@ -6,25 +6,26 @@ This document outlines the CSS architecture for our TV application, following Re
 
 ## File Structure
 
-- `design-system.css`: Single source of truth for design tokens, variables, and base styles
-- `App.css`: App-specific layout and container styles
+- `App.css`: App-specific layout, container styles, and TV-specific scaling
 - `index.css`: Minimal global styles
 - Component-specific CSS files: Located alongside their components
+- Design tokens: Imported from `@smtv/design-tokens` npm package
 
 ## CSS Organization Principles
 
-### 1. Design System (design-system.css)
+### 1. Design Tokens (@smtv/design-tokens)
 
-- Contains all CSS variables (colors, typography, spacing, etc.)
-- Provides base styles for HTML elements
-- Includes utility classes for common styling needs
-- Contains TV-specific optimizations
+- Imported from the npm package: `@import '@smtv/design-tokens/dist/design-tokens.css'`
+- Provides all CSS variables (colors, typography, spacing, etc.)
+- Single source of truth for design system values
+- Includes TV-specific optimizations
 
 ### 2. App Layout (App.css)
 
 - Focuses on app container and layout structure
-- Handles responsive scaling for TV display
+- Handles responsive scaling for TV display (16:9 aspect ratio)
 - Manages app-specific components like headers and main content areas
+- Imports design tokens from npm package
 
 ### 3. Global Styles (index.css)
 
@@ -35,11 +36,11 @@ This document outlines the CSS architecture for our TV application, following Re
 
 - Each component has its own CSS file (e.g., `ChannelCard.css`)
 - CSS is scoped to the component
-- Uses design system variables for consistency
+- Uses design system variables from the npm package for consistency
 
 ## Best Practices
 
-1. **Use CSS Variables**: Always use design system variables for colors, spacing, etc.
+1. **Use Design Tokens**: Always use variables from `@smtv/design-tokens` for colors, spacing, etc.
 2. **Component Scoping**: Keep component styles with their components
 3. **Avoid Global Styles**: Minimize global styles to prevent conflicts
 4. **TV-Specific Considerations**: Always consider TV viewing distance and remote navigation

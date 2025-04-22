@@ -15,7 +15,7 @@ function Home() {
       <Header title="TV App" />
       <div className="content-swimlane">
         <LibraryChannelCard 
-          title="Sample Channel" 
+          title="Sample Channel"    
           thumbnailUrl="https://picsum.photos/300/300"
           onSelect={handleChannelSelect} 
         />
