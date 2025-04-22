@@ -4,6 +4,11 @@ import react from '@vitejs/plugin-react';
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
+  resolve: {
+    // Ensure proper module resolution
+    mainFields: ['module', 'main'],
+    extensions: ['.js', '.jsx', '.json']
+  },
   server: {
     // Enable HMR with specific settings
     hmr: {
@@ -30,10 +35,16 @@ export default defineConfig({
       output: {
         // Ensure consistent chunk naming
         manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
-          'ui-components': ['./src/components']
+          'react-vendor': ['react', 'react-dom']
         }
-      }
+      },
+      external: [
+        // Add any other external dependencies that should not be bundled
+        /^@smtv\/design-tokens\/.*/
+      ]
     }
+  },
+  optimizeDeps: {
+    include: ['@smtv/design-tokens']
   }
 });
