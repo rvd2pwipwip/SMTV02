@@ -7,6 +7,7 @@ import '../styles/App.css';
 
 function Home() {
   const { ref, focusKey } = useFocusable();
+  const { ref: swimlaneRef, focusKey: swimlaneFocusKey } = useFocusable();
   const handleChannelSelect = () => {
     console.log('Channel selected');
   };
@@ -15,7 +16,7 @@ function Home() {
     <FocusContext.Provider value={{ focusKey }}>
       <div className="app" ref={ref}>
         <Header title="TV App" />
-        <div className="content-swimlane">
+        <div className="content-swimlane" ref={swimlaneRef} focusKey={swimlaneFocusKey}>
           <ChannelCard 
             title="Sample Channel 1"    
             thumbnailUrl="https://picsum.photos/300/300"
