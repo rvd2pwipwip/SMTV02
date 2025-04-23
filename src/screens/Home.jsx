@@ -16,7 +16,7 @@ function Home() {
     <FocusContext.Provider value={{ focusKey }}>
       <div className="app" ref={ref}>
         <Header title="TV App" />
-        <div className="content-swimlane" ref={swimlaneRef} focusKey={swimlaneFocusKey}>
+        <div className="content-swimlane" ref={swimlaneRef} data-focus-key={swimlaneFocusKey}>
           <ChannelCard 
             title="Sample Channel 1"    
             thumbnailUrl="https://picsum.photos/300/300"
