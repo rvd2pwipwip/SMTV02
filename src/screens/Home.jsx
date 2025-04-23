@@ -12,6 +12,11 @@ function Home() {
   // Swimlane focus context
   const { ref: swimlaneRef, focusKey: swimlaneFocusKey, focusSelf: focusSwimlane } = useFocusable();
 
+  // Card focus contexts
+  const { ref: card1Ref, focusKey: card1FocusKey } = useFocusable();
+  const { ref: card2Ref, focusKey: card2FocusKey } = useFocusable();
+  const { ref: card3Ref, focusKey: card3FocusKey } = useFocusable();
+
   // Set initial focus when component mounts
   useEffect(() => {
     // Focus the swimlane first
@@ -30,16 +35,22 @@ function Home() {
              ref={swimlaneRef} 
              data-focus-key={swimlaneFocusKey}>
           <ChannelCard 
+            ref={card1Ref}
+            data-focus-key={card1FocusKey}
             title="Sample Channel 1"    
             thumbnailUrl="https://picsum.photos/300/300"
             onSelect={handleChannelSelect} 
           />
           <ChannelCard 
+            ref={card2Ref}
+            data-focus-key={card2FocusKey}
             title="Sample Channel 2"    
             thumbnailUrl="https://picsum.photos/300/300"
             onSelect={handleChannelSelect} 
           />
           <ChannelCard 
+            ref={card3Ref}
+            data-focus-key={card3FocusKey}
             title="Sample Channel 3"    
             thumbnailUrl="https://picsum.photos/300/300"
             onSelect={handleChannelSelect} 
