@@ -1,18 +1,19 @@
 import React from 'react';
-import { FocusContext } from '@noriginmedia/norigin-spatial-navigation';
+import { FocusContext, useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import { ChannelCard } from '@smtv/tv-component-library';
 import '@smtv/tv-component-library/dist/style.css';
 import Header from '../components/Header';
 import '../styles/App.css';
 
 function Home() {
+  const { ref, focusKey } = useFocusable();
   const handleChannelSelect = () => {
     console.log('Channel selected');
   };
 
   return (
-    <FocusContext.Provider>
-      <div className="app">
+    <FocusContext.Provider value={{ focusKey }}>
+      <div className="app" ref={ref}>
         <Header title="TV App" />
         <div className="content-swimlane">
           <ChannelCard 
