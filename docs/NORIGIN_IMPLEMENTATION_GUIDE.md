@@ -165,6 +165,43 @@ useEffect(() => {
 - Implement directional navigation
 - Handle focus restoration
 
+## ChannelCard Integration Plan
+
+### Overview
+This section outlines the implementation plan for integrating Norigin Spatial Navigation with the existing ChannelCard component from `@smtv/tv-component-library`.
+
+### Implementation Steps
+
+1. **Initial Focus Setup**
+   - Add `focusSelf` to the root level focus context
+   - Create an `useEffect` hook to set initial focus on the first ChannelCard
+   - Ensure focus restoration works after navigation
+
+2. **Mouse Navigation Integration**
+   - Since ChannelCard already handles mouse clicks, we need to:
+     - Ensure mouse hover events don't interfere with keyboard focus
+     - Maintain the existing click-to-focus behavior
+     - Test the interaction between mouse and keyboard navigation
+
+3. **Focus Management**
+   - Add proper focus movement between cards
+   - Implement directional navigation (up/down/left/right)
+   - Handle edge cases (first/last items)
+   - Ensure focus state is properly synchronized between Norigin and ChannelCard
+
+4. **Testing Requirements**
+   - Verify initial focus works on app load
+   - Test that ChannelCard's existing focus ring appears with keyboard navigation
+   - Validate mouse click behavior still works as expected
+   - Check focus restoration after navigation
+   - Test edge cases and error states
+
+### Key Points
+- ChannelCard has existing focus ring implementation
+- Focus on proper integration rather than style implementation
+- Maintain existing mouse click behavior
+- Ensure smooth transition between mouse and keyboard navigation
+
 ## Troubleshooting
 
 ### Common Issues
