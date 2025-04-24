@@ -1,26 +1,58 @@
 import React, { useEffect } from 'react';
-import { FocusContext, useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import { FocusContext, useFocusable, init } from '@noriginmedia/norigin-spatial-navigation';
 import { ChannelCard } from '@smtv/tv-component-library';
 import '@smtv/tv-component-library/dist/style.css';
 import Header from '../components/Header';
 import '../styles/App.css';
 
+// Initialize Norigin with debug mode
+init({
+  debug: true,
+  visualDebug: true
+});
+
 function Home() {
+  // Card focus contexts first, focusSelf for setting initial focus
+  const { ref: card1Ref, focusKey: card1FocusKey, focusSelf: focusCard1 } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        card1Ref.current?.focus();
+      }, 0);
+    }
+  });
+  const { ref: card2Ref, focusKey: card2FocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        card2Ref.current?.focus();
+      }, 0);
+    }
+  });
+  const { ref: card3Ref, focusKey: card3FocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        card3Ref.current?.focus();
+      }, 0);
+    }
+  });
+
   // Root level focus context
-  const { ref, focusKey, focusSelf: focusRoot } = useFocusable();
+  const { ref, focusKey } = useFocusable({
+    focusable: false,
+    trackChildren: true
+  });
   
   // Swimlane focus context
-  const { ref: swimlaneRef, focusKey: swimlaneFocusKey, focusSelf: focusSwimlane } = useFocusable();
+  const { ref: swimlaneRef, focusKey: swimlaneFocusKey } = useFocusable({
+    focusable: false,
+    trackChildren: true
+  });
 
-  // Card focus contexts
-  const { ref: card1Ref, focusKey: card1FocusKey } = useFocusable();
-  const { ref: card2Ref, focusKey: card2FocusKey } = useFocusable();
-  const { ref: card3Ref, focusKey: card3FocusKey } = useFocusable();
-
-  // Set initial focus when component mounts
+  // Set initial focus on first card
   useEffect(() => {
-    // Focus the swimlane first
-    focusSwimlane();
+    focusCard1();
   }, []);
 
   const handleChannelSelect = () => {
@@ -39,21 +71,38 @@ function Home() {
             data-focus-key={card1FocusKey}
             title="Sample Channel 1"    
             thumbnailUrl="https://picsum.photos/300/300"
-            onSelect={handleChannelSelect} 
+            onSelect={handleChannelSelect}
+            onFocus={() => {
+              // Small delay to ensure Norigin has finished its focus handling
+              setTimeout(() => {
+                // set the native browser focus
+                card1Ref.current?.focus();
+              }, 0);
+            }}
           />
           <ChannelCard 
             ref={card2Ref}
             data-focus-key={card2FocusKey}
             title="Sample Channel 2"    
             thumbnailUrl="https://picsum.photos/300/300"
-            onSelect={handleChannelSelect} 
+            onSelect={handleChannelSelect}
+            onFocus={() => {
+              setTimeout(() => {
+                card2Ref.current?.focus();
+              }, 0);
+            }}
           />
           <ChannelCard 
             ref={card3Ref}
             data-focus-key={card3FocusKey}
             title="Sample Channel 3"    
             thumbnailUrl="https://picsum.photos/300/300"
-            onSelect={handleChannelSelect} 
+            onSelect={handleChannelSelect}
+            onFocus={() => {
+              setTimeout(() => {
+                card3Ref.current?.focus();
+              }, 0);
+            }}
           />
         </div>
       </div>
