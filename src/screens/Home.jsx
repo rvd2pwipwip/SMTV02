@@ -53,6 +53,11 @@ function Home() {
     console.log('Channel selected');
   };
 
+  // Add click handler for focus
+  const handleCardClick = (focusKey) => {
+    console.log('Card clicked with focus key:', focusKey);
+  };
+
   return (
     <FocusContext.Provider value={{ focusKey }}>
       <div className="app" ref={ref}>
@@ -66,10 +71,9 @@ function Home() {
             title="Sample Channel 1"    
             thumbnailUrl="https://picsum.photos/300/300"
             onSelect={handleChannelSelect}
+            onClick={() => handleCardClick(card1FocusKey)}
             onFocus={() => {
-              // Small delay to ensure Norigin has finished its focus handling
               setTimeout(() => {
-                // set the native browser focus
                 card1Ref.current?.focus();
               }, 0);
             }}
@@ -80,6 +84,7 @@ function Home() {
             title="Sample Channel 2"    
             thumbnailUrl="https://picsum.photos/300/300"
             onSelect={handleChannelSelect}
+            onClick={() => handleCardClick(card2FocusKey)}
             onFocus={() => {
               setTimeout(() => {
                 card2Ref.current?.focus();
@@ -92,6 +97,7 @@ function Home() {
             title="Sample Channel 3"    
             thumbnailUrl="https://picsum.photos/300/300"
             onSelect={handleChannelSelect}
+            onClick={() => handleCardClick(card3FocusKey)}
             onFocus={() => {
               setTimeout(() => {
                 card3Ref.current?.focus();
