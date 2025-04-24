@@ -147,4 +147,57 @@
 - [Norigin Spatial Navigation](https://github.com/NoriginMedia/Norigin-Spatial-Navigation)
 - TV App Development Best Practices
 - React Component Patterns
-- Accessibility Guidelines for TV 
+- Accessibility Guidelines for TV
+
+## Screen Navigation Implementation
+
+### Navigation Architecture Decision
+- Implemented screen stack pattern for navigation
+- Chosen over simple state management for scalability
+- Aligns with TV app navigation patterns
+- Supports future screen additions
+
+#### Screen Stack Pattern
+```javascript
+const [screenStack, setScreenStack] = useState(['home']);
+```
+- Maintains screen hierarchy
+- Enables natural back navigation
+- Preserves screen state
+- Scales well with additional screens
+
+### Norigin Integration
+- Successfully implemented Norigin spatial navigation
+- Focus management working with:
+  - Keyboard navigation between cards
+  - Mouse click focus integration
+  - Focus ring styling via component library
+- Removed global focus styles to let components manage their own focus
+
+#### Key Implementation Points
+1. **Initialization**
+   - Single Norigin initialization in `main.jsx`
+   - Debug mode for development
+   - Visual debug for focus visualization
+
+2. **Focus Management**
+   - Root and container elements: `focusable: false`
+   - Interactive elements: `focusable: true`
+   - Proper focus hierarchy with `FocusContext.Provider`
+
+3. **Screen Transitions**
+   - Focus preservation during transitions
+   - Proper focus restoration on back navigation
+   - Smooth keyboard navigation between screens
+
+### Next Steps
+1. Implement screen stack navigation
+2. Add ChannelInfo screen
+3. Implement Enter/B key navigation
+4. Add focus management between screens
+
+#### Learning Goals
+- Understanding screen stack patterns
+- Mastering focus management across screens
+- Implementing TV-specific navigation
+- Testing screen transitions 
