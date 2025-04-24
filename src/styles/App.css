@@ -95,11 +95,4 @@ html, body {
   align-items: center;
   width: 100%;
   gap: var(--spacing-lg);
-}
-
-/* Ensure proper focus navigation */
-.app *:focus-visible {
-  outline: 2px solid var(--color-focus-ring);
-  transform: scale(var(--focus-scale));
-  transition: all var(--transition-duration) var(--transition-timing);
 } 
