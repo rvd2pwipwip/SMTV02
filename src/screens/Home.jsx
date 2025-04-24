@@ -1,15 +1,9 @@
 import React, { useEffect } from 'react';
-import { FocusContext, useFocusable, init } from '@noriginmedia/norigin-spatial-navigation';
+import { FocusContext, useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import { ChannelCard } from '@smtv/tv-component-library';
 import '@smtv/tv-component-library/dist/style.css';
 import Header from '../components/Header';
 import '../styles/App.css';
-
-// Initialize Norigin with debug mode
-init({
-  debug: true,
-  visualDebug: true
-});
 
 function Home() {
   // Card focus contexts first, focusSelf for setting initial focus
