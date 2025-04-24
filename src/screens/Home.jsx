@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { FocusContext, useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import { FocusContext, useFocusable, setFocus } from '@noriginmedia/norigin-spatial-navigation';
 import { ChannelCard } from '@smtv/tv-component-library';
 import '@smtv/tv-component-library/dist/style.css';
 import Header from '../components/Header';
@@ -56,6 +56,7 @@ function Home() {
   // Add click handler for focus
   const handleCardClick = (focusKey) => {
     console.log('Card clicked with focus key:', focusKey);
+    setFocus(focusKey);
   };
 
   return (
