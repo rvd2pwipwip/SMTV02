@@ -240,4 +240,136 @@ This section outlines the implementation plan for integrating Norigin Spatial Na
 ## Resources
 - [Norigin Spatial Navigation Documentation](https://github.com/NoriginMedia/Norigin-Spatial-Navigation)
 - [TV App Best Practices](https://www.w3.org/TR/2016/REC-html51-20161101/)
-- [React Focus Management](https://react.dev/learn/managing-state) 
+- [React Focus Management](https://react.dev/learn/managing-state)
+
+## Successful Implementation Example
+
+### Working ChannelCard Navigation
+```jsx
+import React, { useEffect } from 'react';
+import { FocusContext, useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import { ChannelCard } from '@smtv/tv-component-library';
+
+function Home() {
+  // Card focus contexts first, focusSelf for setting initial focus
+  const { ref: card1Ref, focusKey: card1FocusKey, focusSelf: focusCard1 } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        card1Ref.current?.focus();
+      }, 0);
+    }
+  });
+  const { ref: card2Ref, focusKey: card2FocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        card2Ref.current?.focus();
+      }, 0);
+    }
+  });
+  const { ref: card3Ref, focusKey: card3FocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        card3Ref.current?.focus();
+      }, 0);
+    }
+  });
+
+  // Root level focus context
+  const { ref, focusKey } = useFocusable({
+    focusable: false,
+    trackChildren: true
+  });
+  
+  // Swimlane focus context
+  const { ref: swimlaneRef, focusKey: swimlaneFocusKey } = useFocusable({
+    focusable: false,
+    trackChildren: true
+  });
+
+  // Set initial focus on first card
+  useEffect(() => {
+    focusCard1();
+  }, []);
+
+  return (
+    <FocusContext.Provider value={{ focusKey }}>
+      <div className="app" ref={ref}>
+        <Header title="TV App" />
+        <div className="content-swimlane" 
+             ref={swimlaneRef} 
+             data-focus-key={swimlaneFocusKey}>
+          <ChannelCard 
+            ref={card1Ref}
+            data-focus-key={card1FocusKey}
+            title="Sample Channel 1"    
+            thumbnailUrl="https://picsum.photos/300/300"
+            onSelect={handleChannelSelect}
+          />
+          {/* Additional ChannelCards */}
+        </div>
+      </div>
+    </FocusContext.Provider>
+  );
+}
+```
+
+### Key Implementation Points
+
+1. **Initialization**
+   - Initialize Norigin once in `main.jsx`
+   - Do not initialize in component files
+   - Example initialization:
+   ```jsx
+   init({
+     debug: true,
+     visualDebug: true
+   });
+   ```
+
+2. **Focus Self Function**
+   - Use `focusSelf` to programmatically set focus
+   - Important for setting initial focus
+   - Example:
+   ```jsx
+   const { ref, focusKey, focusSelf } = useFocusable();
+   useEffect(() => {
+     focusSelf();
+   }, []);
+   ```
+
+3. **Focus Hierarchy**
+   - Root and container elements should be `focusable: false`
+   - Set `trackChildren: true` for containers
+   - Only interactive elements (like cards) should be `focusable: true`
+
+4. **Native Focus Integration**
+   - Use `setTimeout` to ensure proper focus timing
+   - Example:
+   ```jsx
+   onFocus: () => {
+     setTimeout(() => {
+       ref.current?.focus();
+     }, 0);
+   }
+   ```
+
+### Common Pitfalls and Solutions
+
+1. **Multiple Initializations**
+   ❌ **Wrong:** Initializing Norigin in multiple components
+   ✅ **Correct:** Initialize once in `main.jsx`
+
+2. **Focus Timing**
+   ❌ **Wrong:** Setting focus directly in `onFocus`
+   ✅ **Correct:** Use `setTimeout` to ensure proper timing
+
+3. **Focus Hierarchy**
+   ❌ **Wrong:** Making containers focusable
+   ✅ **Correct:** Set `focusable: false` for containers
+
+4. **Initial Focus**
+   ❌ **Wrong:** Using `preferredChildFocusKey`
+   ✅ **Correct:** Use `focusSelf` with `useEffect` 
