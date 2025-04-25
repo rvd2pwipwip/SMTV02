@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { FocusContext, useFocusable, setFocus } from '@noriginmedia/norigin-spatial-navigation';
-import { ChannelCardWrapper } from '../components/ChannelCardWrapper';
+import { EnterKeyWrapper } from '../components/EnterKeyWrapper';
 import '@smtv/tv-component-library/dist/style.css';
 import Header from '../components/Header';
 import '../styles/App.css';
@@ -68,7 +68,7 @@ function Home({ onChannelSelect }) {
         <div className="content-swimlane" 
              ref={swimlaneRef} 
              data-focus-key={swimlaneFocusKey}>
-          <ChannelCardWrapper 
+          <EnterKeyWrapper 
             ref={card1Ref}
             data-focus-key={card1FocusKey}
             title="Sample Channel 1"    
@@ -82,7 +82,7 @@ function Home({ onChannelSelect }) {
               }, 0);
             }}
           />
-          <ChannelCardWrapper 
+          <EnterKeyWrapper 
             ref={card2Ref}
             data-focus-key={card2FocusKey}
             title="Sample Channel 2"    
@@ -96,7 +96,7 @@ function Home({ onChannelSelect }) {
               }, 0);
             }}
           />
-          <ChannelCardWrapper 
+          <EnterKeyWrapper 
             ref={card3Ref}
             data-focus-key={card3FocusKey}
             title="Sample Channel 3"    
