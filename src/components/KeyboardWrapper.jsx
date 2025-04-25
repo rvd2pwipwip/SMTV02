@@ -1,19 +1,16 @@
 import React from 'react';
 
 /**
- * KeyboardFocusWrapper - A generic wrapper component for keyboard navigation and focus management
+ * KeyboardWrapper - A generic wrapper component for keyboard navigation
  * 
- * This component is based on the working EnterKeyWrapper pattern but made generic.
+ * This component works exactly like EnterKeyWrapper but accepts any component as a child.
  * It will:
  * 1. Accept any child component
- * 2. Handle keyboard events
- * 3. Manage focus properly
- * 4. Forward refs correctly
+ * 2. Handle Enter key events
+ * 3. Forward all props to the child component
  */
 
-const KeyboardWrapper = React.forwardRef((props, ref) => {
-  const { children, onSelect, ...restProps } = props;
-
+const KeyboardWrapper = ({ onSelect, children, ...props }) => {
   const handleKeyDown = (e) => {
     if (e.key === 'Enter' && onSelect) {
       onSelect();
@@ -21,16 +18,10 @@ const KeyboardWrapper = React.forwardRef((props, ref) => {
   };
 
   return (
-    <div 
-      ref={ref}
-      onKeyDown={handleKeyDown}
-      {...restProps}
-    >
-      {children}
+    <div onKeyDown={handleKeyDown}>
+      {React.cloneElement(children, props)}
     </div>
   );
-});
-
-KeyboardWrapper.displayName = 'KeyboardFocusWrapper';
+};
 
 export default KeyboardWrapper; 
