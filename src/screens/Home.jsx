@@ -127,17 +127,17 @@ function Home({ onChannelSelect }) {
             ref={testCardRef}
             data-focus-key={testCardFocusKey}
             onSelect={() => handleCardClick(testCardFocusKey, { id: 4, title: "Test Channel" }, 'enter')}
-            onClick={() => handleCardClick(testCardFocusKey, { id: 4, title: "Test Channel" }, 'click')}
-            onFocus={() => {
-              console.log('Test Card focused');
-              setTimeout(() => {
-                testCardRef.current?.focus();
-              }, 0);
-            }}
           >
             <ChannelCard
               title="Test Channel"    
               thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(testCardFocusKey, { id: 4, title: "Test Channel" }, 'click')}
+              onFocus={() => {
+                console.log('Test Card focused');
+                setTimeout(() => {
+                  testCardRef.current?.focus();
+                }, 0);
+              }}
             />
           </KeyboardWrapper>
         </div>
