@@ -11,7 +11,7 @@ import React from 'react';
  * 4. Forward refs correctly
  */
 
-const KeyboardFocusWrapper = React.forwardRef((props, ref) => {
+const KeyboardWrapper = React.forwardRef((props, ref) => {
   const { children, onSelect, ...restProps } = props;
 
   const handleKeyDown = (e) => {
@@ -31,6 +31,6 @@ const KeyboardFocusWrapper = React.forwardRef((props, ref) => {
   );
 });
 
-KeyboardFocusWrapper.displayName = 'KeyboardFocusWrapper';
+KeyboardWrapper.displayName = 'KeyboardFocusWrapper';
 
-export default KeyboardFocusWrapper; 
+export default KeyboardWrapper; 

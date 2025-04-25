@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { FocusContext, useFocusable, setFocus } from '@noriginmedia/norigin-spatial-navigation';
 import { EnterKeyWrapper } from '../components/EnterKeyWrapper';
-import KeyboardFocusWrapper from '../components/KeyboardFocusWrapper';
+import KeyboardWrapper from '../components/KeyboardWrapper';
 import { ChannelCard } from '@smtv/tv-component-library';
 import '@smtv/tv-component-library/dist/style.css';
 import Header from '../components/Header';
@@ -123,7 +123,7 @@ function Home({ onChannelSelect }) {
             }}
           />
           {/* Test our new KeyboardFocusWrapper */}
-          <KeyboardFocusWrapper
+          <KeyboardWrapper
             ref={testCardRef}
             data-focus-key={testCardFocusKey}
           >
@@ -131,7 +131,7 @@ function Home({ onChannelSelect }) {
               title="Test Channel"    
               thumbnailUrl="https://picsum.photos/300/300"
             />
-          </KeyboardFocusWrapper>
+          </KeyboardWrapper>
         </div>
       </div>
     </FocusContext.Provider>
