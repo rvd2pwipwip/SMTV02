@@ -7,8 +7,8 @@ import './styles/index.css';
 
 // Initialize spatial navigation
 init({
-  debug: false,
-  visualDebug: false
+  debug: true,
+  visualDebug: true
 });
 
 ReactDOM.createRoot(document.getElementById('root')).render(

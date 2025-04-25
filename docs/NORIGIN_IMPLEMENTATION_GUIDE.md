@@ -373,3 +373,113 @@ function Home() {
 4. **Initial Focus**
    ❌ **Wrong:** Using `preferredChildFocusKey`
    ✅ **Correct:** Use `focusSelf` with `useEffect` 
+
+## Component Wrapper Pattern
+
+### Overview
+When working with third-party components that don't natively support keyboard navigation, we can use a wrapper component pattern to add this functionality without modifying the original component.
+
+### Implementation Example
+```jsx
+// ChannelCardWrapper.jsx
+import React from 'react';
+import { ChannelCard } from '@smtv/tv-component-library';
+
+export const ChannelCardWrapper = ({ onSelect, ...props }) => {
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter' && onSelect) {
+      onSelect();
+    }
+  };
+
+  return (
+    <div onKeyDown={handleKeyDown}>
+      <ChannelCard {...props} />
+    </div>
+  );
+};
+```
+
+### Usage in Home Component
+```jsx
+// Home.jsx
+import { ChannelCardWrapper } from '../components/ChannelCardWrapper';
+
+// In the component:
+<ChannelCardWrapper 
+  ref={card1Ref}
+  data-focus-key={card1FocusKey}
+  title="Sample Channel 1"    
+  thumbnailUrl="https://picsum.photos/300/300"
+  onSelect={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'enter')}
+  onClick={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'click')}
+  onFocus={() => {
+    setTimeout(() => {
+      card1Ref.current?.focus();
+    }, 0);
+  }}
+/>
+```
+
+### Why Use This Pattern?
+
+1. **Separation of Concerns**
+   - Keeps third-party components clean
+   - Isolates navigation-specific logic
+   - Makes testing easier
+
+2. **Flexibility**
+   - Can add/remove functionality easily
+   - Doesn't require library changes
+   - Can be project-specific
+
+3. **Maintainability**
+   - Clear separation of responsibilities
+   - Easy to update navigation logic
+   - Simple to debug
+
+### Best Practices
+
+1. **Keep It Simple**
+   - One wrapper, one responsibility
+   - Clear naming conventions
+   - Good documentation
+
+2. **Proper Prop Forwarding**
+   - Use spread operator carefully
+   - Handle refs correctly
+   - Maintain component API
+
+3. **Performance Considerations**
+   - Use React.memo when needed
+   - Avoid unnecessary re-renders
+   - Keep the wrapper lightweight
+
+### Common Use Cases
+
+1. **Adding Keyboard Navigation**
+   - Enter key handling
+   - Arrow key navigation
+   - Focus management
+
+2. **Cross-Cutting Concerns**
+   - Analytics
+   - Error boundaries
+   - Logging
+
+3. **TV-Specific Features**
+   - Spatial navigation
+   - Focus management
+   - Keyboard controls
+
+### When to Use This Pattern
+
+✅ **Good Cases:**
+- Adding keyboard navigation to third-party components
+- Implementing TV-specific features
+- Adding cross-cutting concerns
+
+❌ **Avoid When:**
+- The component can be modified directly
+- The wrapper adds too much complexity
+- Performance is critical 

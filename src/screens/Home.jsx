@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { FocusContext, useFocusable, setFocus } from '@noriginmedia/norigin-spatial-navigation';
-import { ChannelCard } from '@smtv/tv-component-library';
+import { ChannelCardWrapper } from '../components/ChannelCardWrapper';
 import '@smtv/tv-component-library/dist/style.css';
 import Header from '../components/Header';
 import '../styles/App.css';
 
-function Home() {
+function Home({ onChannelSelect }) {
   // Card focus contexts first, focusSelf for setting initial focus
   const { ref: card1Ref, focusKey: card1FocusKey, focusSelf: focusCard1 } = useFocusable({
     focusable: true,
@@ -49,14 +49,16 @@ function Home() {
     focusCard1();
   }, []);
 
-  const handleChannelSelect = () => {
-    console.log('Channel selected');
-  };
-
-  // Add click handler for focus
-  const handleCardClick = (focusKey) => {
-    console.log('Card clicked with focus key:', focusKey);
+  // Add click handler for focus and channel selection
+  const handleCardClick = (focusKey, channelData, eventType) => {
+    console.log('Card interaction:', {
+      focusKey,
+      channelData,
+      eventType,
+      isFocused: document.activeElement === document.querySelector(`[data-focus-key="${focusKey}"]`)
+    });
     setFocus(focusKey);
+    onChannelSelect(channelData);
   };
 
   return (
@@ -66,40 +68,43 @@ function Home() {
         <div className="content-swimlane" 
              ref={swimlaneRef} 
              data-focus-key={swimlaneFocusKey}>
-          <ChannelCard 
+          <ChannelCardWrapper 
             ref={card1Ref}
             data-focus-key={card1FocusKey}
             title="Sample Channel 1"    
             thumbnailUrl="https://picsum.photos/300/300"
-            onSelect={handleChannelSelect}
-            onClick={() => handleCardClick(card1FocusKey)}
+            onSelect={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'enter')}
+            onClick={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'click')}
             onFocus={() => {
+              console.log('Card 1 focused');
               setTimeout(() => {
                 card1Ref.current?.focus();
               }, 0);
             }}
           />
-          <ChannelCard 
+          <ChannelCardWrapper 
             ref={card2Ref}
             data-focus-key={card2FocusKey}
             title="Sample Channel 2"    
             thumbnailUrl="https://picsum.photos/300/300"
-            onSelect={handleChannelSelect}
-            onClick={() => handleCardClick(card2FocusKey)}
+            onSelect={() => handleCardClick(card2FocusKey, { id: 2, title: "Sample Channel 2" }, 'enter')}
+            onClick={() => handleCardClick(card2FocusKey, { id: 2, title: "Sample Channel 2" }, 'click')}
             onFocus={() => {
+              console.log('Card 2 focused');
               setTimeout(() => {
                 card2Ref.current?.focus();
               }, 0);
             }}
           />
-          <ChannelCard 
+          <ChannelCardWrapper 
             ref={card3Ref}
             data-focus-key={card3FocusKey}
             title="Sample Channel 3"    
             thumbnailUrl="https://picsum.photos/300/300"
-            onSelect={handleChannelSelect}
-            onClick={() => handleCardClick(card3FocusKey)}
+            onSelect={() => handleCardClick(card3FocusKey, { id: 3, title: "Sample Channel 3" }, 'enter')}
+            onClick={() => handleCardClick(card3FocusKey, { id: 3, title: "Sample Channel 3" }, 'click')}
             onFocus={() => {
+              console.log('Card 3 focused');
               setTimeout(() => {
                 card3Ref.current?.focus();
               }, 0);

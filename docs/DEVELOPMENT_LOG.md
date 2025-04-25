@@ -166,35 +166,107 @@ const [screenStack, setScreenStack] = useState(['home']);
 - Preserves screen state
 - Scales well with additional screens
 
-### Norigin Integration
-- Successfully implemented Norigin spatial navigation
-- Focus management working with:
-  - Keyboard navigation between cards
-  - Mouse click focus integration
-  - Focus ring styling via component library
-- Removed global focus styles to let components manage their own focus
+### Implementation Details
 
-#### Key Implementation Points
-1. **Initialization**
-   - Single Norigin initialization in `main.jsx`
-   - Debug mode for development
-   - Visual debug for focus visualization
+#### Screen Structure
+1. **Full-Screen Overlay Approach**
+   - ChannelInfo as full-screen overlay
+   - No background dimming needed
+   - Simple z-index management
+   ```css
+   .channel-info {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;
+     height: 100%;
+     z-index: 10;
+   }
+   ```
 
-2. **Focus Management**
-   - Root and container elements: `focusable: false`
-   - Interactive elements: `focusable: true`
-   - Proper focus hierarchy with `FocusContext.Provider`
+2. **Screen State Management**
+   ```javascript
+   const [screenStack, setScreenStack] = useState(['home']);
+   const [selectedChannel, setSelectedChannel] = useState(null);
+   ```
+   - Track current screen
+   - Store channel data for info screen
+   - Handle transition states
 
 3. **Screen Transitions**
-   - Focus preservation during transitions
-   - Proper focus restoration on back navigation
-   - Smooth keyboard navigation between screens
+   - Smooth enter/exit animations
+   - Focus preservation
+   - State synchronization
+   - Clean transition handling
+
+#### Focus Management
+1. **Between Screens**
+   - Preserve focus state when leaving home
+   - Set initial focus on ChannelInfo
+   - Restore previous focus on return
+   - Handle focus traps in overlay
+
+2. **Norigin Integration**
+   - Maintain focus hierarchy across screens
+   - Proper focus context switching
+   - Smooth focus transitions
+   - Keyboard navigation within screens
+
+3. **Focus Restoration**
+   - Save last focused card
+   - Restore focus position
+   - Handle edge cases
+   - Maintain navigation context
+
+### Implementation Steps
+1. **Setup Screen Stack**
+   - Create screen state management
+   - Implement basic transitions
+   - Set up focus context
+
+2. **ChannelInfo Screen**
+   - Create full-screen overlay
+   - Implement B key navigation
+   - Add focus management
+   - Handle channel data
+
+3. **Navigation Integration**
+   - Add Enter key handler
+   - Implement back navigation
+   - Connect focus systems
+   - Test transitions
+
+4. **Focus Management**
+   - Implement focus preservation
+   - Add focus restoration
+   - Handle edge cases
+   - Test keyboard navigation
+
+### Testing Requirements
+1. **Screen Transitions**
+   - Verify smooth transitions
+   - Test state preservation
+   - Check focus behavior
+   - Validate animations
+
+2. **Keyboard Navigation**
+   - Test Enter key on cards
+   - Verify B key on info screen
+   - Check focus restoration
+   - Validate edge cases
+
+3. **Focus Management**
+   - Verify focus hierarchy
+   - Test focus traps
+   - Check restoration
+   - Validate transitions
 
 ### Next Steps
-1. Implement screen stack navigation
-2. Add ChannelInfo screen
-3. Implement Enter/B key navigation
-4. Add focus management between screens
+1. Create screen stack implementation
+2. Build ChannelInfo screen
+3. Implement keyboard navigation
+4. Add focus management
+5. Test and refine
 
 #### Learning Goals
 - Understanding screen stack patterns
