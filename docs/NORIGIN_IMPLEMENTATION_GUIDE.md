@@ -381,20 +381,19 @@ When working with third-party components that don't natively support keyboard na
 
 ### Implementation Example
 ```jsx
-// ChannelCardWrapper.jsx
+// EnterKeyWrapper.jsx
 import React from 'react';
-import { ChannelCard } from '@smtv/tv-component-library';
 
-export const ChannelCardWrapper = ({ onSelect, ...props }) => {
+export const EnterKeyWrapper = ({ onEnter, children, ...props }) => {
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && onSelect) {
-      onSelect();
+    if (e.key === 'Enter' && onEnter) {
+      onEnter();
     }
   };
 
   return (
-    <div onKeyDown={handleKeyDown}>
-      <ChannelCard {...props} />
+    <div onKeyDown={handleKeyDown} {...props}>
+      {children}
     </div>
   );
 };
@@ -403,33 +402,37 @@ export const ChannelCardWrapper = ({ onSelect, ...props }) => {
 ### Usage in Home Component
 ```jsx
 // Home.jsx
-import { ChannelCardWrapper } from '../components/ChannelCardWrapper';
+import { EnterKeyWrapper } from '../components/EnterKeyWrapper';
+import { ChannelCard } from '@smtv/tv-component-library';
 
 // In the component:
-<ChannelCardWrapper 
+<EnterKeyWrapper 
   ref={card1Ref}
   data-focus-key={card1FocusKey}
-  title="Sample Channel 1"    
-  thumbnailUrl="https://picsum.photos/300/300"
-  onSelect={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'enter')}
-  onClick={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'click')}
-  onFocus={() => {
-    setTimeout(() => {
-      card1Ref.current?.focus();
-    }, 0);
-  }}
-/>
+  onEnter={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'enter')}
+>
+  <ChannelCard 
+    title="Sample Channel 1"    
+    thumbnailUrl="https://picsum.photos/300/300"
+    onClick={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'click')}
+    onFocus={() => {
+      setTimeout(() => {
+        card1Ref.current?.focus();
+      }, 0);
+    }}
+  />
+</EnterKeyWrapper>
 ```
 
 ### Why Use This Pattern?
 
 1. **Separation of Concerns**
    - Keeps third-party components clean
-   - Isolates navigation-specific logic
+   - Isolates keyboard navigation logic
    - Makes testing easier
 
 2. **Flexibility**
-   - Can add/remove functionality easily
+   - Can be used with any component
    - Doesn't require library changes
    - Can be project-specific
 
