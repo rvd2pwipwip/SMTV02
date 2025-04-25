@@ -7,7 +7,7 @@ import './styles/index.css';
 
 // Initialize spatial navigation
 init({
-  debug: true,
+  debug: false,
   visualDebug: false
 });
 

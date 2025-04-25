@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Home from './screens/Home';
 import ChannelInfo from './screens/ChannelInfo';
 import './styles/App.css';
@@ -18,6 +18,20 @@ function App() {
     setScreenStack(screenStack.slice(0, -1));
     setSelectedChannel(null);
   };
+
+  // Global 'B' key handler
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Only handle 'B' key when not on home screen
+      if (e.key.toLowerCase() === 'b' && screenStack.length > 1) {
+        e.preventDefault(); // Prevent default browser behavior
+        popScreen();
+      }
+    };
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, [screenStack]); // Re-run effect when screen stack changes
 
   // Get current screen
   const currentScreen = screenStack[screenStack.length - 1];
