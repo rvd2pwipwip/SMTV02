@@ -3,14 +3,14 @@ import { ChannelCard } from '@smtv/tv-component-library/dist/index.umd.js';
 import Header from '../components/Header';
 import '../styles/App.css';
 
-function ChannelInfo() {
+function ChannelInfo({ channel }) {
   const handleChannelSelect = () => {
     console.log('Channel selected');
   };
 
   return (
     <div className="app">
-      <Header title="Channel Info" />
+      <Header title={channel?.title || "Channel Info"} />
       <div className="content-swimlane">
         <ChannelCard 
           title="Sample Channel 1"    
