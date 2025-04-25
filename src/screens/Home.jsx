@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { FocusContext, useFocusable, setFocus } from '@noriginmedia/norigin-spatial-navigation';
 import { EnterKeyWrapper } from '../components/EnterKeyWrapper';
+import KeyboardFocusWrapper from '../components/KeyboardFocusWrapper';
+import { ChannelCard } from '@smtv/tv-component-library';
 import '@smtv/tv-component-library/dist/style.css';
 import Header from '../components/Header';
 import '../styles/App.css';
@@ -42,6 +44,16 @@ function Home({ onChannelSelect }) {
   const { ref: swimlaneRef, focusKey: swimlaneFocusKey } = useFocusable({
     focusable: false,
     trackChildren: true
+  });
+
+  // Test card focus context
+  const { ref: testCardRef, focusKey: testCardFocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        testCardRef.current?.focus();
+      }, 0);
+    }
   });
 
   // Set initial focus on first card
@@ -110,6 +122,16 @@ function Home({ onChannelSelect }) {
               }, 0);
             }}
           />
+          {/* Test our new KeyboardFocusWrapper */}
+          <KeyboardFocusWrapper
+            ref={testCardRef}
+            data-focus-key={testCardFocusKey}
+          >
+            <ChannelCard
+              title="Test Channel"    
+              thumbnailUrl="https://picsum.photos/300/300"
+            />
+          </KeyboardFocusWrapper>
         </div>
       </div>
     </FocusContext.Provider>
