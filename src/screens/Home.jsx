@@ -80,49 +80,61 @@ function Home({ onChannelSelect }) {
         <div className="content-swimlane" 
              ref={swimlaneRef} 
              data-focus-key={swimlaneFocusKey}>
-          <EnterKeyWrapper 
+
+          <KeyboardWrapper
             ref={card1Ref}
             data-focus-key={card1FocusKey}
-            title="Sample Channel 1"    
-            thumbnailUrl="https://picsum.photos/300/300"
             onSelect={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'enter')}
-            onClick={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'click')}
-            onFocus={() => {
-              console.log('Card 1 focused');
-              setTimeout(() => {
-                card1Ref.current?.focus();
-              }, 0);
-            }}
-          />
-          <EnterKeyWrapper 
+          >
+            <ChannelCard
+              title="Sample Channel 1"    
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'click')}
+              onFocus={() => {
+                console.log('Card 1 focused');
+                setTimeout(() => {
+                  card1Ref.current?.focus();
+                }, 0);
+              }}
+            />
+          </KeyboardWrapper>
+
+          <KeyboardWrapper
             ref={card2Ref}
             data-focus-key={card2FocusKey}
-            title="Sample Channel 2"    
-            thumbnailUrl="https://picsum.photos/300/300"
             onSelect={() => handleCardClick(card2FocusKey, { id: 2, title: "Sample Channel 2" }, 'enter')}
-            onClick={() => handleCardClick(card2FocusKey, { id: 2, title: "Sample Channel 2" }, 'click')}
-            onFocus={() => {
-              console.log('Card 2 focused');
-              setTimeout(() => {
-                card2Ref.current?.focus();
-              }, 0);
-            }}
-          />
-          <EnterKeyWrapper 
+          >
+            <ChannelCard
+              title="Sample Channel 2"    
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card2FocusKey, { id: 2, title: "Sample Channel 2" }, 'click')}
+              onFocus={() => {
+                console.log('Card 2 focused');
+                setTimeout(() => {
+                  card2Ref.current?.focus();
+                }, 0);
+              }}
+            />
+          </KeyboardWrapper>
+
+          <KeyboardWrapper
             ref={card3Ref}
             data-focus-key={card3FocusKey}
-            title="Sample Channel 3"    
-            thumbnailUrl="https://picsum.photos/300/300"
             onSelect={() => handleCardClick(card3FocusKey, { id: 3, title: "Sample Channel 3" }, 'enter')}
-            onClick={() => handleCardClick(card3FocusKey, { id: 3, title: "Sample Channel 3" }, 'click')}
-            onFocus={() => {
-              console.log('Card 3 focused');
-              setTimeout(() => {
-                card3Ref.current?.focus();
-              }, 0);
-            }}
-          />
-          {/* Test our new KeyboardFocusWrapper */}
+          >
+            <ChannelCard
+              title="Sample Channel 3"    
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card3FocusKey, { id: 3, title: "Sample Channel 3" }, 'click')}
+              onFocus={() => {
+                console.log('Card 3 focused');
+                setTimeout(() => {
+                  card3Ref.current?.focus();
+                }, 0);
+              }}
+            />
+          </KeyboardWrapper>
+
           <KeyboardWrapper
             ref={testCardRef}
             data-focus-key={testCardFocusKey}
