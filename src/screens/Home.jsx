@@ -5,10 +5,12 @@ import { ChannelCard } from '@smtv/tv-component-library';
 import '@smtv/tv-component-library/dist/style.css';
 import Header from '../components/Header';
 import '../styles/App.css';
+import { useFocusMemory } from '../contexts/FocusMemoryContext';
 
 function Home({ onChannelSelect }) {
   const hasMounted = useRef(false);
   const hasLoggedInitialFocus = useRef(false);
+  const { restoreFocus } = useFocusMemory();
 
   // Card focus contexts first, focusSelf for setting initial focus
   const { ref: card1Ref, focusKey: card1FocusKey, focusSelf: focusCard1 } = useFocusable({
@@ -77,11 +79,28 @@ function Home({ onChannelSelect }) {
     }
   });
 
-  // Set initial focus on first card
+  // Set initial focus on first card or restore saved focus
   useEffect(() => {
     if (!hasMounted.current) {
-      console.log('Home component mounted, setting initial focus');
+      console.log('Home component mounted');
       hasMounted.current = true;
+
+      // Try to restore saved focus
+      const savedStableId = restoreFocus('home');
+      if (savedStableId) {
+        const element = document.querySelector(`[data-stable-id="${savedStableId}"]`);
+        if (element) {
+          const focusKey = element.getAttribute('data-focus-key');
+          if (focusKey) {
+            console.log('Restoring saved focus:', { stableId: savedStableId, focusKey });
+            setFocus(focusKey);
+            return;
+          }
+        }
+      }
+
+      // If no saved focus, set initial focus on first card
+      console.log('No saved focus found, setting initial focus on Card 1');
       focusCard1();
     }
   }, []);
