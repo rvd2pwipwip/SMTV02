@@ -381,13 +381,13 @@ When working with third-party components that don't natively support keyboard na
 
 ### Implementation Example
 ```jsx
-// EnterKeyWrapper.jsx
+// KeyboardWrapper.jsx
 import React from 'react';
 
-export const EnterKeyWrapper = ({ onEnter, children, ...props }) => {
+export const KeyboardWrapper = ({ onSelect, children, ...props }) => {
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter' && onEnter) {
-      onEnter();
+    if (e.key === 'Enter' && onSelect) {
+      onSelect();
     }
   };
 
@@ -402,26 +402,22 @@ export const EnterKeyWrapper = ({ onEnter, children, ...props }) => {
 ### Usage in Home Component
 ```jsx
 // Home.jsx
-import { EnterKeyWrapper } from '../components/EnterKeyWrapper';
+import { KeyboardWrapper } from '../components/KeyboardWrapper';
 import { ChannelCard } from '@smtv/tv-component-library';
 
 // In the component:
-<EnterKeyWrapper 
+<KeyboardWrapper 
   ref={card1Ref}
   data-focus-key={card1FocusKey}
-  onEnter={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'enter')}
+  data-stable-id="home-card-1"
+  onSelect={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'enter')}
 >
   <ChannelCard 
     title="Sample Channel 1"    
     thumbnailUrl="https://picsum.photos/300/300"
     onClick={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'click')}
-    onFocus={() => {
-      setTimeout(() => {
-        card1Ref.current?.focus();
-      }, 0);
-    }}
   />
-</EnterKeyWrapper>
+</KeyboardWrapper>
 ```
 
 ### Why Use This Pattern?
