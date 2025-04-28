@@ -10,7 +10,6 @@ export function FocusMemoryProvider({ children }) {
 
   // Save the stable ID of the focused element for the current screen
   const saveFocus = (screenName, stableId) => {
-    console.log('Saving focus:', { screenName, stableId });
     setFocusMemory(prev => ({
       ...prev,
       [screenName]: stableId
@@ -19,14 +18,11 @@ export function FocusMemoryProvider({ children }) {
 
   // Get the stable ID of the last focused element for a screen
   const restoreFocus = (screenName) => {
-    const stableId = focusMemory[screenName];
-    console.log('Restoring focus:', { screenName, stableId });
-    return stableId;
+    return focusMemory[screenName];
   };
 
   // Update which screen is currently active
   const updateCurrentScreen = (screenName) => {
-    console.log('Updating current screen:', screenName);
     setCurrentScreen(screenName);
   };
 

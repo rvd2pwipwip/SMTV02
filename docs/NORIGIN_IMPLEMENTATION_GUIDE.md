@@ -485,4 +485,148 @@ import { ChannelCard } from '@smtv/tv-component-library';
 ❌ **Avoid When:**
 - The component can be modified directly
 - The wrapper adds too much complexity
-- Performance is critical 
+- Performance is critical
+
+## Focus Memory System
+
+### Overview
+The focus memory system allows screens to remember and restore their last focused item after remounting. This is crucial for TV applications where users expect focus to return to their last position when navigating back to a screen.
+
+### Why Stable IDs?
+Norigin generates dynamic focus keys (e.g., `sn:focusable-item-1`) that change on each component remount. This makes it impossible to directly store and restore focus keys. Instead, we use stable IDs that remain constant across remounts.
+
+### Implementation Details
+
+1. **Stable ID Pattern**
+   ```jsx
+   <KeyboardWrapper
+     ref={card1Ref}
+     data-focus-key={card1FocusKey}  // Dynamic, from norigin
+     data-stable-id="home-card-1"    // Static, from our code
+     onSelect={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'enter')}
+   >
+   ```
+
+2. **Focus Memory Context**
+   ```jsx
+   // Stores only stable IDs
+   const [focusMemory, setFocusMemory] = useState({
+     "home": "home-card-2",    // Last focused stable ID for home screen
+     "channelInfo": "info-1"   // Last focused stable ID for channel info screen
+   });
+   ```
+
+3. **Focus Restoration**
+   ```jsx
+   // When screen mounts
+   useEffect(() => {
+     const savedStableId = restoreFocus('home');
+     if (savedStableId) {
+       const element = document.querySelector(`[data-stable-id="${savedStableId}"]`);
+       if (element) {
+         const focusKey = element.getAttribute('data-focus-key');
+         if (focusKey) {
+           setFocus(focusKey);
+         }
+       }
+     }
+   }, []);
+   ```
+
+### Key Design Decisions
+
+1. **Why Store Only Stable IDs?**
+   - Focus keys are dynamic and change on remount
+   - Stable IDs provide a reliable reference point
+   - Simpler state management
+   - More predictable behavior
+
+2. **Why Not Store Both?**
+   - Extra complexity without benefit
+   - Focus keys would be outdated on remount
+   - Stable IDs are sufficient for restoration
+
+3. **Why Use DOM Queries?**
+   - Direct access to current focus keys
+   - Works with norigin's dynamic key generation
+   - Reliable across remounts
+
+### Best Practices
+
+1. **Naming Conventions**
+   - Use consistent patterns for stable IDs
+   - Include screen name in ID
+   - Make IDs descriptive and unique
+
+2. **Focus Management**
+   - Save focus before screen transitions
+   - Restore focus after screen transitions
+   - Handle edge cases (no saved focus)
+
+3. **Testing**
+   - Verify focus restoration works
+   - Test with different navigation paths
+   - Check focus behavior after remounts
+
+### Common Issues and Solutions
+
+1. **Focus Not Restoring**
+   - Check if stable ID exists
+   - Verify focus key is valid
+   - Ensure proper timing of focus restoration
+
+2. **Duplicate Focus Events**
+   - Use refs to track mount state
+   - Implement proper cleanup
+   - Handle focus events carefully
+
+### Example Implementation
+
+```jsx
+// In App.jsx
+const pushScreen = (screen, data = null) => {
+  // Save focus before leaving current screen
+  const currentScreen = screenStack[screenStack.length - 1];
+  const focusedElement = document.querySelector('[data-focus-key]:focus');
+  if (focusedElement) {
+    const stableId = focusedElement.getAttribute('data-stable-id');
+    if (stableId) {
+      saveFocus(currentScreen, stableId);
+    }
+  }
+  // ... rest of navigation logic
+};
+
+const popScreen = () => {
+  // ... save focus logic ...
+  
+  // Restore focus on the previous screen
+  const stableId = restoreFocus(previousScreen);
+  if (stableId) {
+    const element = document.querySelector(`[data-stable-id="${stableId}"]`);
+    if (element) {
+      const focusKey = element.getAttribute('data-focus-key');
+      if (focusKey) {
+        setFocus(focusKey);
+      }
+    }
+  }
+};
+```
+
+### Future Improvements
+
+1. **Nested Components**
+   - Add focus memory for nested components
+   - Implement hierarchical focus restoration
+   - Handle complex navigation paths
+
+2. **Focus History**
+   - Track focus history for each screen
+   - Implement undo/redo for focus
+   - Add focus navigation shortcuts
+
+3. **Debugging Tools**
+   - Add focus state visualization
+   - Implement focus logging
+   - Create focus debugging tools 

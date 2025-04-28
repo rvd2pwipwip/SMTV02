@@ -9,20 +9,12 @@ import { useFocusMemory } from '../contexts/FocusMemoryContext';
 
 function Home({ onChannelSelect }) {
   const hasMounted = useRef(false);
-  const hasLoggedInitialFocus = useRef(false);
   const { restoreFocus } = useFocusMemory();
 
   // Card focus contexts first, focusSelf for setting initial focus
   const { ref: card1Ref, focusKey: card1FocusKey, focusSelf: focusCard1 } = useFocusable({
     focusable: true,
     onFocus: () => {
-      if (!hasLoggedInitialFocus.current) {
-        console.log('Card 1 received focus:', {
-          focusKey: card1FocusKey,
-          stableId: 'home-card-1'
-        });
-        hasLoggedInitialFocus.current = true;
-      }
       setTimeout(() => {
         card1Ref.current?.focus();
       }, 0);
@@ -31,10 +23,6 @@ function Home({ onChannelSelect }) {
   const { ref: card2Ref, focusKey: card2FocusKey } = useFocusable({
     focusable: true,
     onFocus: () => {
-      console.log('Card 2 received focus:', {
-        focusKey: card2FocusKey,
-        stableId: 'home-card-2'
-      });
       setTimeout(() => {
         card2Ref.current?.focus();
       }, 0);
@@ -43,10 +31,6 @@ function Home({ onChannelSelect }) {
   const { ref: card3Ref, focusKey: card3FocusKey } = useFocusable({
     focusable: true,
     onFocus: () => {
-      console.log('Card 3 received focus:', {
-        focusKey: card3FocusKey,
-        stableId: 'home-card-3'
-      });
       setTimeout(() => {
         card3Ref.current?.focus();
       }, 0);
@@ -69,10 +53,6 @@ function Home({ onChannelSelect }) {
   const { ref: testCardRef, focusKey: testCardFocusKey } = useFocusable({
     focusable: true,
     onFocus: () => {
-      console.log('Test Card received focus:', {
-        focusKey: testCardFocusKey,
-        stableId: 'home-test-card'
-      });
       setTimeout(() => {
         testCardRef.current?.focus();
       }, 0);
@@ -82,7 +62,6 @@ function Home({ onChannelSelect }) {
   // Set initial focus on first card or restore saved focus
   useEffect(() => {
     if (!hasMounted.current) {
-      console.log('Home component mounted');
       hasMounted.current = true;
 
       // Try to restore saved focus
@@ -92,7 +71,6 @@ function Home({ onChannelSelect }) {
         if (element) {
           const focusKey = element.getAttribute('data-focus-key');
           if (focusKey) {
-            console.log('Restoring saved focus:', { stableId: savedStableId, focusKey });
             setFocus(focusKey);
             return;
           }
@@ -100,25 +78,12 @@ function Home({ onChannelSelect }) {
       }
 
       // If no saved focus, set initial focus on first card
-      console.log('No saved focus found, setting initial focus on Card 1');
       focusCard1();
     }
   }, []);
 
   // Add click handler for focus and channel selection
   const handleCardClick = (focusKey, channelData, eventType) => {
-    const element = document.querySelector(`[data-focus-key="${focusKey}"]`);
-    const stableId = element?.getAttribute('data-stable-id');
-    
-    console.log('Card interaction:', {
-      focusKey,
-      stableId,
-      channelData,
-      eventType,
-      isFocused: document.activeElement === element,
-      elementExists: !!element
-    });
-    
     setFocus(focusKey);
     onChannelSelect(channelData);
   };
