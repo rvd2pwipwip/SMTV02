@@ -3,23 +3,28 @@ import React, { createContext, useContext, useState } from 'react';
 const FocusMemoryContext = createContext();
 
 export function FocusMemoryProvider({ children }) {
+  // Store only stable IDs for each screen
+  // Example: { "home": "home-card-2", "channelInfo": "info-1" }
   const [focusMemory, setFocusMemory] = useState({});
   const [currentScreen, setCurrentScreen] = useState('home');
 
-  const saveFocus = (screenName, focusKey) => {
-    console.log('Saving focus:', { screenName, focusKey });
+  // Save the stable ID of the focused element for the current screen
+  const saveFocus = (screenName, stableId) => {
+    console.log('Saving focus:', { screenName, stableId });
     setFocusMemory(prev => ({
       ...prev,
-      [screenName]: focusKey
+      [screenName]: stableId
     }));
   };
 
+  // Get the stable ID of the last focused element for a screen
   const restoreFocus = (screenName) => {
-    const focusKey = focusMemory[screenName];
-    console.log('Restoring focus:', { screenName, focusKey });
-    return focusKey;
+    const stableId = focusMemory[screenName];
+    console.log('Restoring focus:', { screenName, stableId });
+    return stableId;
   };
 
+  // Update which screen is currently active
   const updateCurrentScreen = (screenName) => {
     console.log('Updating current screen:', screenName);
     setCurrentScreen(screenName);

@@ -15,7 +15,10 @@ function AppContent() {
     const currentScreen = screenStack[screenStack.length - 1];
     const focusedElement = document.querySelector('[data-focus-key]:focus');
     if (focusedElement) {
-      saveFocus(currentScreen, focusedElement.getAttribute('data-focus-key'));
+      const stableId = focusedElement.getAttribute('data-stable-id');
+      if (stableId) {
+        saveFocus(currentScreen, stableId);
+      }
     }
 
     setScreenStack([...screenStack, screen]);
@@ -28,7 +31,10 @@ function AppContent() {
     const currentScreen = screenStack[screenStack.length - 1];
     const focusedElement = document.querySelector('[data-focus-key]:focus');
     if (focusedElement) {
-      saveFocus(currentScreen, focusedElement.getAttribute('data-focus-key'));
+      const stableId = focusedElement.getAttribute('data-stable-id');
+      if (stableId) {
+        saveFocus(currentScreen, stableId);
+      }
     }
 
     setScreenStack(screenStack.slice(0, -1));
@@ -37,7 +43,16 @@ function AppContent() {
     updateCurrentScreen(previousScreen);
     
     // Restore focus on the previous screen
-    restoreFocus(previousScreen);
+    const stableId = restoreFocus(previousScreen);
+    if (stableId) {
+      const element = document.querySelector(`[data-stable-id="${stableId}"]`);
+      if (element) {
+        const focusKey = element.getAttribute('data-focus-key');
+        if (focusKey) {
+          setFocus(focusKey);
+        }
+      }
+    }
   };
 
   // Global 'B' key handler
