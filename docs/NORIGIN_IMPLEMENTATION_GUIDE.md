@@ -626,3 +626,192 @@ const popScreen = () => {
    - Add focus state visualization
    - Implement focus logging
    - Create focus debugging tools 
+
+## Sliding Behavior Implementation
+
+### Overview
+When implementing sliding behavior for swimlanes (e.g., channel cards that slide while keeping the focus ring in place), we need a reliable way to detect focus changes and update the UI accordingly. This section explains why we chose the MutationObserver approach and how it works.
+
+### Why MutationObserver?
+
+1. **Direct DOM Changes**
+   - The spatial navigation library updates the DOM directly
+   - It adds/removes the `data-focused` attribute
+   - We need to detect these changes reliably
+
+2. **React State Limitations**
+   - React's state system doesn't detect DOM changes made by third-party libraries
+   - useEffect with dependencies wouldn't catch these changes
+   - We need a more direct way to observe DOM changes
+
+3. **Performance Considerations**
+   - MutationObserver is more efficient than polling
+   - Provides immediate response to changes
+   - No unnecessary re-renders
+
+### Implementation Details
+
+1. **Setting up the Observer**
+   ```jsx
+   const observer = new MutationObserver((mutations) => {
+     mutations.forEach((mutation) => {
+       if (mutation.type === 'attributes' && mutation.attributeName === 'data-focused') {
+         updateOffset();
+       }
+     });
+   });
+   ```
+
+2. **What the Observer Watches**
+   ```jsx
+   const cards = swimlaneRef.current.querySelectorAll('[data-stable-id^="home-card-"]');
+   cards.forEach(card => {
+     observer.observe(card, { attributes: true });
+   });
+   ```
+
+3. **How Focus Changes are Detected**
+   ```jsx
+   const updateOffset = () => {
+     const focusedElement = document.querySelector('[data-focused="true"]');
+     if (!focusedElement) return;
+
+     const viewportRect = focusRef.current.getBoundingClientRect();
+     const focusedRect = focusedElement.getBoundingClientRect();
+     const firstCard = swimlaneRef.current.querySelector('[data-stable-id="home-card-1"]');
+     
+     if (!firstCard) return;
+
+     const firstCardRect = firstCard.getBoundingClientRect();
+     const newOffset = firstCardRect.left - focusedRect.left;
+     setOffset(newOffset);
+   };
+   ```
+
+4. **Cleanup**
+   ```jsx
+   return () => {
+     observer.disconnect();
+   };
+   ```
+
+### Flow of Events
+```
+User presses arrow key
+  ↓
+Spatial Navigation Library updates DOM
+  ↓
+Adds data-focused="true" to new card
+  ↓
+MutationObserver detects change
+  ↓
+Calls updateOffset()
+  ↓
+Calculates new position
+  ↓
+Updates offset state
+  ↓
+React re-renders with new transform
+```
+
+### Alternative Approaches Considered
+
+1. **useEffect with Dependencies**
+   - Wouldn't detect DOM changes from the library
+   - Less reliable for our use case
+   - Could miss focus changes
+
+2. **Stable ID + Interval**
+   - More "React-like" but less efficient
+   - Requires polling
+   - Could miss focus changes between checks
+
+3. **Spatial Navigation Events**
+   - Might not give same level of control
+   - More complex to implement
+   - Could require additional state management
+
+### Best Practices
+
+1. **Observer Setup**
+   - Watch only necessary attributes
+   - Use proper cleanup
+   - Handle edge cases
+
+2. **Performance**
+   - Minimize DOM queries
+   - Use efficient selectors
+   - Implement proper cleanup
+
+3. **Maintainability**
+   - Clear documentation
+   - Proper error handling
+   - Consistent naming
+
+### Common Issues and Solutions
+
+1. **Observer Not Triggering**
+   - Check attribute names
+   - Verify observer setup
+   - Ensure proper cleanup
+
+2. **Performance Issues**
+   - Optimize DOM queries
+   - Use efficient selectors
+   - Implement proper cleanup
+
+3. **Memory Leaks**
+   - Always implement cleanup
+   - Disconnect observer on unmount
+   - Handle edge cases
+
+### Example Implementation
+
+```jsx
+// In App.jsx
+const pushScreen = (screen, data = null) => {
+  // Save focus before leaving current screen
+  const currentScreen = screenStack[screenStack.length - 1];
+  const focusedElement = document.querySelector('[data-focus-key]:focus');
+  if (focusedElement) {
+    const stableId = focusedElement.getAttribute('data-stable-id');
+    if (stableId) {
+      saveFocus(currentScreen, stableId);
+    }
+  }
+  // ... rest of navigation logic
+};
+
+const popScreen = () => {
+  // ... save focus logic ...
+  
+  // Restore focus on the previous screen
+  const stableId = restoreFocus(previousScreen);
+  if (stableId) {
+    const element = document.querySelector(`[data-stable-id="${stableId}"]`);
+    if (element) {
+      const focusKey = element.getAttribute('data-focus-key');
+      if (focusKey) {
+        setFocus(focusKey);
+      }
+    }
+  }
+};
+```
+
+### Future Improvements
+
+1. **Nested Components**
+   - Add focus memory for nested components
+   - Implement hierarchical focus restoration
+   - Handle complex navigation paths
+
+2. **Focus History**
+   - Track focus history for each screen
+   - Implement undo/redo for focus
+   - Add focus navigation shortcuts
+
+3. **Debugging Tools**
+   - Add focus state visualization
+   - Implement focus logging
+   - Create focus debugging tools 

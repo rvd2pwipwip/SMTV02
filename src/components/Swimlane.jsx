@@ -13,4 +13,6 @@ const Swimlane = React.forwardRef(({ children, ...props }, ref) => {
   );
 });
 
+Swimlane.displayName = 'Swimlane';
+
 export default Swimlane; 

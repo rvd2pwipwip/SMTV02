@@ -89,6 +89,12 @@ html, body {
   margin-bottom: var(--spacing-xl);
 }
 
+.swimlane-viewport {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
 .content-swimlane {
   display: flex;
   justify-content: flex-start;
@@ -100,6 +106,9 @@ html, body {
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
   padding: var(--spacing-md) 0;
+  position: relative;
+  transition: transform 0.3s ease-in-out;
+  will-change: transform;
 }
 
 .content-swimlane::-webkit-scrollbar {
