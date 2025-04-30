@@ -36,6 +36,78 @@ function Home({ onChannelSelect }) {
       }, 0);
     }
   });
+  const { ref: card4Ref, focusKey: card4FocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        card4Ref.current?.focus();
+      }, 0);
+    }
+  });
+  const { ref: card5Ref, focusKey: card5FocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        card5Ref.current?.focus();
+      }, 0);
+    }
+  });
+  const { ref: card6Ref, focusKey: card6FocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        card6Ref.current?.focus();
+      }, 0);
+    }
+  });
+  const { ref: card7Ref, focusKey: card7FocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        card7Ref.current?.focus();
+      }, 0);
+    }
+  });
+  const { ref: card8Ref, focusKey: card8FocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        card8Ref.current?.focus();
+      }, 0);
+    }
+  });
+  const { ref: card9Ref, focusKey: card9FocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        card9Ref.current?.focus();
+      }, 0);
+    }
+  });
+  const { ref: card10Ref, focusKey: card10FocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        card10Ref.current?.focus();
+      }, 0);
+    }
+  });
+  const { ref: card11Ref, focusKey: card11FocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        card11Ref.current?.focus();
+      }, 0);
+    }
+  });
+  const { ref: card12Ref, focusKey: card12FocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        card12Ref.current?.focus();
+      }, 0);
+    }
+  });
 
   // Root level focus context
   const { ref, focusKey } = useFocusable({
@@ -49,20 +121,15 @@ function Home({ onChannelSelect }) {
     trackChildren: true
   });
 
-  // Test card focus context
-  const { ref: testCardRef, focusKey: testCardFocusKey } = useFocusable({
-    focusable: true,
-    onFocus: () => {
-      setTimeout(() => {
-        testCardRef.current?.focus();
-      }, 0);
-    }
-  });
-
   // Set initial focus on first card or restore saved focus
   useEffect(() => {
     if (!hasMounted.current) {
       hasMounted.current = true;
+
+      // Reset scroll position to ensure first card is visible
+      if (swimlaneRef.current) {
+        swimlaneRef.current.scrollLeft = 0;
+      }
 
       // Try to restore saved focus
       const savedStableId = restoreFocus('home');
@@ -136,15 +203,119 @@ function Home({ onChannelSelect }) {
           </KeyboardWrapper>
 
           <KeyboardWrapper
-            ref={testCardRef}
-            data-focus-key={testCardFocusKey}
-            data-stable-id="home-test-card"
-            onSelect={() => handleCardClick(testCardFocusKey, { id: 4, title: "Test Channel" }, 'enter')}
+            ref={card4Ref}
+            data-focus-key={card4FocusKey}
+            data-stable-id="home-card-4"
+            onSelect={() => handleCardClick(card4FocusKey, { id: 4, title: "Sample Channel 4" }, 'enter')}
           >
             <ChannelCard
-              title="Test Channel"    
+              title="Sample Channel 4"    
               thumbnailUrl="https://picsum.photos/300/300"
-              onClick={() => handleCardClick(testCardFocusKey, { id: 4, title: "Test Channel" }, 'click')}
+              onClick={() => handleCardClick(card4FocusKey, { id: 4, title: "Sample Channel 4" }, 'click')}
+            />
+          </KeyboardWrapper>
+
+          <KeyboardWrapper
+            ref={card5Ref}
+            data-focus-key={card5FocusKey}
+            data-stable-id="home-card-5"
+            onSelect={() => handleCardClick(card5FocusKey, { id: 5, title: "Sample Channel 5" }, 'enter')}
+          >
+            <ChannelCard
+              title="Sample Channel 5"    
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card5FocusKey, { id: 5, title: "Sample Channel 5" }, 'click')}
+            />
+          </KeyboardWrapper>
+
+          <KeyboardWrapper
+            ref={card6Ref}
+            data-focus-key={card6FocusKey}
+            data-stable-id="home-card-6"
+            onSelect={() => handleCardClick(card6FocusKey, { id: 6, title: "Sample Channel 6" }, 'enter')}
+          >
+            <ChannelCard
+              title="Sample Channel 6"    
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card6FocusKey, { id: 6, title: "Sample Channel 6" }, 'click')}
+            />
+          </KeyboardWrapper>
+
+          <KeyboardWrapper
+            ref={card7Ref}
+            data-focus-key={card7FocusKey}
+            data-stable-id="home-card-7"
+            onSelect={() => handleCardClick(card7FocusKey, { id: 7, title: "Sample Channel 7" }, 'enter')}
+          >
+            <ChannelCard
+              title="Sample Channel 7"    
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card7FocusKey, { id: 7, title: "Sample Channel 7" }, 'click')}
+            />
+          </KeyboardWrapper>
+
+          <KeyboardWrapper
+            ref={card8Ref}
+            data-focus-key={card8FocusKey}
+            data-stable-id="home-card-8"
+            onSelect={() => handleCardClick(card8FocusKey, { id: 8, title: "Sample Channel 8" }, 'enter')}
+          >
+            <ChannelCard
+              title="Sample Channel 8"    
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card8FocusKey, { id: 8, title: "Sample Channel 8" }, 'click')}
+            />
+          </KeyboardWrapper>
+
+          <KeyboardWrapper
+            ref={card9Ref}
+            data-focus-key={card9FocusKey}
+            data-stable-id="home-card-9"
+            onSelect={() => handleCardClick(card9FocusKey, { id: 9, title: "Sample Channel 9" }, 'enter')}
+          >
+            <ChannelCard
+              title="Sample Channel 9"    
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card9FocusKey, { id: 9, title: "Sample Channel 9" }, 'click')}
+            />
+          </KeyboardWrapper>
+
+          <KeyboardWrapper
+            ref={card10Ref}
+            data-focus-key={card10FocusKey}
+            data-stable-id="home-card-10"
+            onSelect={() => handleCardClick(card10FocusKey, { id: 10, title: "Sample Channel 10" }, 'enter')}
+          >
+            <ChannelCard
+              title="Sample Channel 10"    
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card10FocusKey, { id: 10, title: "Sample Channel 10" }, 'click')}
+            />
+          </KeyboardWrapper>
+
+          <KeyboardWrapper
+            ref={card11Ref}
+            data-focus-key={card11FocusKey}
+            data-stable-id="home-card-11"
+            onSelect={() => handleCardClick(card11FocusKey, { id: 11, title: "Sample Channel 11" }, 'enter')}
+          >
+            <ChannelCard
+              title="Sample Channel 11"    
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card11FocusKey, { id: 11, title: "Sample Channel 11" }, 'click')}
+            />
+          </KeyboardWrapper>
+
+          <KeyboardWrapper
+            ref={card12Ref}
+            data-focus-key={card12FocusKey}
+            data-stable-id="home-card-12"
+            onSelect={() => handleCardClick(card12FocusKey, { id: 12, title: "Sample Channel 12" }, 'enter')}
+          >
+            <ChannelCard
+              title="Sample Channel 12"    
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card12FocusKey, { id: 12, title: "Sample Channel 12" }, 'click')}
             />
           </KeyboardWrapper>
         </div>
