@@ -4,6 +4,7 @@ import KeyboardWrapper from '../components/KeyboardWrapper';
 import { ChannelCard } from '@smtv/tv-component-library';
 import '@smtv/tv-component-library/dist/style.css';
 import Header from '../components/Header';
+import Swimlane from '../components/Swimlane';
 import '../styles/App.css';
 import { useFocusMemory } from '../contexts/FocusMemoryContext';
 
@@ -159,10 +160,7 @@ function Home({ onChannelSelect }) {
     <FocusContext.Provider value={{ focusKey }}>
       <div className="app" ref={ref}>
         <Header title="TV App" />
-        <div className="content-swimlane" 
-             ref={swimlaneRef} 
-             data-focus-key={swimlaneFocusKey}>
-
+        <Swimlane ref={swimlaneRef} data-focus-key={swimlaneFocusKey}>
           <KeyboardWrapper
             ref={card1Ref}
             data-focus-key={card1FocusKey}
@@ -318,7 +316,7 @@ function Home({ onChannelSelect }) {
               onClick={() => handleCardClick(card12FocusKey, { id: 12, title: "Sample Channel 12" }, 'click')}
             />
           </KeyboardWrapper>
-        </div>
+        </Swimlane>
       </div>
     </FocusContext.Provider>
   );
