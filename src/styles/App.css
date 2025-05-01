@@ -93,16 +93,16 @@ html, body {
   width: 100%;
   overflow: hidden;
   position: relative;
+  padding-left: 80px;
 }
 
 .content-swimlane {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  width: 100%;
+  width: fit-content;
+  min-width: 100%;
   gap: var(--spacing-lg);
-  overflow-x: auto;
-  overflow-y: hidden;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
   padding: var(--spacing-md) 0;
