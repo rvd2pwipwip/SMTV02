@@ -10,3 +10,7 @@ so we slide the swimlane to achieve the illusion that the cards are sliding unti
 when the last card is completely on the screen, the wrapper component stops offsetting the current swimlane
 
 is that a pattern that can be achieved? just an assessment, no code yet
+
+we have tried already, in other chats, to implement this scroll behavior but we never managed to proerly calculate the value of maxOffset
+
+how can we make sure we calculate content width only after all its children have mounted? just an assessment

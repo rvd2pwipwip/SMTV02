@@ -4,6 +4,12 @@ import '../styles/App.css';
 
 const SlidingSwimlane = React.forwardRef(({ children, ...props }, ref) => {
   const [offset, setOffset] = useState(0);
+  const [measurements, setMeasurements] = useState({
+    viewportWidth: 0,
+    contentWidth: 0,
+    currentOffset: 0,
+    maxOffset: 0
+  });
   const viewportRef = useRef(null);
   const swimlaneRef = useRef(null);
 
@@ -14,6 +20,44 @@ const SlidingSwimlane = React.forwardRef(({ children, ...props }, ref) => {
     ref: viewportRef
   });
 
+  // Update measurements when content changes
+  useEffect(() => {
+    if (!viewportRef.current || !swimlaneRef.current) return;
+
+    const updateMeasurements = () => {
+      const viewportWidth = viewportRef.current.getBoundingClientRect().width;
+      const contentWidth = swimlaneRef.current.scrollWidth;
+      const currentOffset = offset;
+      const maxOffset = contentWidth - viewportWidth + 60; // 60px margin from right
+
+      console.log('Measurements:', {
+        viewportWidth,
+        contentWidth,
+        currentOffset,
+        maxOffset
+      });
+
+      setMeasurements({
+        viewportWidth,
+        contentWidth,
+        currentOffset,
+        maxOffset
+      });
+    };
+
+    // Initial measurement
+    updateMeasurements();
+
+    // Set up ResizeObserver to track size changes
+    const resizeObserver = new ResizeObserver(updateMeasurements);
+    resizeObserver.observe(viewportRef.current);
+    resizeObserver.observe(swimlaneRef.current);
+
+    return () => {
+      resizeObserver.disconnect();
+    };
+  }, [offset]);
+
   // Calculate offset when focus changes
   useEffect(() => {
     if (!focusRef.current || !swimlaneRef.current) return;
@@ -21,12 +65,6 @@ const SlidingSwimlane = React.forwardRef(({ children, ...props }, ref) => {
     const updateOffset = () => {
       const focusedElement = document.querySelector('[data-focused="true"]');
       if (!focusedElement) return;
-
-      console.log('Focused element:', focusedElement);
-      console.log('Focused element data:', {
-        stableId: focusedElement.getAttribute('data-stable-id'),
-        focusKey: focusedElement.getAttribute('data-focus-key')
-      });
 
       const viewportRect = focusRef.current.getBoundingClientRect();
       const focusedRect = focusedElement.getBoundingClientRect();
@@ -37,12 +75,16 @@ const SlidingSwimlane = React.forwardRef(({ children, ...props }, ref) => {
       const firstCardRect = firstCard.getBoundingClientRect();
       const newOffset = firstCardRect.left - focusedRect.left;
 
-      console.log('Calculated offset:', newOffset);
-      console.log('Viewport rect:', viewportRect);
-      console.log('Focused rect:', focusedRect);
-      console.log('First card rect:', firstCardRect);
+      // Clamp the offset to the maximum allowed value
+      const clampedOffset = Math.min(newOffset, measurements.maxOffset);
+      
+      console.log('Offset calculation:', {
+        newOffset,
+        clampedOffset,
+        maxOffset: measurements.maxOffset
+      });
 
-      setOffset(newOffset);
+      setOffset(clampedOffset);
     };
 
     // Set up MutationObserver to watch for focus changes
@@ -67,7 +109,7 @@ const SlidingSwimlane = React.forwardRef(({ children, ...props }, ref) => {
     return () => {
       observer.disconnect();
     };
-  }, [focusRef]);
+  }, [focusRef, measurements.maxOffset]);
 
   return (
     <div 
