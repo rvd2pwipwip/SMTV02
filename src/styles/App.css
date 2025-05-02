@@ -89,11 +89,15 @@ html, body {
   margin-bottom: var(--spacing-xl);
 }
 
+:root {
+  --screen-side-padding: 80px;
+}
+
 .swimlane-viewport {
   width: 100%;
   overflow: hidden;
   position: relative;
-  padding-left: 80px;
+  padding-left: var(--screen-side-padding);
 }
 
 .content-swimlane {

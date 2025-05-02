@@ -35,10 +35,12 @@ const SlidingSwimlane = React.forwardRef(({ children, ...props }, ref) => {
       const contentRect = swimlaneRef.current.getBoundingClientRect();
       const contentWidth = contentRect.width;
       const viewportWidth = viewportRect.width;
-      const minRightMargin = 60;
+      
+      // Get the CSS variable value using getComputedStyle
+      const screenSidePadding = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--screen-side-padding'));
 
-      // Calculate how much the content can slide before reaching the 60px margin
-      const maxSlide = contentWidth - viewportWidth + minRightMargin;
+      // Calculate how much the content can slide before reaching the margin
+      const maxSlide = contentWidth - viewportWidth + screenSidePadding + screenSidePadding;
 
       // If the new offset would slide the content beyond the max slide, use the max slide instead
       if (Math.abs(newOffset) > maxSlide) {
