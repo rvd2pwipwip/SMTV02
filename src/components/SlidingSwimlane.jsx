@@ -31,14 +31,18 @@ const SlidingSwimlane = React.forwardRef(({ children, ...props }, ref) => {
       const firstCardRect = firstCard.getBoundingClientRect();
       const newOffset = firstCardRect.left - focusedRect.left;
 
-      // Check if the right edge of content-swimlane is within 60px of viewport's right edge
+      // Get the total width of the content
       const contentRect = swimlaneRef.current.getBoundingClientRect();
-      const contentRightEdge = contentRect.right - offset; // Current right edge without the new offset
-      const viewportRightEdge = viewportRect.right;
+      const contentWidth = contentRect.width;
+      const viewportWidth = viewportRect.width;
       const minRightMargin = 60;
 
-      // If content's right edge would be within 60px of viewport's right edge after applying the new offset, stop offsetting
-      if (contentRightEdge + newOffset - viewportRightEdge <= minRightMargin) {
+      // Calculate how much the content can slide before reaching the 60px margin
+      const maxSlide = contentWidth - viewportWidth + minRightMargin;
+
+      // If the new offset would slide the content beyond the max slide, use the max slide instead
+      if (Math.abs(newOffset) > maxSlide) {
+        setOffset(-maxSlide);
         return;
       }
 
@@ -67,7 +71,7 @@ const SlidingSwimlane = React.forwardRef(({ children, ...props }, ref) => {
     return () => {
       observer.disconnect();
     };
-  }, [focusRef, offset]);
+  }, [focusRef]);
 
   return (
     <div 
