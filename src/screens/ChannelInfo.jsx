@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChannelCard } from '@smtv/tv-component-library/dist/index.umd.js';
+import { ChannelCard } from '@smtv/tv-component-library';
 import Header from '../components/Header';
 import '../styles/App.css';
 
