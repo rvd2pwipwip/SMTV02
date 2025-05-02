@@ -576,6 +576,31 @@ Norigin generates dynamic focus keys (e.g., `sn:focusable-item-1`) that change o
    - Implement proper cleanup
    - Handle focus events carefully
 
+3. **Observer Not Triggering**
+   - Check attribute names
+   - Verify observer setup
+   - Ensure proper cleanup
+
+4. **Content Clipping**
+   - Ensure proper padding calculations
+   - Check viewport width measurements
+   - Verify content width calculations
+
+5. **Performance Issues**
+   - Optimize DOM queries
+   - Use efficient selectors
+   - Implement proper cleanup
+
+6. **Memory Leaks**
+   - Always implement cleanup
+   - Disconnect observer on unmount
+   - Handle edge cases
+
+7. **Focus Management**
+   - Ensure focus remains visible
+   - Handle edge cases properly
+   - Maintain focus hierarchy
+
 ### Example Implementation
 
 ```jsx
@@ -608,6 +633,34 @@ const popScreen = () => {
     }
   }
 };
+
+// In Home.jsx
+function Home() {
+  // Root level focus context
+  const { ref, focusKey } = useFocusable({
+    focusable: false,
+    trackChildren: true
+  });
+  
+  // Swimlane focus context
+  const { ref: swimlaneRef, focusKey: swimlaneFocusKey } = useFocusable({
+    focusable: false,
+    trackChildren: true
+  });
+
+  return (
+    <FocusContext.Provider value={{ focusKey }}>
+      <div className="app" ref={ref}>
+        <Header title="TV App" />
+        <SlidingSwimlane>
+          <Swimlane ref={swimlaneRef} data-focus-key={swimlaneFocusKey}>
+            {/* Channel cards with KeyboardWrapper */}
+          </Swimlane>
+        </SlidingSwimlane>
+      </div>
+    </FocusContext.Provider>
+  );
+}
 ```
 
 ### Future Improvements
@@ -625,12 +678,12 @@ const popScreen = () => {
 3. **Debugging Tools**
    - Add focus state visualization
    - Implement focus logging
-   - Create focus debugging tools 
+   - Create focus debugging tools
 
 ## Sliding Behavior Implementation
 
 ### Overview
-When implementing sliding behavior for swimlanes (e.g., channel cards that slide while keeping the focus ring in place), we need a reliable way to detect focus changes and update the UI accordingly. This section explains why we chose the MutationObserver approach and how it works.
+The sliding behavior in the TV app ensures that content swimlanes slide smoothly while maintaining proper padding from the screen edges. This section details how the sliding behavior works and how it handles screen-side-padding.
 
 ### Why MutationObserver?
 
@@ -652,48 +705,91 @@ When implementing sliding behavior for swimlanes (e.g., channel cards that slide
 ### Implementation Details
 
 1. **Setting up the Observer**
-   ```jsx
-   const observer = new MutationObserver((mutations) => {
-     mutations.forEach((mutation) => {
-       if (mutation.type === 'attributes' && mutation.attributeName === 'data-focused') {
-         updateOffset();
-       }
-     });
-   });
-   ```
+```jsx
+const observer = new MutationObserver((mutations) => {
+  mutations.forEach((mutation) => {
+    if (mutation.type === 'attributes' && mutation.attributeName === 'data-focused') {
+      updateOffset();
+    }
+  });
+});
+```
 
 2. **What the Observer Watches**
-   ```jsx
-   const cards = swimlaneRef.current.querySelectorAll('[data-stable-id^="home-card-"]');
-   cards.forEach(card => {
-     observer.observe(card, { attributes: true });
-   });
-   ```
+```jsx
+const cards = swimlaneRef.current.querySelectorAll('[data-stable-id^="home-card-"]');
+cards.forEach(card => {
+  observer.observe(card, { attributes: true });
+});
+```
 
-3. **How Focus Changes are Detected**
-   ```jsx
-   const updateOffset = () => {
-     const focusedElement = document.querySelector('[data-focused="true"]');
-     if (!focusedElement) return;
+3. **CSS Setup**
+```css
+.swimlane-viewport {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding-left: var(--screen-side-padding);
+}
 
-     const viewportRect = focusRef.current.getBoundingClientRect();
-     const focusedRect = focusedElement.getBoundingClientRect();
-     const firstCard = swimlaneRef.current.querySelector('[data-stable-id="home-card-1"]');
-     
-     if (!firstCard) return;
+.content-swimlane {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: fit-content;
+  min-width: 100%;
+  gap: var(--spacing-lg);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: var(--spacing-md) 0;
+  position: relative;
+  transition: transform 0.3s ease-in-out;
+  will-change: transform;
+}
+```
 
-     const firstCardRect = firstCard.getBoundingClientRect();
-     const newOffset = firstCardRect.left - focusedRect.left;
-     setOffset(newOffset);
-   };
-   ```
+4. **Offset Calculation**
+```jsx
+const updateOffset = () => {
+  const focusedElement = document.querySelector('[data-focused="true"]');
+  if (!focusedElement) return;
 
-4. **Cleanup**
-   ```jsx
-   return () => {
-     observer.disconnect();
-   };
-   ```
+  const viewportRect = focusRef.current.getBoundingClientRect();
+  const focusedRect = focusedElement.getBoundingClientRect();
+  const firstCard = swimlaneRef.current.querySelector('[data-stable-id="home-card-1"]');
+  
+  if (!firstCard) return;
+
+  const firstCardRect = firstCard.getBoundingClientRect();
+  const newOffset = firstCardRect.left - focusedRect.left;
+
+  // Get the total width of the content
+  const contentRect = swimlaneRef.current.getBoundingClientRect();
+  const contentWidth = contentRect.width;
+  const viewportWidth = viewportRect.width;
+  
+  // Get the CSS variable value for screen-side-padding
+  const screenSidePadding = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--screen-side-padding'));
+
+  // Calculate how much the content can slide before reaching the margin
+  const maxSlide = contentWidth - viewportWidth + screenSidePadding + screenSidePadding;
+
+  // If the new offset would slide the content beyond the max slide, use the max slide instead
+  if (Math.abs(newOffset) > maxSlide) {
+    setOffset(-maxSlide);
+    return;
+  }
+
+  setOffset(newOffset);
+};
+```
+
+5. **Cleanup**
+```jsx
+return () => {
+  observer.disconnect();
+};
+```
 
 ### Flow of Events
 ```
@@ -713,6 +809,25 @@ Updates offset state
   ↓
 React re-renders with new transform
 ```
+
+### How It Works
+
+1. **Screen-Side Padding**
+   - The viewport has a left padding defined by `--screen-side-padding` CSS variable
+   - This ensures content doesn't touch the screen edge
+   - The padding is considered in all calculations
+
+2. **Sliding Behavior**
+   - Content slides smoothly using CSS transform
+   - The offset is calculated based on the focused element's position
+   - The sliding stops when the right edge of content is at the screen-side-padding from the viewport's right edge
+
+3. **Maximum Slide Calculation**
+   - Takes into account:
+     - Total content width
+     - Viewport width
+     - Screen-side-padding on both sides
+   - Prevents content from sliding beyond the maximum allowed position
 
 ### Alternative Approaches Considered
 
@@ -739,14 +854,20 @@ React re-renders with new transform
    - Handle edge cases
 
 2. **Performance**
+   - Use `will-change: transform` for smooth animations
+   - Implement proper cleanup of observers
    - Minimize DOM queries
    - Use efficient selectors
-   - Implement proper cleanup
 
-3. **Maintainability**
-   - Clear documentation
-   - Proper error handling
-   - Consistent naming
+3. **Accessibility**
+   - Ensure content remains visible during sliding
+   - Maintain proper focus indicators
+   - Consider screen reader announcements
+
+4. **Responsive Design**
+   - Use CSS variables for padding and spacing
+   - Consider different screen sizes
+   - Maintain consistent behavior across devices
 
 ### Common Issues and Solutions
 
@@ -755,15 +876,25 @@ React re-renders with new transform
    - Verify observer setup
    - Ensure proper cleanup
 
-2. **Performance Issues**
+2. **Content Clipping**
+   - Ensure proper padding calculations
+   - Check viewport width measurements
+   - Verify content width calculations
+
+3. **Performance Issues**
    - Optimize DOM queries
    - Use efficient selectors
    - Implement proper cleanup
 
-3. **Memory Leaks**
+4. **Memory Leaks**
    - Always implement cleanup
    - Disconnect observer on unmount
    - Handle edge cases
+
+5. **Focus Management**
+   - Ensure focus remains visible
+   - Handle edge cases properly
+   - Maintain focus hierarchy
 
 ### Example Implementation
 
@@ -797,6 +928,34 @@ const popScreen = () => {
     }
   }
 };
+
+// In Home.jsx
+function Home() {
+  // Root level focus context
+  const { ref, focusKey } = useFocusable({
+    focusable: false,
+    trackChildren: true
+  });
+  
+  // Swimlane focus context
+  const { ref: swimlaneRef, focusKey: swimlaneFocusKey } = useFocusable({
+    focusable: false,
+    trackChildren: true
+  });
+
+  return (
+    <FocusContext.Provider value={{ focusKey }}>
+      <div className="app" ref={ref}>
+        <Header title="TV App" />
+        <SlidingSwimlane>
+          <Swimlane ref={swimlaneRef} data-focus-key={swimlaneFocusKey}>
+            {/* Channel cards with KeyboardWrapper */}
+          </Swimlane>
+        </SlidingSwimlane>
+      </div>
+    </FocusContext.Provider>
+  );
+}
 ```
 
 ### Future Improvements
@@ -814,4 +973,4 @@ const popScreen = () => {
 3. **Debugging Tools**
    - Add focus state visualization
    - Implement focus logging
-   - Create focus debugging tools 
+   - Create focus debugging tools
