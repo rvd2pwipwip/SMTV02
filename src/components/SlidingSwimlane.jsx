@@ -4,12 +4,6 @@ import '../styles/App.css';
 
 const SlidingSwimlane = React.forwardRef(({ children, ...props }, ref) => {
   const [offset, setOffset] = useState(0);
-  const [measurements, setMeasurements] = useState({
-    viewportWidth: 0,
-    contentWidth: 0,
-    currentOffset: 0,
-    maxOffset: 0
-  });
   const viewportRef = useRef(null);
   const swimlaneRef = useRef(null);
 
@@ -19,44 +13,6 @@ const SlidingSwimlane = React.forwardRef(({ children, ...props }, ref) => {
     trackChildren: true,
     ref: viewportRef
   });
-
-  // Update measurements when content changes
-  useEffect(() => {
-    if (!viewportRef.current || !swimlaneRef.current) return;
-
-    const updateMeasurements = () => {
-      const viewportWidth = viewportRef.current.getBoundingClientRect().width;
-      const contentWidth = swimlaneRef.current.scrollWidth;
-      const currentOffset = offset;
-      const maxOffset = contentWidth - viewportWidth + 60; // 60px margin from right
-
-      console.log('Measurements:', {
-        viewportWidth,
-        contentWidth,
-        currentOffset,
-        maxOffset
-      });
-
-      setMeasurements({
-        viewportWidth,
-        contentWidth,
-        currentOffset,
-        maxOffset
-      });
-    };
-
-    // Initial measurement
-    updateMeasurements();
-
-    // Set up ResizeObserver to track size changes
-    const resizeObserver = new ResizeObserver(updateMeasurements);
-    resizeObserver.observe(viewportRef.current);
-    resizeObserver.observe(swimlaneRef.current);
-
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, [offset]);
 
   // Calculate offset when focus changes
   useEffect(() => {
@@ -75,16 +31,18 @@ const SlidingSwimlane = React.forwardRef(({ children, ...props }, ref) => {
       const firstCardRect = firstCard.getBoundingClientRect();
       const newOffset = firstCardRect.left - focusedRect.left;
 
-      // Clamp the offset to the maximum allowed value
-      const clampedOffset = Math.min(newOffset, measurements.maxOffset);
-      
-      console.log('Offset calculation:', {
-        newOffset,
-        clampedOffset,
-        maxOffset: measurements.maxOffset
-      });
+      // Check if the right edge of content-swimlane is within 60px of viewport's right edge
+      const contentRect = swimlaneRef.current.getBoundingClientRect();
+      const contentRightEdge = contentRect.right - offset; // Current right edge without the new offset
+      const viewportRightEdge = viewportRect.right;
+      const minRightMargin = 60;
 
-      setOffset(clampedOffset);
+      // If content's right edge would be within 60px of viewport's right edge after applying the new offset, stop offsetting
+      if (contentRightEdge + newOffset - viewportRightEdge <= minRightMargin) {
+        return;
+      }
+
+      setOffset(newOffset);
     };
 
     // Set up MutationObserver to watch for focus changes
@@ -109,7 +67,7 @@ const SlidingSwimlane = React.forwardRef(({ children, ...props }, ref) => {
     return () => {
       observer.disconnect();
     };
-  }, [focusRef, measurements.maxOffset]);
+  }, [focusRef, offset]);
 
   return (
     <div 
