@@ -10,8 +10,8 @@ function ChannelInfo({ channel }) {
   };
 
   return (
-    <div className="app" style={{ padding: '100px 100px 0px', display: 'flex', flexDirection: 'column', gap: 30 }}>
-      <div style={{ display: 'flex', flexDirection: 'row', gap: 40, width: 1600, marginLeft: 'auto', marginRight: 'auto' }}>
+    <div className="app" style={{ padding: '100px 100px 0px', display: 'flex', flexDirection: 'column', gap: 15 }}>
+      <div style={{ display: 'flex', flexDirection: 'row', gap: 40, width: '100%', boxSizing: 'border-box', paddingLeft: 0, paddingRight: 0 }}>
         {/* Channel Thumbnail Placeholder */}
         <div
           style={{
@@ -76,7 +76,7 @@ function ChannelInfo({ channel }) {
       </div>
       
       {/* Related Channels */}
-      <div style={{ width: 1600, marginLeft: 'auto', marginRight: 'auto', marginTop: 90 }}>
+      <div style={{ width: '100%', boxSizing: 'border-box', paddingLeft: 0, paddingRight: 0, marginTop: 90 }}>
         <div
           style={{
             fontFamily: 'var(--font-family-secondary)',
