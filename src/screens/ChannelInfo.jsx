@@ -11,10 +11,11 @@ function ChannelInfo({ channel }) {
   return (
     <div className="app">
       <Header title={channel?.title || "Channel Info"} />
-      <div className="content-swimlane">
-        <Button>Sample Button</Button>
+      <div className="content-swimlane buttons">
+        <Button>Play</Button>
+        <Button variant="secondary">Add to Favorites</Button>
       </div>
-      <div className="content-swimlane">
+      <div className="content-swimlane related-channels">
         <ChannelCard 
           title="Sample Channel 1"    
           thumbnailUrl="https://picsum.photos/300/300"
