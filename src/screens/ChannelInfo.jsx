@@ -2,6 +2,7 @@ import React from 'react';
 import { ChannelCard, Button } from '@smtv/tv-component-library';
 import Header from '../components/Header';
 import '../styles/App.css';
+import ChannelRow from '../components/ChannelRow';
 
 function ChannelInfo({ channel }) {
   const handleChannelSelect = () => {
@@ -36,23 +37,33 @@ function ChannelInfo({ channel }) {
       </div>
       
       {/* Related Channels */}
-      <div className="content-swimlane related-channels" style={{ display: 'flex', gap: 24, marginTop: 90 }}>
+      <ChannelRow style={{ marginTop: 90 }}>
         <ChannelCard 
           title="Sample Channel 1"    
-          thumbnailUrl="https://picsum.photos/300/300"
+          thumbnailUrl="https://picsum.photos/300/300?1"
           onSelect={handleChannelSelect} 
         />
         <ChannelCard 
           title="Sample Channel 2"    
-          thumbnailUrl="https://picsum.photos/300/300"
+          thumbnailUrl="https://picsum.photos/300/300?2"
           onSelect={handleChannelSelect} 
         />
         <ChannelCard 
           title="Sample Channel 3"    
-          thumbnailUrl="https://picsum.photos/300/300"
+          thumbnailUrl="https://picsum.photos/300/300?3"
           onSelect={handleChannelSelect} 
         />
-      </div>
+        <ChannelCard 
+          title="Sample Channel 4"    
+          thumbnailUrl="https://picsum.photos/300/300?4"
+          onSelect={handleChannelSelect} 
+        />
+        <ChannelCard 
+          title="Sample Channel 5"    
+          thumbnailUrl="https://picsum.photos/300/300?5"
+          onSelect={handleChannelSelect} 
+        />
+      </ChannelRow>
     </div>
   );
 }
