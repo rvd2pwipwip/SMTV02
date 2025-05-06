@@ -76,33 +76,46 @@ function ChannelInfo({ channel }) {
       </div>
       
       {/* Related Channels */}
-      <ChannelRow style={{ marginTop: 90, marginLeft: 'auto', marginRight: 'auto' }}>
-        <ChannelCard 
-          title="Sample Channel 1"    
-          thumbnailUrl="https://picsum.photos/300/300?1"
-          onSelect={handleChannelSelect} 
-        />
-        <ChannelCard 
-          title="Sample Channel 2"    
-          thumbnailUrl="https://picsum.photos/300/300?2"
-          onSelect={handleChannelSelect} 
-        />
-        <ChannelCard 
-          title="Sample Channel 3"    
-          thumbnailUrl="https://picsum.photos/300/300?3"
-          onSelect={handleChannelSelect} 
-        />
-        <ChannelCard 
-          title="Sample Channel 4"    
-          thumbnailUrl="https://picsum.photos/300/300?4"
-          onSelect={handleChannelSelect} 
-        />
-        <ChannelCard 
-          title="Sample Channel 5"    
-          thumbnailUrl="https://picsum.photos/300/300?5"
-          onSelect={handleChannelSelect} 
-        />
-      </ChannelRow>
+      <div style={{ width: 1600, marginLeft: 'auto', marginRight: 'auto', marginTop: 90 }}>
+        <div
+          style={{
+            fontFamily: 'var(--font-family-secondary)',
+            fontSize: 'var(--font-size-h2)',
+            fontWeight: 'var(--font-weight-bold)',
+            color: 'var(--color-text-primary)',
+            marginBottom: 16,
+          }}
+        >
+          Related
+        </div>
+        <ChannelRow>
+          <ChannelCard 
+            title="Sample Channel 1"    
+            thumbnailUrl="https://picsum.photos/300/300?1"
+            onSelect={handleChannelSelect} 
+          />
+          <ChannelCard 
+            title="Sample Channel 2"    
+            thumbnailUrl="https://picsum.photos/300/300?2"
+            onSelect={handleChannelSelect} 
+          />
+          <ChannelCard 
+            title="Sample Channel 3"    
+            thumbnailUrl="https://picsum.photos/300/300?3"
+            onSelect={handleChannelSelect} 
+          />
+          <ChannelCard 
+            title="Sample Channel 4"    
+            thumbnailUrl="https://picsum.photos/300/300?4"
+            onSelect={handleChannelSelect} 
+          />
+          <ChannelCard 
+            title="Sample Channel 5"    
+            thumbnailUrl="https://picsum.photos/300/300?5"
+            onSelect={handleChannelSelect} 
+          />
+        </ChannelRow>
+      </div>
     </div>
   );
 }
