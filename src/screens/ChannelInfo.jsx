@@ -9,13 +9,34 @@ function ChannelInfo({ channel }) {
   };
 
   return (
-    <div className="app">
-      <Header title={channel?.title || "Channel Info"} />
-      <div className="content-swimlane buttons">
-        <Button>Play</Button>
-        <Button variant="secondary">Add to Favorites</Button>
+    <div className="app" style={{ padding: '100px 100px 0px', display: 'flex', flexDirection: 'column', gap: 30 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 40, maxWidth: 900 }}>
+        {/* Channel Title */}
+        <h1 style={{ margin: 0 }}>{channel?.title || "Sample Channel Title"}</h1>
+        
+        {/* Action Buttons */}
+        <div style={{ display: 'flex', gap: 24 }}>
+          <Button>Play</Button>
+          <Button variant="secondary">Add to Favorites</Button>
+        </div>
+        
+        {/* Channel Description */}
+        <div style={{ fontSize: 20, color: '#ccc', maxWidth: 700 }}>
+          {channel?.description || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod, urna eu tincidunt consectetur, nisi nisl aliquam nunc, eget aliquam massa nisl quis neque."}
+        </div>
+        
+        {/* Filter Buttons */}
+        <div style={{ display: 'flex', gap: 16 }}>
+          <Button variant="secondary">Cooking</Button>
+          <Button variant="secondary">Love</Button>
+          <Button variant="secondary">Third</Button>
+          <Button variant="secondary">Fourth Tag</Button>
+          <Button variant="secondary">Fifth</Button>
+        </div>
       </div>
-      <div className="content-swimlane related-channels">
+      
+      {/* Related Channels */}
+      <div className="content-swimlane related-channels" style={{ display: 'flex', gap: 24, marginTop: 90 }}>
         <ChannelCard 
           title="Sample Channel 1"    
           thumbnailUrl="https://picsum.photos/300/300"
