@@ -13,7 +13,17 @@ function ChannelInfo({ channel }) {
     <div className="app" style={{ padding: '100px 100px 0px', display: 'flex', flexDirection: 'column', gap: 30 }}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 40, maxWidth: 900 }}>
         {/* Channel Title */}
-        <h1 style={{ margin: 0 }}>{channel?.title || "Sample Channel Title"}</h1>
+        <h1
+          style={{
+            fontFamily: 'var(--font-family-secondary)',
+            fontSize: 'var(--font-size-h1)',
+            fontWeight: 'var(--font-weight-bold)',
+            color: 'var(--color-text-primary)',
+            margin: 0,
+          }}
+        >
+          {channel?.title || "Sample Channel Title"}
+        </h1>
         
         {/* Action Buttons */}
         <div style={{ display: 'flex', gap: 24 }}>
@@ -22,7 +32,14 @@ function ChannelInfo({ channel }) {
         </div>
         
         {/* Channel Description */}
-        <div style={{ fontSize: 20, color: '#ccc', maxWidth: 700 }}>
+        <div
+          style={{
+            fontFamily: 'var(--font-family-primary)',
+            fontSize: 'var(--font-size-body)',
+            color: 'var(--color-text-secondary)',
+            maxWidth: 700,
+          }}
+        >
           {channel?.description || "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod, urna eu tincidunt consectetur, nisi nisl aliquam nunc, eget aliquam massa nisl quis neque."}
         </div>
         
