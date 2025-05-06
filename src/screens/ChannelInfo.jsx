@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChannelCard } from '@smtv/tv-component-library';
+import { ChannelCard, Button } from '@smtv/tv-component-library';
 import Header from '../components/Header';
 import '../styles/App.css';
 
@@ -11,6 +11,9 @@ function ChannelInfo({ channel }) {
   return (
     <div className="app">
       <Header title={channel?.title || "Channel Info"} />
+      <div className="content-swimlane">
+        <Button>Sample Button</Button>
+      </div>
       <div className="content-swimlane">
         <ChannelCard 
           title="Sample Channel 1"    
