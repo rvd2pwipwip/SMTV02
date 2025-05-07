@@ -1,10 +1,42 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ChannelCard, Button } from '@smtv/tv-component-library';
 import Header from '../components/Header';
 import '../styles/App.css';
 import ChannelRow from '../components/ChannelRow';
+import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
+import KeyboardWrapper from '../components/KeyboardWrapper';
 
 function ChannelInfo({ channel }) {
+  // Action button group focus context (not itself focusable, tracks children)
+  const { ref: actionGroupRef, focusKey: actionGroupFocusKey } = useFocusable({
+    focusable: false,
+    trackChildren: true
+  });
+
+  // Play button focusable
+  const { ref: playRef, focusKey: playFocusKey, focusSelf: focusPlay } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        if (playRef.current) playRef.current.focus();
+      }, 0);
+    }
+  });
+  // Add to Favorites button focusable
+  const { ref: favRef, focusKey: favFocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        if (favRef.current) favRef.current.focus();
+      }, 0);
+    }
+  });
+
+  // Set initial focus to Play button on mount
+  useEffect(() => {
+    focusPlay();
+  }, [focusPlay]);
+
   const handleChannelSelect = () => {
     console.log('Channel selected');
   };
@@ -47,9 +79,29 @@ function ChannelInfo({ channel }) {
           </h1>
           
           {/* Action Buttons */}
-          <div style={{ display: 'flex', gap: 24 }}>
-            <Button>Play</Button>
-            <Button variant="secondary">Add to Favorites</Button>
+          <div 
+            ref={actionGroupRef}
+            data-focus-key={actionGroupFocusKey}
+            style={{ display: 'flex', gap: 24 }}
+          >
+            <KeyboardWrapper
+              ref={playRef}
+              data-focus-key={playFocusKey}
+              data-stable-id="channelinfo-action-play"
+            >
+              <Button>
+                Play
+              </Button>
+            </KeyboardWrapper>
+            <KeyboardWrapper
+              ref={favRef}
+              data-focus-key={favFocusKey}
+              data-stable-id="channelinfo-action-fav"
+            >
+              <Button variant="secondary">
+                Add to Favorites
+              </Button>
+            </KeyboardWrapper>
           </div>
           
           {/* Channel Description */}
