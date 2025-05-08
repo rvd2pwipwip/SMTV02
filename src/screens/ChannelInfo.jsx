@@ -32,6 +32,19 @@ function ChannelInfo({ channel }) {
     }
   });
 
+  // Filter button group focus context (not itself focusable, tracks children)
+  const { ref: filterGroupRef, focusKey: filterGroupFocusKey } = useFocusable({
+    focusable: false,
+    trackChildren: true
+  });
+
+  // Individual filter buttons
+  const { ref: allRef, focusKey: allFocusKey } = useFocusable({ focusable: true });
+  const { ref: popularRef, focusKey: popularFocusKey } = useFocusable({ focusable: true });
+  const { ref: recommendedRef, focusKey: recommendedFocusKey } = useFocusable({ focusable: true });
+  const { ref: newRef, focusKey: newFocusKey } = useFocusable({ focusable: true });
+  const { ref: favoritesRef, focusKey: favoritesFocusKey } = useFocusable({ focusable: true });
+
   // Set initial focus to Play button on mount
   useEffect(() => {
     focusPlay();
@@ -117,12 +130,46 @@ function ChannelInfo({ channel }) {
           </div>
           
           {/* Filter Buttons */}
-          <div style={{ display: 'flex', gap: 16 }}>
-            <Button variant="secondary">All</Button>
-            <Button variant="secondary">Popular</Button>
-            <Button variant="secondary">Recommended</Button>
-            <Button variant="secondary">New</Button>
-            <Button variant="secondary">Favorites</Button>
+          <div
+            ref={filterGroupRef}
+            data-focus-key={filterGroupFocusKey}
+            style={{ display: 'flex', gap: 16 }}
+          >
+            <KeyboardWrapper
+              ref={allRef}
+              data-focus-key={allFocusKey}
+              data-stable-id="channelinfo-filter-all"
+            >
+              <Button variant="secondary">All</Button>
+            </KeyboardWrapper>
+            <KeyboardWrapper
+              ref={popularRef}
+              data-focus-key={popularFocusKey}
+              data-stable-id="channelinfo-filter-popular"
+            >
+              <Button variant="secondary">Popular</Button>
+            </KeyboardWrapper>
+            <KeyboardWrapper
+              ref={recommendedRef}
+              data-focus-key={recommendedFocusKey}
+              data-stable-id="channelinfo-filter-recommended"
+            >
+              <Button variant="secondary">Recommended</Button>
+            </KeyboardWrapper>
+            <KeyboardWrapper
+              ref={newRef}
+              data-focus-key={newFocusKey}
+              data-stable-id="channelinfo-filter-new"
+            >
+              <Button variant="secondary">New</Button>
+            </KeyboardWrapper>
+            <KeyboardWrapper
+              ref={favoritesRef}
+              data-focus-key={favoritesFocusKey}
+              data-stable-id="channelinfo-filter-favorites"
+            >
+              <Button variant="secondary">Favorites</Button>
+            </KeyboardWrapper>
           </div>
         </div>
       </div>
