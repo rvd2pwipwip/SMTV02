@@ -80,6 +80,54 @@ function ChannelInfo({ channel }) {
     }
   });
 
+  // Related channel cards group focus context (not itself focusable, tracks children)
+  const { ref: relatedGroupRef, focusKey: relatedGroupFocusKey } = useFocusable({
+    focusable: false,
+    trackChildren: true
+  });
+
+  // Individual related channel cards
+  const { ref: relatedCard1Ref, focusKey: relatedCard1FocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        if (relatedCard1Ref.current) relatedCard1Ref.current.focus();
+      }, 0);
+    }
+  });
+  const { ref: relatedCard2Ref, focusKey: relatedCard2FocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        if (relatedCard2Ref.current) relatedCard2Ref.current.focus();
+      }, 0);
+    }
+  });
+  const { ref: relatedCard3Ref, focusKey: relatedCard3FocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        if (relatedCard3Ref.current) relatedCard3Ref.current.focus();
+      }, 0);
+    }
+  });
+  const { ref: relatedCard4Ref, focusKey: relatedCard4FocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        if (relatedCard4Ref.current) relatedCard4Ref.current.focus();
+      }, 0);
+    }
+  });
+  const { ref: relatedCard5Ref, focusKey: relatedCard5FocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        if (relatedCard5Ref.current) relatedCard5Ref.current.focus();
+      }, 0);
+    }
+  });
+
   // Set initial focus to Play button on mount
   useEffect(() => {
     focusPlay();
@@ -222,32 +270,65 @@ function ChannelInfo({ channel }) {
         >
           Related
         </div>
-        <ChannelRow>
-          <ChannelCard 
-            title="Sample Channel 1"    
-            thumbnailUrl="https://picsum.photos/300/300?1"
-            onSelect={handleChannelSelect} 
-          />
-          <ChannelCard 
-            title="Sample Channel 2"    
-            thumbnailUrl="https://picsum.photos/300/300?2"
-            onSelect={handleChannelSelect} 
-          />
-          <ChannelCard 
-            title="Sample Channel 3"    
-            thumbnailUrl="https://picsum.photos/300/300?3"
-            onSelect={handleChannelSelect} 
-          />
-          <ChannelCard 
-            title="Sample Channel 4"    
-            thumbnailUrl="https://picsum.photos/300/300?4"
-            onSelect={handleChannelSelect} 
-          />
-          <ChannelCard 
-            title="Sample Channel 5"    
-            thumbnailUrl="https://picsum.photos/300/300?5"
-            onSelect={handleChannelSelect} 
-          />
+        <ChannelRow
+          ref={relatedGroupRef}
+          data-focus-key={relatedGroupFocusKey}
+        >
+          <KeyboardWrapper
+            ref={relatedCard1Ref}
+            data-focus-key={relatedCard1FocusKey}
+            data-stable-id="channelinfo-related-card-1"
+          >
+            <ChannelCard 
+              title="Sample Channel 1"    
+              thumbnailUrl="https://picsum.photos/300/300?1"
+              onSelect={handleChannelSelect} 
+            />
+          </KeyboardWrapper>
+          <KeyboardWrapper
+            ref={relatedCard2Ref}
+            data-focus-key={relatedCard2FocusKey}
+            data-stable-id="channelinfo-related-card-2"
+          >
+            <ChannelCard 
+              title="Sample Channel 2"    
+              thumbnailUrl="https://picsum.photos/300/300?2"
+              onSelect={handleChannelSelect} 
+            />
+          </KeyboardWrapper>
+          <KeyboardWrapper
+            ref={relatedCard3Ref}
+            data-focus-key={relatedCard3FocusKey}
+            data-stable-id="channelinfo-related-card-3"
+          >
+            <ChannelCard 
+              title="Sample Channel 3"    
+              thumbnailUrl="https://picsum.photos/300/300?3"
+              onSelect={handleChannelSelect} 
+            />
+          </KeyboardWrapper>
+          <KeyboardWrapper
+            ref={relatedCard4Ref}
+            data-focus-key={relatedCard4FocusKey}
+            data-stable-id="channelinfo-related-card-4"
+          >
+            <ChannelCard 
+              title="Sample Channel 4"    
+              thumbnailUrl="https://picsum.photos/300/300?4"
+              onSelect={handleChannelSelect} 
+            />
+          </KeyboardWrapper>
+          <KeyboardWrapper
+            ref={relatedCard5Ref}
+            data-focus-key={relatedCard5FocusKey}
+            data-stable-id="channelinfo-related-card-5"
+          >
+            <ChannelCard 
+              title="Sample Channel 5"    
+              thumbnailUrl="https://picsum.photos/300/300?5"
+              onSelect={handleChannelSelect} 
+            />
+          </KeyboardWrapper>
         </ChannelRow>
       </div>
     </div>
