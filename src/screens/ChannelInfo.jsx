@@ -39,11 +39,46 @@ function ChannelInfo({ channel }) {
   });
 
   // Individual filter buttons
-  const { ref: allRef, focusKey: allFocusKey } = useFocusable({ focusable: true });
-  const { ref: popularRef, focusKey: popularFocusKey } = useFocusable({ focusable: true });
-  const { ref: recommendedRef, focusKey: recommendedFocusKey } = useFocusable({ focusable: true });
-  const { ref: newRef, focusKey: newFocusKey } = useFocusable({ focusable: true });
-  const { ref: favoritesRef, focusKey: favoritesFocusKey } = useFocusable({ focusable: true });
+  const { ref: allRef, focusKey: allFocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        if (allRef.current) allRef.current.focus();
+      }, 0);
+    }
+  });
+  const { ref: popularRef, focusKey: popularFocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        if (popularRef.current) popularRef.current.focus();
+      }, 0);
+    }
+  });
+  const { ref: recommendedRef, focusKey: recommendedFocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        if (recommendedRef.current) recommendedRef.current.focus();
+      }, 0);
+    }
+  });
+  const { ref: newRef, focusKey: newFocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        if (newRef.current) newRef.current.focus();
+      }, 0);
+    }
+  });
+  const { ref: favoritesRef, focusKey: favoritesFocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        if (favoritesRef.current) favoritesRef.current.focus();
+      }, 0);
+    }
+  });
 
   // Set initial focus to Play button on mount
   useEffect(() => {
