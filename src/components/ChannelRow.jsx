@@ -49,7 +49,6 @@ const ChannelRow = ({
         width: '100%',
         gap: 0,
         flexWrap: 'nowrap',
-        overflow: 'hidden',
         ...style,
       }}
       {...props}
