@@ -24,18 +24,15 @@ const ChannelRow = ({
 
   const cardCount = React.Children.count(children);
 
-  // Calculate max number of cards that can fit and the gap
-  const { maxCards, gap } = useMemo(() => {
+  // Calculate max number of cards that can fit
+  const { maxCards } = useMemo(() => {
     if (cardCount < 2 || containerWidth === 0) {
-      return { maxCards: cardCount, gap: minGap };
+      return { maxCards: cardCount };
     }
     // Try to fit as many cards as possible with at least minGap
     let possibleCards = Math.min(cardCount, Math.floor((containerWidth + minGap) / (cardWidth + minGap)));
     if (possibleCards < 2) possibleCards = 2;
-    // Calculate the gap for the actual number of cards
-    const totalCardWidth = cardWidth * possibleCards;
-    const gapValue = possibleCards > 1 ? (containerWidth - totalCardWidth) / (possibleCards - 1) : 0;
-    return { maxCards: possibleCards, gap: gapValue };
+    return { maxCards: possibleCards };
   }, [containerWidth, cardWidth, cardCount, minGap]);
 
   // Only render up to maxCards
@@ -47,12 +44,12 @@ const ChannelRow = ({
       style={{
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         alignItems: 'center',
         width: '100%',
-        gap,
+        gap: 0,
         flexWrap: 'nowrap',
-        overflow: 'display',
+        overflow: 'hidden',
         ...style,
       }}
       {...props}
