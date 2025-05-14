@@ -5,6 +5,7 @@ import '../styles/App.css';
 import ChannelRow from '../components/ChannelRow';
 import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import KeyboardWrapper from '../components/KeyboardWrapper';
+import { Like, SingNow } from 'stingray-icons';
 
 function ChannelInfo({ channel }) {
   // Action button group focus context (not itself focusable, tracks children)
@@ -185,7 +186,12 @@ function ChannelInfo({ channel }) {
               data-focus-key={playFocusKey}
               data-stable-id="channelinfo-action-play"
             >
-              <Button>
+              <Button
+                icon={<SingNow />}
+                showIcon
+                size="medium"
+                variant="primary"
+              >
                 Play
               </Button>
             </KeyboardWrapper>
@@ -194,7 +200,12 @@ function ChannelInfo({ channel }) {
               data-focus-key={favFocusKey}
               data-stable-id="channelinfo-action-fav"
             >
-              <Button variant="secondary">
+              <Button
+                icon={<Like />}
+                showIcon
+                size="medium"
+                variant="secondary"
+              >
                 Add to Favorites
               </Button>
             </KeyboardWrapper>
