@@ -1,19 +1,16 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import '../styles/App.css';
 import { Info, Like, SkipNext, PauseCircle } from 'stingray-icons';
+import stingrayMusicLogo from '../assets/svg/stingrayMusic.svg';
 import KeyboardWrapper from '../components/KeyboardWrapper';
 
 function Player() {
-  // Controls group (row) focus context
-  const { ref: controlsGroupRef, focusKey: controlsGroupFocusKey } = useFocusable({
-    focusable: false,
-    trackChildren: true,
-  });
-
-  // Individual control buttons
+  // Focusable action buttons for header
   const { ref: infoRef, focusKey: infoFocusKey } = useFocusable({ focusable: true });
   const { ref: likeRef, focusKey: likeFocusKey } = useFocusable({ focusable: true });
+  // Controls row (PauseCircle, etc.)
+  const { ref: controlsGroupRef, focusKey: controlsGroupFocusKey } = useFocusable({ focusable: false, trackChildren: true });
   const { ref: skipRef, focusKey: skipFocusKey } = useFocusable({ focusable: true });
   const { ref: pauseRef, focusKey: pauseFocusKey, focusSelf: focusPause } = useFocusable({ focusable: true });
 
@@ -24,18 +21,77 @@ function Player() {
 
   return (
     <div className="app" style={{ position: 'relative', width: '100%', height: '100%', background: '#313131' }}>
-      {/* Background gradient overlay (placeholder) */}
+      {/* Player Header */}
       <div style={{
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        background: 'linear-gradient(180deg, rgba(0,0,0,0) 44%, rgba(0,0,0,0.6) 100%)',
-        zIndex: 1,
-      }} />
+        position: 'relative',
+        width: '100vw',
+        minHeight: 200,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        paddingTop: 40,
+        boxSizing: 'border-box',
+      }}>
+        {/* Absolute logo */}
+        <div style={{
+          position: 'absolute',
+          left: 80,
+          top: 40,
+          width: 245,
+          height: 70,
+          display: 'flex',
+          alignItems: 'center',
+          zIndex: 2,
+        }}>
+          <img src={stingrayMusicLogo} alt="Stingray Music" style={{ width: '100%', height: '100%' }} />
+        </div>
+        {/* Centered channel title */}
+        <h1 style={{
+          fontFamily: 'var(--font-family-secondary)',
+          fontSize: 'var(--font-size-h1)',
+          fontWeight: 'var(--font-weight-bold)',
+          color: 'var(--color-text-primary)',
+          margin: 0,
+          textAlign: 'center',
+          zIndex: 1,
+        }}>
+          Sample Channel Title
+        </h1>
+        {/* Centered action buttons row */}
+        <div style={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 40,
+          marginTop: 32,
+          zIndex: 1,
+        }}>
+          <KeyboardWrapper
+            ref={infoRef}
+            data-focus-key={infoFocusKey}
+            data-stable-id="player-header-action-info"
+            onSelect={() => {}}
+          >
+            <button style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+              <Info style={{ width: 64, height: 64, color: 'white' }} />
+            </button>
+          </KeyboardWrapper>
+          <KeyboardWrapper
+            ref={likeRef}
+            data-focus-key={likeFocusKey}
+            data-stable-id="player-header-action-like"
+            onSelect={() => {}}
+          >
+            <button style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
+              <Like style={{ width: 64, height: 64, color: 'white' }} />
+            </button>
+          </KeyboardWrapper>
+        </div>
+      </div>
 
-      {/* Main content */}
+      {/* Main content below header */}
       <div style={{
         position: 'relative',
         zIndex: 2,
@@ -43,14 +99,14 @@ function Player() {
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-        height: '100%',
+        height: 'calc(100% - 200px)',
         gap: 40,
         paddingTop: 60,
       }}>
         {/* Cover Art Placeholder */}
         <div style={{
-          width: 360,
-          height: 360,
+          width: 400,
+          height: 400,
           background: 'var(--color-outline-secondary)',
           borderRadius: 30,
           display: 'flex',
@@ -61,6 +117,7 @@ function Player() {
           fontFamily: 'var(--font-family-primary)',
           marginBottom: 30,
         }}>
+          400x400
         </div>
 
         {/* Channel Info Placeholder */}
@@ -71,15 +128,6 @@ function Player() {
           gap: 10,
           marginBottom: 30,
         }}>
-          <h1 style={{
-            fontFamily: 'var(--font-family-secondary)',
-            fontSize: 'var(--font-size-h1)',
-            fontWeight: 'var(--font-weight-bold)',
-            color: 'var(--color-text-primary)',
-            margin: 0,
-          }}>
-            Sample Channel Title
-          </h1>
           <div style={{
             fontFamily: 'var(--font-family-primary)',
             fontSize: 'var(--font-size-body)',
@@ -97,24 +145,6 @@ function Player() {
           data-focus-key={controlsGroupFocusKey}
           style={{ display: 'flex', flexDirection: 'row', gap: 40, marginBottom: 30 }}
         >
-          <KeyboardWrapper
-            ref={infoRef}
-            data-focus-key={infoFocusKey}
-            data-stable-id="player-control-info"
-          >
-            <button style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-              <Info style={{ width: 64, height: 64, color: 'white' }} />
-            </button>
-          </KeyboardWrapper>
-          <KeyboardWrapper
-            ref={likeRef}
-            data-focus-key={likeFocusKey}
-            data-stable-id="player-control-like"
-          >
-            <button style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-              <Like style={{ width: 64, height: 64, color: 'white' }} />
-            </button>
-          </KeyboardWrapper>
           <KeyboardWrapper
             ref={skipRef}
             data-focus-key={skipFocusKey}
@@ -152,24 +182,7 @@ function Player() {
           Banner Ad
         </div>
 
-        {/* Logo Placeholder */}
-        <div style={{
-          position: 'absolute',
-          top: 90,
-          left: 90,
-          width: 120,
-          height: 40,
-          background: '#fff',
-          borderRadius: 8,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: '#222',
-          fontWeight: 700,
-          fontSize: 24,
-        }}>
-          Logo
-        </div>
+        {/* Logo Placeholder (moved out of main content) */}
       </div>
     </div>
   );
