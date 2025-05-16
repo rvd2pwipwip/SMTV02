@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Home from './screens/Home';
 import ChannelInfo from './screens/ChannelInfo';
+import Player from './screens/Player';
 import { FocusMemoryProvider, useFocusMemory } from './contexts/FocusMemoryContext';
 import './styles/App.css';
 
@@ -80,6 +81,13 @@ function AppContent() {
       )}
       {currentScreen === 'channelInfo' && (
         <ChannelInfo 
+          channel={selectedChannel}
+          onBack={popScreen}
+          onPlay={() => pushScreen('player', selectedChannel)}
+        />
+      )}
+      {currentScreen === 'player' && (
+        <Player 
           channel={selectedChannel}
           onBack={popScreen}
         />

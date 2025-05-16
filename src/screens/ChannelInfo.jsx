@@ -7,7 +7,7 @@ import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import KeyboardWrapper from '../components/KeyboardWrapper';
 import { Like, SingNow } from 'stingray-icons';
 
-function ChannelInfo({ channel }) {
+function ChannelInfo({ channel, onBack, onPlay }) {
   // Action button group focus context (not itself focusable, tracks children)
   const { ref: actionGroupRef, focusKey: actionGroupFocusKey } = useFocusable({
     focusable: false,
@@ -185,12 +185,14 @@ function ChannelInfo({ channel }) {
               ref={playRef}
               data-focus-key={playFocusKey}
               data-stable-id="channelinfo-action-play"
+              onSelect={onPlay}
             >
               <Button
                 icon={<SingNow />}
                 showIcon
                 size="medium"
                 variant="primary"
+                onClick={onPlay}
               >
                 Play
               </Button>

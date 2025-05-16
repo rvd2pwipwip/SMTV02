@@ -44,8 +44,8 @@
   },
   "dependencies": {
     "@noriginmedia/norigin-spatial-navigation": "^2.3.0",
-    "@smtv/design-tokens": "^1.0.1",
-    "@smtv/tv-component-library": "^2.0.2",
-    "stingray-icons": "^1.0.1"
+    "@smtv/design-tokens": "^1.0.3",
+    "@smtv/tv-component-library": "^2.0.3",
+    "stingray-icons": "^1.0.4"
   }
 }
