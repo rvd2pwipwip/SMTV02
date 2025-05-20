@@ -15,7 +15,7 @@ const PlayPauseButton = forwardRef(({ isPlaying = true, padding = 8, ...props },
       background: 'transparent',
       border: 'none',
     }}
-    tabIndex={-1}
+    tabIndex={0}
     {...props}
   >
     <img

@@ -11,12 +11,40 @@ import AdBanner from '../components/AdBanner';
 
 function Player() {
   // Focusable action buttons for header
-  const { ref: infoRef, focusKey: infoFocusKey } = useFocusable({ focusable: true });
-  const { ref: likeRef, focusKey: likeFocusKey } = useFocusable({ focusable: true });
+  const { ref: infoRef, focusKey: infoFocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        infoRef.current?.focus();
+      }, 0);
+    }
+  });
+  const { ref: likeRef, focusKey: likeFocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        likeRef.current?.focus();
+      }, 0);
+    }
+  });
   // Controls row (PauseCircle, etc.)
   const { ref: controlsGroupRef, focusKey: controlsGroupFocusKey } = useFocusable({ focusable: false, trackChildren: true });
-  const { ref: skipRef, focusKey: skipFocusKey } = useFocusable({ focusable: true });
-  const { ref: pauseRef, focusKey: pauseFocusKey, focusSelf: focusPause } = useFocusable({ focusable: true });
+  const { ref: skipRef, focusKey: skipFocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        skipRef.current?.focus();
+      }, 0);
+    }
+  });
+  const { ref: pauseRef, focusKey: pauseFocusKey, focusSelf: focusPause } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        pauseRef.current?.focus();
+      }, 0);
+    }
+  });
 
   // Always focus PauseCircle on mount
   useEffect(() => {
@@ -172,27 +200,46 @@ function Player() {
         <div
           ref={controlsGroupRef}
           data-focus-key={controlsGroupFocusKey}
-          style={{ display: 'flex', flexDirection: 'row', gap: 40, marginBottom: 30 }}
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+            position: 'relative',
+            width: '100%',
+            minHeight: 120,
+            marginBottom: 30,
+          }}
         >
-          <KeyboardWrapper
-            ref={pauseRef}
-            data-focus-key={pauseFocusKey}
-            data-stable-id="player-control-pause"
-          >
-            <PlayPauseButton />
-          </KeyboardWrapper>
-          <KeyboardWrapper
-            ref={skipRef}
-            data-focus-key={skipFocusKey}
-            data-stable-id="player-control-skip"
-          >
-            <Button
-              icon={<SkipNext size={TRANS_BTN_ICON_SIZE}/>}
-              showIcon
-              size="medium"
-              variant="transparent"
-            />
-          </KeyboardWrapper>
+          {/* Left controls (empty for now) */}
+          <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+            {/* Add left controls here in the future */}
+          </div>
+          {/* Center PlayPause */}
+          <div style={{ flex: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <KeyboardWrapper
+              ref={pauseRef}
+              data-focus-key={pauseFocusKey}
+              data-stable-id="player-control-pause"
+            >
+              <PlayPauseButton />
+            </KeyboardWrapper>
+          </div>
+          {/* Right controls */}
+          <div style={{ flex: 1, display: 'flex', justifyContent: 'flex-start', alignItems: 'center' }}>
+            <KeyboardWrapper
+              ref={skipRef}
+              data-focus-key={skipFocusKey}
+              data-stable-id="player-control-skip"
+            >
+              <Button
+                icon={<SkipNext size={TRANS_BTN_ICON_SIZE}/>} 
+                showIcon
+                size="medium"
+                variant="transparent"
+              />
+            </KeyboardWrapper>
+          </div>
         </div>
 
         {/* Logo Placeholder (moved out of main content) */}
