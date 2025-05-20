@@ -8,6 +8,7 @@ import Swimlane from '../components/Swimlane';
 import SlidingSwimlane from '../components/SlidingSwimlane';
 import '../styles/App.css';
 import { useFocusMemory } from '../contexts/FocusMemoryContext';
+import AdBanner from '../components/AdBanner';
 
 function Home({ onChannelSelect }) {
   const hasMounted = useRef(false);
@@ -159,7 +160,7 @@ function Home({ onChannelSelect }) {
 
   return (
     <FocusContext.Provider value={{ focusKey }}>
-      <div className="app" ref={ref}>
+      <>
         <Header title="TV App" />
         <SlidingSwimlane>
           <Swimlane ref={swimlaneRef} data-focus-key={swimlaneFocusKey}>
@@ -320,7 +321,8 @@ function Home({ onChannelSelect }) {
             </KeyboardWrapper>
           </Swimlane>
         </SlidingSwimlane>
-      </div>
+        <AdBanner />
+      </>
     </FocusContext.Provider>
   );
 }

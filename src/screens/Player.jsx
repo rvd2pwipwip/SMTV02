@@ -4,6 +4,9 @@ import '../styles/App.css';
 import { Info, Like, SkipNext, PauseCircle } from 'stingray-icons';
 import stingrayMusicLogo from '../assets/svg/stingrayMusic.svg';
 import KeyboardWrapper from '../components/KeyboardWrapper';
+import { Button } from '@smtv/tv-component-library';
+import { TRANS_BTN_ICON_SIZE } from '../constants/ui';
+import AdBanner from '../components/AdBanner';
 
 function Player() {
   // Focusable action buttons for header
@@ -20,7 +23,7 @@ function Player() {
   }, [focusPause]);
 
   return (
-    <div className="app" style={{ position: 'relative', width: '100%', height: '100%', background: '#313131' }}>
+    <>
       {/* Player Header */}
       <div style={{
         position: 'relative',
@@ -49,7 +52,7 @@ function Player() {
         {/* Centered channel title */}
         <h1 style={{
           fontFamily: 'var(--font-family-secondary)',
-          fontSize: 'var(--font-size-h1)',
+          fontSize: 'var(--font-size-h3)',
           fontWeight: 'var(--font-weight-bold)',
           color: 'var(--color-text-primary)',
           margin: 0,
@@ -64,8 +67,6 @@ function Player() {
           flexDirection: 'row',
           justifyContent: 'center',
           alignItems: 'center',
-          gap: 40,
-          marginTop: 32,
           zIndex: 1,
         }}>
           <KeyboardWrapper
@@ -74,9 +75,13 @@ function Player() {
             data-stable-id="player-header-action-info"
             onSelect={() => {}}
           >
-            <button style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-              <Info style={{ width: 64, height: 64, color: 'white' }} />
-            </button>
+            <Button
+              icon={<Info size={TRANS_BTN_ICON_SIZE}/>}
+              showIcon
+              size="medium"
+              variant="transparent"
+            >
+            </Button>
           </KeyboardWrapper>
           <KeyboardWrapper
             ref={likeRef}
@@ -84,9 +89,13 @@ function Player() {
             data-stable-id="player-header-action-like"
             onSelect={() => {}}
           >
-            <button style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-              <Like style={{ width: 64, height: 64, color: 'white' }} />
-            </button>
+            <Button
+              icon={<Like size={TRANS_BTN_ICON_SIZE}/>}
+              showIcon
+              size="medium"
+              variant="transparent"
+            >
+            </Button>
           </KeyboardWrapper>
         </div>
       </div>
@@ -98,15 +107,14 @@ function Player() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        justifyContent: 'center',
-        height: 'calc(100% - 200px)',
-        gap: 40,
-        paddingTop: 60,
+        // justifyContent: 'center',
+        // height: 'calc(100% - 200px)',
+        // gap: 40,
       }}>
         {/* Cover Art Placeholder */}
         <div style={{
-          width: 400,
-          height: 400,
+          width: 360,
+          height: 360,
           background: 'var(--color-outline-secondary)',
           borderRadius: 30,
           display: 'flex',
@@ -117,7 +125,7 @@ function Player() {
           fontFamily: 'var(--font-family-primary)',
           marginBottom: 30,
         }}>
-          400x400
+          360x360
         </div>
 
         {/* Channel Info Placeholder */}
@@ -165,26 +173,10 @@ function Player() {
           </KeyboardWrapper>
         </div>
 
-        {/* Banner Ad Placeholder */}
-        <div style={{
-          width: 900,
-          height: 80,
-          background: 'rgba(255,255,255,0.5)',
-          borderRadius: 16,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: '#222',
-          fontSize: 40,
-          fontWeight: 900,
-          marginBottom: 30,
-        }}>
-          Banner Ad
-        </div>
-
         {/* Logo Placeholder (moved out of main content) */}
       </div>
-    </div>
+      <AdBanner />
+    </>
   );
 }
 
