@@ -8,7 +8,7 @@ const PlayPauseButton = forwardRef(({ isPlaying = true, padding = 8, ...props },
     className="tv-button tv-button--transparent tv-button--icon-only"
     style={{
       padding,
-      borderRadius: '50%',
+      // borderRadius: '50%',
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
