@@ -6,6 +6,7 @@
 - **Repository**: [tv-component-library](https://github.com/rvd2pwipwip/tv-component-library)
 - **Purpose**: Reusable TV components with TV-specific considerations
 - **Status**: Initial setup phase
+- **Version**: _[Add your current version here, e.g., 1.0.0]_  <!-- Add versioning info for future reference -->
 
 ## Design Philosophy
 
@@ -35,6 +36,14 @@ Components are designed as simple, reusable building blocks that:
     - items: Array of menu items
     - onSelect: Selection handler
     - currentFocus: Active item
+  - **Example:**
+    ```jsx
+    <TVMenu
+      items={[{ label: 'Home' }, { label: 'Channels' }]}
+      onSelect={handleMenuSelect}
+      currentFocus={focusKey}
+    />
+    ```
 
 - **TVMenuItem**
   - Purpose: Individual menu item
@@ -60,6 +69,14 @@ Components are designed as simple, reusable building blocks that:
     - title: Category title
     - items: Array of content items
     - onItemSelect: Selection handler
+  - **Example:**
+    ```jsx
+    <TVSwimlane
+      title="Featured"
+      items={channelList}
+      onItemSelect={handleChannelSelect}
+    />
+    ```
 
 - **TVCard**
   - Purpose: Content container
@@ -75,6 +92,14 @@ Components are designed as simple, reusable building blocks that:
     - content: Main content
     - image: Optional image
     - metadata: Additional info
+  - **Example:**
+    ```jsx
+    <TVCard
+      title="Channel 1"
+      image="/images/channel1.png"
+      metadata={{ viewers: 1200 }}
+    />
+    ```
 
 ### 3. Interactive Components
 - **TVButton**
@@ -83,11 +108,50 @@ Components are designed as simple, reusable building blocks that:
     - Focus states
     - Keyboard interaction
     - Visual feedback
+    - **Consistent icon sizing for transparent variant**
   - Props:
     - label: Button text
     - onClick: Click handler
     - variant: Style variant
     - size: Button size
+    - icon: Icon element
+  - **Available Variants:**
+    - `"primary"`
+    - `"secondary"`
+    - `"ButtonTransparent"` (for icon-only or minimal buttons)
+  - **Example:**
+    ```jsx
+    <Button
+      icon={<Info style={{ width: TRANS_BTN_ICON_SIZE, height: TRANS_BTN_ICON_SIZE }} />}
+      showIcon
+      size="medium"
+      variant="ButtonTransparent"
+      onClick={handleInfo}
+    >
+      Info
+    </Button>
+    ```
+
+#### Icon Sizing for Transparent Buttons
+To ensure consistent icon sizing for all transparent buttons across the app, use the shared JS constant `TRANS_BTN_ICON_SIZE` defined in `src/constants/ui.js`:
+
+```js
+// src/constants/ui.js
+export const TRANS_BTN_ICON_SIZE = 44; // px
+```
+
+When using a transparent button with an icon:
+```js
+import { TRANS_BTN_ICON_SIZE } from '../constants/ui';
+<Button
+  icon={<Info style={{ width: TRANS_BTN_ICON_SIZE, height: TRANS_BTN_ICON_SIZE }} />}
+  showIcon
+  size="medium"
+  variant="ButtonTransparent"
+/>
+```
+
+To update the icon size for all transparent buttons, change the value of `TRANS_BTN_ICON_SIZE` in one place.
 
 ## Implementation Guidelines
 
@@ -113,6 +177,13 @@ Parent components should:
 - Typography
 - Spacing
 - Focus states
+- **Icon sizing constant for transparent buttons**
+
+**Note:**
+> Always import the design tokens CSS in your app entry point (e.g., `main.jsx` or `App.jsx`) to ensure all components are styled correctly:
+> ```js
+> import '@smtv/design-tokens/dist/design-tokens.css';
+> ```
 
 ### TV-Specific Considerations
 - Fixed viewport (1920x1080)
