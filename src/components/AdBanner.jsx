@@ -21,7 +21,7 @@ const AdBanner = ({ children }) => {
       }}
     >
       {children || (
-        <span style={{ color: '#fff', fontSize: 32, fontWeight: 700 }}>Ad Banner Placeholder</span>
+        <span style={{ color: 'var(--color-outline-secondary)', fontSize: 32, fontWeight: 700 }}>Ad Banner Placeholder</span>
       )}
     </div>
   );

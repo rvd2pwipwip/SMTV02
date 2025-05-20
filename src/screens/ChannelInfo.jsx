@@ -1,12 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import { ChannelCard, Button } from '@smtv/tv-component-library';
-import Header from '../components/Header';
 import '../styles/App.css';
 import ChannelRow from '../components/ChannelRow';
 import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import KeyboardWrapper from '../components/KeyboardWrapper';
 import { Like, SingNow } from 'stingray-icons';
-import { TRANS_BTN_ICON_SIZE } from '../constants/ui';
 import AdBanner from '../components/AdBanner';
 
 function ChannelInfo({ channel, onBack, onPlay }) {
@@ -142,7 +140,7 @@ function ChannelInfo({ channel, onBack, onPlay }) {
 
   return (
     <>
-      <div style={{ padding: '100px 100px 0px', display: 'flex', flexDirection: 'column', gap: 15, position: 'relative' }}>
+      <div style={{ width: '100%', boxSizing: 'border-box', padding: '100px  100px', display: 'flex', flexDirection: 'column', gap: 15, position: 'relative' }}>
         <div style={{ display: 'flex', flexDirection: 'row', gap: 40, width: '100%', boxSizing: 'border-box', paddingLeft: 0, paddingRight: 0 }}>
           {/* Channel Thumbnail Placeholder */}
           <div
