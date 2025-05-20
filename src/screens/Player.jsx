@@ -3,6 +3,7 @@ import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import '../styles/App.css';
 import { Info, Like, SkipNext, PauseCircle } from 'stingray-icons';
 import stingrayMusicLogo from '../assets/svg/stingrayMusic.svg';
+import PlayPauseButton from '../components/PlayPauseButton';
 import KeyboardWrapper from '../components/KeyboardWrapper';
 import { Button } from '@smtv/tv-component-library';
 import { TRANS_BTN_ICON_SIZE } from '../constants/ui';
@@ -27,7 +28,7 @@ function Player() {
       {/* Player Header */}
       <div style={{
         position: 'relative',
-        width: '100vw',
+        width: '100%',
         minHeight: 200,
         display: 'flex',
         flexDirection: 'column',
@@ -103,6 +104,8 @@ function Player() {
       {/* Main content below header */}
       <div style={{
         position: 'relative',
+        width: '100%',
+        padding: '0px 100px',
         zIndex: 2,
         display: 'flex',
         flexDirection: 'column',
@@ -123,7 +126,7 @@ function Player() {
           color: '#888',
           fontSize: 32,
           fontFamily: 'var(--font-family-primary)',
-          marginBottom: 30,
+          marginBottom: 20,
         }}>
           360x360
         </div>
@@ -133,17 +136,35 @@ function Player() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: 10,
-          marginBottom: 30,
+          // gap: 10,
+          marginBottom: 20,
         }}>
           <div style={{
             fontFamily: 'var(--font-family-primary)',
-            fontSize: 'var(--font-size-body)',
-            color: 'var(--color-text-secondary)',
-            maxWidth: 700,
+            fontSize: 'var(--font-size-h3)',
+            fontWeight: 'var(--font-weight-bold)',
+            color: 'var(--color-text-primary)',
             textAlign: 'center',
           }}>
-            Sample channel description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Song Title
+          </div>
+          <div style={{
+            fontFamily: 'var(--font-family-primary)',
+            fontSize: 'var(--font-size-body)',
+            fontWeight: 'var(--font-weight-medium)',
+            color: 'var(--color-text-secondary)',
+            textAlign: 'center',
+          }}>
+            Artist Name
+          </div>
+          <div style={{
+            fontFamily: 'var(--font-family-primary)',
+            fontSize: 'var(--font-size-body)',
+            fontWeight: 'var(--font-weight-regular)',
+            color: 'var(--color-text-tertiary, #AAA)',
+            textAlign: 'center',
+          }}>
+            Album
           </div>
         </div>
 
@@ -154,22 +175,23 @@ function Player() {
           style={{ display: 'flex', flexDirection: 'row', gap: 40, marginBottom: 30 }}
         >
           <KeyboardWrapper
-            ref={skipRef}
-            data-focus-key={skipFocusKey}
-            data-stable-id="player-control-skip"
-          >
-            <button style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-              <SkipNext style={{ width: 64, height: 64, color: 'white' }} />
-            </button>
-          </KeyboardWrapper>
-          <KeyboardWrapper
             ref={pauseRef}
             data-focus-key={pauseFocusKey}
             data-stable-id="player-control-pause"
           >
-            <button style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-              <PauseCircle style={{ width: 64, height: 64, color: 'white' }} />
-            </button>
+            <PlayPauseButton />
+          </KeyboardWrapper>
+          <KeyboardWrapper
+            ref={skipRef}
+            data-focus-key={skipFocusKey}
+            data-stable-id="player-control-skip"
+          >
+            <Button
+              icon={<SkipNext size={TRANS_BTN_ICON_SIZE}/>}
+              showIcon
+              size="medium"
+              variant="transparent"
+            />
           </KeyboardWrapper>
         </div>
 
