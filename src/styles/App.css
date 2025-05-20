@@ -1,15 +1,5 @@
 @import '@smtv/design-tokens/dist/design-tokens.css';
 
-/* Force 16:9 aspect ratio (1920:1080) */
-html, body {
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  font-family: var(--font-family-primary);
-}
-
 #root {
   width: 100%;
   height: 100%;
@@ -46,7 +36,6 @@ html, body {
   }
 }
 
-/* Use the smaller scale to ensure the app fits both dimensions */
 @media (max-width: var(--tv-width)) and (max-height: var(--tv-height)) {
   .app {
     transform: scale(min(calc(100vw / var(--tv-width)), calc(100vh / var(--tv-height))));
@@ -83,7 +72,7 @@ html, body {
 }
 
 .app-title {
-  font-family: var(--font-secondary);
+  font-family: var(--font-family-secondary);
   font-size: var(--font-size-h1);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
