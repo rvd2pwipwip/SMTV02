@@ -14,7 +14,7 @@ import { TRANS_BTN_ICON_SIZE } from '../constants/ui';
 
 function Home({ onChannelSelect }) {
   const hasMounted = useRef(false);
-  const { restoreFocus } = useFocusMemory();
+  const { restoreFocus, saveFocus } = useFocusMemory();
 
   // Card focus contexts first, focusSelf for setting initial focus
   const { ref: card1Ref, focusKey: card1FocusKey, focusSelf: focusCard1 } = useFocusable({
@@ -144,6 +144,9 @@ function Home({ onChannelSelect }) {
     }
   });
 
+  // Add a ref for SlidingSwimlane to access its imperative handle
+  const slidingSwimlaneRef = useRef(null);
+
   // Set initial focus on first card or restore saved focus
   useEffect(() => {
     if (!hasMounted.current) {
@@ -172,8 +175,18 @@ function Home({ onChannelSelect }) {
     }
   }, []);
 
-  // Add click handler for focus and channel selection
+  // Update handleCardClick to store both focus and offset
   const handleCardClick = (focusKey, channelData, eventType) => {
+    // Get the current offset from SlidingSwimlane via imperative handle
+    let currentOffset = 0;
+    if (slidingSwimlaneRef.current && typeof slidingSwimlaneRef.current.getOffset === 'function') {
+      currentOffset = slidingSwimlaneRef.current.getOffset();
+    }
+    // Save both the focused card's stable ID and the current offset
+    saveFocus('home', {
+      focusKey,
+      offset: currentOffset
+    });
     setFocus(focusKey);
     onChannelSelect(channelData);
   };
@@ -229,7 +242,7 @@ function Home({ onChannelSelect }) {
           </div>
         </div>
         {/* End Custom Header Row */}
-        <SlidingSwimlane>
+        <SlidingSwimlane ref={slidingSwimlaneRef}>
           <Swimlane ref={swimlaneRef} data-focus-key={swimlaneFocusKey}>
             <KeyboardWrapper
               ref={card1Ref}

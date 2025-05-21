@@ -8,15 +8,15 @@ export function FocusMemoryProvider({ children }) {
   const [focusMemory, setFocusMemory] = useState({});
   const [currentScreen, setCurrentScreen] = useState('home');
 
-  // Save the stable ID of the focused element for the current screen
-  const saveFocus = (screenName, stableId) => {
+  // Save an object with both focusKey and offset for the current screen
+  const saveFocus = (screenName, data) => {
     setFocusMemory(prev => ({
       ...prev,
-      [screenName]: stableId
+      [screenName]: data // data: { focusKey, offset }
     }));
   };
 
-  // Get the stable ID of the last focused element for a screen
+  // Get the object (focusKey and offset) for a screen
   const restoreFocus = (screenName) => {
     return focusMemory[screenName];
   };
