@@ -4,14 +4,13 @@ import '../styles/App.css';
 
 const SlidingSwimlane = React.forwardRef(({ children, ...props }, ref) => {
   const [offset, setOffset] = useState(0);
-  const viewportRef = useRef(null);
   const swimlaneRef = useRef(null);
 
-  // Track focus changes
+  // Track focus changes with the forwarded ref
   const { ref: focusRef, focusKey } = useFocusable({
     focusable: false,
     trackChildren: true,
-    ref: viewportRef
+    ref
   });
 
   // Calculate offset when focus changes

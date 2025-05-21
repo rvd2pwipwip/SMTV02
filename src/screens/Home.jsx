@@ -160,7 +160,7 @@ function Home({ onChannelSelect }) {
 
   return (
     <FocusContext.Provider value={{ focusKey }}>
-      <>
+      <div className="app" ref={ref}>
         <Header title="TV App" />
         <SlidingSwimlane>
           <Swimlane ref={swimlaneRef} data-focus-key={swimlaneFocusKey}>
@@ -322,7 +322,7 @@ function Home({ onChannelSelect }) {
           </Swimlane>
         </SlidingSwimlane>
         <AdBanner />
-      </>
+      </div>
     </FocusContext.Provider>
   );
 }
