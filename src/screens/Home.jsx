@@ -152,20 +152,26 @@ function Home({ onChannelSelect }) {
     if (!hasMounted.current) {
       hasMounted.current = true;
 
-      // Reset scroll position to ensure first card is visible
-      if (swimlaneRef.current) {
-        swimlaneRef.current.scrollLeft = 0;
-      }
-
-      // Try to restore saved focus
-      const savedStableId = restoreFocus('home');
-      if (savedStableId) {
-        const element = document.querySelector(`[data-stable-id="${savedStableId}"]`);
-        if (element) {
-          const focusKey = element.getAttribute('data-focus-key');
-          if (focusKey) {
-            setFocus(focusKey);
-            return;
+      // Try to restore saved focus and offset
+      const saved = restoreFocus('home');
+      // Debug: Log what is being restored
+      console.log('Restoring focus:', saved);
+      if (saved) {
+        const { stableId, offset } = saved;
+        // Set the swimlane offset directly using the imperative handle
+        if (slidingSwimlaneRef.current && typeof slidingSwimlaneRef.current.setOffset === 'function' && offset !== undefined) {
+          slidingSwimlaneRef.current.setOffset(offset);
+          // TODO: Disable animation and observer logic in SlidingSwimlane during restore for seamless experience
+        }
+        // Use the stableId to find the element and get its current focusKey
+        if (stableId) {
+          const element = document.querySelector(`[data-stable-id="${stableId}"]`);
+          if (element) {
+            const focusKey = element.getAttribute('data-focus-key');
+            if (focusKey) {
+              setFocus(focusKey);
+              return;
+            }
           }
         }
       }
@@ -182,9 +188,19 @@ function Home({ onChannelSelect }) {
     if (slidingSwimlaneRef.current && typeof slidingSwimlaneRef.current.getOffset === 'function') {
       currentOffset = slidingSwimlaneRef.current.getOffset();
     }
-    // Save both the focused card's stable ID and the current offset
+    // Get the stableId from the event or channelData
+    // We'll use the focusKey to find the element and get its stableId
+    // Since this is called from onSelect/onClick, we can get the stableId from the DOM
+    let stableId = null;
+    // Try to find the element by focusKey
+    const element = document.querySelector(`[data-focus-key="${focusKey}"]`);
+    if (element) {
+      stableId = element.getAttribute('data-stable-id');
+    }
+    // Debug: Log what is being saved
+    console.log('Saving focus:', { stableId, offset: currentOffset });
     saveFocus('home', {
-      focusKey,
+      stableId,
       offset: currentOffset
     });
     setFocus(focusKey);

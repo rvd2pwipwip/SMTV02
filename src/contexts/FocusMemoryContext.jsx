@@ -18,7 +18,12 @@ export function FocusMemoryProvider({ children }) {
 
   // Get the object (focusKey and offset) for a screen
   const restoreFocus = (screenName) => {
-    return focusMemory[screenName];
+    const value = focusMemory[screenName];
+    // Migration logic: if value is a string, treat as old stableId format
+    if (typeof value === 'string') {
+      return { stableId: value, offset: 0 };
+    }
+    return value;
   };
 
   // Update which screen is currently active

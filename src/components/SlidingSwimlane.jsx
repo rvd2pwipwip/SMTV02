@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useImperativeHandle } from 'react';
 import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import '../styles/App.css';
 
@@ -12,6 +12,14 @@ const SlidingSwimlane = React.forwardRef(({ children, ...props }, ref) => {
     trackChildren: true,
     ref
   });
+
+  // Expose imperative handle for parent to get/set offset
+  useImperativeHandle(ref, () => ({
+    // Returns the current offset value
+    getOffset: () => offset,
+    // Allows parent to set the offset directly
+    setOffset: (value) => setOffset(value)
+  }), [offset]);
 
   // Calculate offset when focus changes
   useEffect(() => {
