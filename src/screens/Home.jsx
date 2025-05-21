@@ -1,14 +1,16 @@
 import React, { useEffect, useRef } from 'react';
 import { FocusContext, useFocusable, setFocus } from '@noriginmedia/norigin-spatial-navigation';
 import KeyboardWrapper from '../components/KeyboardWrapper';
-import { ChannelCard } from '@smtv/tv-component-library';
+import { ChannelCard, Button } from '@smtv/tv-component-library';
 import '@smtv/tv-component-library/dist/style.css';
-import Header from '../components/Header';
 import Swimlane from '../components/Swimlane';
 import SlidingSwimlane from '../components/SlidingSwimlane';
 import '../styles/App.css';
 import { useFocusMemory } from '../contexts/FocusMemoryContext';
 import AdBanner from '../components/AdBanner';
+import { MagnifyingGlass, Info } from 'stingray-icons';
+import stingrayMusicLogo from '../assets/svg/stingrayMusic.svg';
+import { TRANS_BTN_ICON_SIZE } from '../constants/ui';
 
 function Home({ onChannelSelect }) {
   const hasMounted = useRef(false);
@@ -124,6 +126,24 @@ function Home({ onChannelSelect }) {
     trackChildren: true
   });
 
+  // Action buttons focusable refs
+  const { ref: searchRef, focusKey: searchFocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        searchRef.current?.focus();
+      }, 0);
+    }
+  });
+  const { ref: infoRef, focusKey: infoFocusKey } = useFocusable({
+    focusable: true,
+    onFocus: () => {
+      setTimeout(() => {
+        infoRef.current?.focus();
+      }, 0);
+    }
+  });
+
   // Set initial focus on first card or restore saved focus
   useEffect(() => {
     if (!hasMounted.current) {
@@ -161,7 +181,54 @@ function Home({ onChannelSelect }) {
   return (
     <FocusContext.Provider value={{ focusKey }}>
       <div className="app" ref={ref}>
-        <Header title="TV App" />
+        {/* Custom Header Row */}
+        <div
+          style={{
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            padding: 'var(--screen-side-padding) var(--screen-side-padding) 0 var(--screen-side-padding)',
+            minHeight: 90,
+            boxSizing: 'border-box',
+          }}
+        >
+          {/* Left: Logo */}
+          <div style={{ width: 245, height: 70, display: 'flex', alignItems: 'center' }}>
+            <img src={stingrayMusicLogo} alt="Stingray Music" style={{ width: '100%', height: '100%' }} />
+          </div>
+          {/* Right: Action Buttons */}
+          <div style={{ display: 'flex', flexDirection: 'row', gap: 24, alignItems: 'center' }}>
+            <KeyboardWrapper
+              ref={searchRef}
+              data-focus-key={searchFocusKey}
+              data-stable-id="home-header-action-search"
+            >
+              <Button
+                icon={<MagnifyingGlass size={TRANS_BTN_ICON_SIZE} />}
+                showIcon
+                size="medium"
+                variant="transparent"
+                aria-label="Search"
+              />
+            </KeyboardWrapper>
+            <KeyboardWrapper
+              ref={infoRef}
+              data-focus-key={infoFocusKey}
+              data-stable-id="home-header-action-info"
+            >
+              <Button
+                icon={<Info size={TRANS_BTN_ICON_SIZE} />}
+                showIcon
+                size="medium"
+                variant="transparent"
+                aria-label="Info"
+              />
+            </KeyboardWrapper>
+          </div>
+        </div>
+        {/* End Custom Header Row */}
         <SlidingSwimlane>
           <Swimlane ref={swimlaneRef} data-focus-key={swimlaneFocusKey}>
             <KeyboardWrapper
