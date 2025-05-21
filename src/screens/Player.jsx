@@ -51,6 +51,25 @@ function Player() {
     focusPause();
   }, [focusPause]);
 
+  const styles = {
+    container: {
+      width: '100%',
+      height: '100%',
+      position: 'relative',
+      backgroundColor: 'var(--color-surface)',
+      paddingTop: 'var(--screen-side-padding)',
+    },
+    backButton: {
+      position: 'absolute',
+      left: 'var(--screen-side-padding)',
+      top: 'var(--screen-side-padding)',
+      zIndex: 1,
+    },
+    channelInfo: {
+      padding: '0px var(--screen-side-padding)',
+    },
+  };
+
   return (
     <>
       {/* Player Header */}
@@ -63,14 +82,14 @@ function Player() {
         gap: 10,
         alignItems: 'center',
         justifyContent: 'flex-start',
-        paddingTop: 40,
+        paddingTop: 'var(--screen-side-padding)',
         boxSizing: 'border-box',
       }}>
         {/* Absolute logo */}
         <div style={{
           position: 'absolute',
-          left: 80,
-          top: 40,
+          left: 'var(--screen-side-padding)',
+          top: 'var(--screen-side-padding)',
           width: 245,
           height: 70,
           display: 'flex',
@@ -134,14 +153,11 @@ function Player() {
       <div style={{
         position: 'relative',
         width: '100%',
-        padding: '0px 100px',
+        padding: '24px var(--screen-side-padding) 0px',
         zIndex: 2,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        // justifyContent: 'center',
-        // height: 'calc(100% - 200px)',
-        // gap: 40,
       }}>
         {/* Cover Art Placeholder */}
         <div style={{
@@ -165,7 +181,6 @@ function Player() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          // gap: 10,
           marginBottom: 20,
         }}>
           <div style={{

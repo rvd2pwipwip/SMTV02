@@ -140,7 +140,15 @@ function ChannelInfo({ channel, onBack, onPlay }) {
 
   return (
     <>
-      <div style={{ width: '100%', boxSizing: 'border-box', padding: '100px  100px', display: 'flex', flexDirection: 'column', gap: 15, position: 'relative' }}>
+      <div style={{ 
+        width: '100%', 
+        boxSizing: 'border-box', 
+        padding: 'var(--screen-side-padding) var(--screen-side-padding)', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        gap: 15, 
+        position: 'relative' 
+      }}>
         <div style={{ display: 'flex', flexDirection: 'row', gap: 40, width: '100%', boxSizing: 'border-box', paddingLeft: 0, paddingRight: 0 }}>
           {/* Channel Thumbnail Placeholder */}
           <div
