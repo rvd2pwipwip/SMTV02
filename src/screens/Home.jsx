@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FocusContext, useFocusable, setFocus } from '@noriginmedia/norigin-spatial-navigation';
 import KeyboardWrapper from '../components/KeyboardWrapper';
 import { ChannelCard, Button } from '@smtv/tv-component-library';
@@ -15,6 +15,7 @@ import { TRANS_BTN_ICON_SIZE } from '../constants/ui';
 function Home({ onChannelSelect }) {
   const hasMounted = useRef(false);
   const { restoreFocus, saveFocus } = useFocusMemory();
+  const [restoring, setRestoring] = useState(false);
 
   // Card focus contexts first, focusSelf for setting initial focus
   const { ref: card1Ref, focusKey: card1FocusKey, focusSelf: focusCard1 } = useFocusable({
@@ -157,11 +158,11 @@ function Home({ onChannelSelect }) {
       // Debug: Log what is being restored
       console.log('Restoring focus:', saved);
       if (saved) {
+        setRestoring(true); // Start restoration phase
         const { stableId, offset } = saved;
         // Set the swimlane offset directly using the imperative handle
         if (slidingSwimlaneRef.current && typeof slidingSwimlaneRef.current.setOffset === 'function' && offset !== undefined) {
           slidingSwimlaneRef.current.setOffset(offset);
-          // TODO: Disable animation and observer logic in SlidingSwimlane during restore for seamless experience
         }
         // Use the stableId to find the element and get its current focusKey
         if (stableId) {
@@ -170,10 +171,14 @@ function Home({ onChannelSelect }) {
             const focusKey = element.getAttribute('data-focus-key');
             if (focusKey) {
               setFocus(focusKey);
+              // End restoration phase after this tick
+              setTimeout(() => setRestoring(false), 0);
               return;
             }
           }
         }
+        // End restoration phase if we didn't return above
+        setTimeout(() => setRestoring(false), 0);
       }
 
       // If no saved focus, set initial focus on first card
@@ -258,7 +263,7 @@ function Home({ onChannelSelect }) {
           </div>
         </div>
         {/* End Custom Header Row */}
-        <SlidingSwimlane ref={slidingSwimlaneRef}>
+        <SlidingSwimlane ref={slidingSwimlaneRef} restoring={restoring}>
           <Swimlane ref={swimlaneRef} data-focus-key={swimlaneFocusKey}>
             <KeyboardWrapper
               ref={card1Ref}
