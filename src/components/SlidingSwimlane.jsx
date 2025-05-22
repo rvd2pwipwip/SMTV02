@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useImperativeHandle } from 'react';
 import { useFocusable } from '@noriginmedia/norigin-spatial-navigation';
 import '../styles/App.css';
 
-const SlidingSwimlane = React.forwardRef(({ children, ...props }, ref) => {
+const SlidingSwimlane = React.forwardRef(({ children, restoring = false, ...props }, ref) => {
   const [offset, setOffset] = useState(0);
   const swimlaneRef = useRef(null);
 
@@ -13,8 +13,18 @@ const SlidingSwimlane = React.forwardRef(({ children, ...props }, ref) => {
     ref
   });
 
+  // Expose imperative handle for parent to get/set offset
+  useImperativeHandle(ref, () => ({
+    // Returns the current offset value
+    getOffset: () => offset,
+    // Allows parent to set the offset directly
+    setOffset: (value) => setOffset(value)
+  }), [offset]);
+
   // Calculate offset when focus changes
   useEffect(() => {
+    // Skip observer logic during restoration phase
+    if (restoring) return;
     if (!focusRef.current || !swimlaneRef.current) return;
 
     const updateOffset = () => {
@@ -72,7 +82,7 @@ const SlidingSwimlane = React.forwardRef(({ children, ...props }, ref) => {
     return () => {
       observer.disconnect();
     };
-  }, [focusRef]);
+  }, [focusRef, restoring]);
 
   return (
     <div 
@@ -83,7 +93,10 @@ const SlidingSwimlane = React.forwardRef(({ children, ...props }, ref) => {
       <div 
         className="content-swimlane"
         ref={swimlaneRef}
-        style={{ transform: `translateX(${offset}px)` }}
+        style={{ 
+          transform: `translateX(${offset}px)`,
+          transition: restoring ? 'none' : undefined // Disable transition if restoring
+        }}
       >
         {children}
       </div>

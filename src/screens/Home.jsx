@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { FocusContext, useFocusable, setFocus } from '@noriginmedia/norigin-spatial-navigation';
 import KeyboardWrapper from '../components/KeyboardWrapper';
 import { ChannelCard, Button } from '@smtv/tv-component-library';
@@ -14,7 +14,8 @@ import { TRANS_BTN_ICON_SIZE } from '../constants/ui';
 
 function Home({ onChannelSelect }) {
   const hasMounted = useRef(false);
-  const { restoreFocus } = useFocusMemory();
+  const { restoreFocus, saveFocus } = useFocusMemory();
+  const [restoring, setRestoring] = useState(false);
 
   // Card focus contexts first, focusSelf for setting initial focus
   const { ref: card1Ref, focusKey: card1FocusKey, focusSelf: focusCard1 } = useFocusable({
@@ -144,27 +145,40 @@ function Home({ onChannelSelect }) {
     }
   });
 
+  // Add a ref for SlidingSwimlane to access its imperative handle
+  const slidingSwimlaneRef = useRef(null);
+
   // Set initial focus on first card or restore saved focus
   useEffect(() => {
     if (!hasMounted.current) {
       hasMounted.current = true;
 
-      // Reset scroll position to ensure first card is visible
-      if (swimlaneRef.current) {
-        swimlaneRef.current.scrollLeft = 0;
-      }
-
-      // Try to restore saved focus
-      const savedStableId = restoreFocus('home');
-      if (savedStableId) {
-        const element = document.querySelector(`[data-stable-id="${savedStableId}"]`);
-        if (element) {
-          const focusKey = element.getAttribute('data-focus-key');
-          if (focusKey) {
-            setFocus(focusKey);
-            return;
+      // Try to restore saved focus and offset
+      const saved = restoreFocus('home');
+      // Debug: Log what is being restored
+      console.log('Restoring focus:', saved);
+      if (saved) {
+        setRestoring(true); // Start restoration phase
+        const { stableId, offset } = saved;
+        // Set the swimlane offset directly using the imperative handle
+        if (slidingSwimlaneRef.current && typeof slidingSwimlaneRef.current.setOffset === 'function' && offset !== undefined) {
+          slidingSwimlaneRef.current.setOffset(offset);
+        }
+        // Use the stableId to find the element and get its current focusKey
+        if (stableId) {
+          const element = document.querySelector(`[data-stable-id="${stableId}"]`);
+          if (element) {
+            const focusKey = element.getAttribute('data-focus-key');
+            if (focusKey) {
+              setFocus(focusKey);
+              // End restoration phase after this tick
+              setTimeout(() => setRestoring(false), 0);
+              return;
+            }
           }
         }
+        // End restoration phase if we didn't return above
+        setTimeout(() => setRestoring(false), 0);
       }
 
       // If no saved focus, set initial focus on first card
@@ -172,8 +186,28 @@ function Home({ onChannelSelect }) {
     }
   }, []);
 
-  // Add click handler for focus and channel selection
+  // Update handleCardClick to store both focus and offset
   const handleCardClick = (focusKey, channelData, eventType) => {
+    // Get the current offset from SlidingSwimlane via imperative handle
+    let currentOffset = 0;
+    if (slidingSwimlaneRef.current && typeof slidingSwimlaneRef.current.getOffset === 'function') {
+      currentOffset = slidingSwimlaneRef.current.getOffset();
+    }
+    // Get the stableId from the event or channelData
+    // We'll use the focusKey to find the element and get its stableId
+    // Since this is called from onSelect/onClick, we can get the stableId from the DOM
+    let stableId = null;
+    // Try to find the element by focusKey
+    const element = document.querySelector(`[data-focus-key="${focusKey}"]`);
+    if (element) {
+      stableId = element.getAttribute('data-stable-id');
+    }
+    // Debug: Log what is being saved
+    console.log('Saving focus:', { stableId, offset: currentOffset });
+    saveFocus('home', {
+      stableId,
+      offset: currentOffset
+    });
     setFocus(focusKey);
     onChannelSelect(channelData);
   };
@@ -229,7 +263,7 @@ function Home({ onChannelSelect }) {
           </div>
         </div>
         {/* End Custom Header Row */}
-        <SlidingSwimlane>
+        <SlidingSwimlane ref={slidingSwimlaneRef} restoring={restoring}>
           <Swimlane ref={swimlaneRef} data-focus-key={swimlaneFocusKey}>
             <KeyboardWrapper
               ref={card1Ref}
