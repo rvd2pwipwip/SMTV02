@@ -90,6 +90,13 @@
   padding-left: var(--screen-side-padding);
 }
 
+.filter-swimlane-viewport {
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding-left: var(--screen-side-padding);
+}
+
 .content-swimlane {
   display: flex;
   justify-content: flex-start;

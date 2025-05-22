@@ -5,6 +5,7 @@ import { ChannelCard, Button } from '@smtv/tv-component-library';
 import '@smtv/tv-component-library/dist/style.css';
 import Swimlane from '../components/Swimlane';
 import SlidingSwimlane from '../components/SlidingSwimlane';
+import FilterSwimlane from '../components/FilterSwimlane';
 import '../styles/App.css';
 import { useFocusMemory } from '../contexts/FocusMemoryContext';
 import AdBanner from '../components/AdBanner';
@@ -12,10 +13,22 @@ import { MagnifyingGlass, Info } from 'stingray-icons';
 import stingrayMusicLogo from '../assets/svg/stingrayMusic.svg';
 import { TRANS_BTN_ICON_SIZE } from '../constants/ui';
 
+const FILTERS = [
+  { label: 'Most Popular', stableId: 'filter-btn-most-popular' },
+  { label: 'New Releases', stableId: 'filter-btn-new-releases' },
+  { label: 'Recommendations', stableId: 'filter-btn-recommendations' },
+  { label: 'TV Lineup', stableId: 'filter-btn-tv-lineup' },
+];
+
 function Home({ onChannelSelect }) {
   const hasMounted = useRef(false);
   const { restoreFocus, saveFocus } = useFocusMemory();
   const [restoring, setRestoring] = useState(false);
+
+  // FilterSwimlane state and ref
+  const [activeFilterId, setActiveFilterId] = useState(FILTERS[0].stableId);
+  const [filterOffset, setFilterOffset] = useState(0);
+  const filterSwimlaneRef = useRef(null);
 
   // Card focus contexts first, focusSelf for setting initial focus
   const { ref: card1Ref, focusKey: card1FocusKey, focusSelf: focusCard1 } = useFocusable({
@@ -212,6 +225,12 @@ function Home({ onChannelSelect }) {
     onChannelSelect(channelData);
   };
 
+  // Handle filter change
+  const handleFilterChange = (newFilterId) => {
+    setActiveFilterId(newFilterId);
+    // TODO: update channel swimlane content based on filter
+  };
+
   return (
     <FocusContext.Provider value={{ focusKey }}>
       <div className="app" ref={ref}>
@@ -263,6 +282,16 @@ function Home({ onChannelSelect }) {
           </div>
         </div>
         {/* End Custom Header Row */}
+        {/* Filter Swimlane */}
+        <FilterSwimlane
+          ref={filterSwimlaneRef}
+          filters={FILTERS}
+          activeFilterId={activeFilterId}
+          onFilterChange={handleFilterChange}
+          restoring={restoring}
+          initialOffset={filterOffset}
+        />
+        {/* Channel swimlane below (SlidingSwimlane) */}
         <SlidingSwimlane ref={slidingSwimlaneRef} restoring={restoring}>
           <Swimlane ref={swimlaneRef} data-focus-key={swimlaneFocusKey}>
             <KeyboardWrapper
