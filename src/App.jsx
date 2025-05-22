@@ -39,8 +39,10 @@ function AppContent() {
     }
 
     setScreenStack(screenStack.slice(0, -1));
-    setSelectedChannel(null);
     const previousScreen = screenStack[screenStack.length - 2];
+    if (previousScreen === 'home') {
+      setSelectedChannel(null);
+    }
     updateCurrentScreen(previousScreen);
     
     // Restore focus on the previous screen

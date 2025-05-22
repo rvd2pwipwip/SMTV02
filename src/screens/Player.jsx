@@ -9,7 +9,7 @@ import { Button } from '@smtv/tv-component-library';
 import { TRANS_BTN_ICON_SIZE } from '../constants/ui';
 import AdBanner from '../components/AdBanner';
 
-function Player() {
+function Player({ channel, onBack }) {
   // Focusable action buttons for header
   const { ref: infoRef, focusKey: infoFocusKey } = useFocusable({
     focusable: true,
@@ -108,7 +108,7 @@ function Player() {
           textAlign: 'center',
           zIndex: 1,
         }}>
-          Sample Channel Title
+          {channel?.title || 'Unknown Channel'}
         </h1>
         {/* Centered action buttons row */}
         <div style={{
