@@ -31,6 +31,9 @@ const SlidingSwimlane = React.forwardRef(({ children, restoring = false, ...prop
       const focusedElement = document.querySelector('[data-focused="true"]');
       if (!focusedElement) return;
 
+      // Only update offset if the focused element is inside the swimlane
+      if (!swimlaneRef.current.contains(focusedElement)) return;
+
       const viewportRect = focusRef.current.getBoundingClientRect();
       const focusedRect = focusedElement.getBoundingClientRect();
       const firstCard = swimlaneRef.current.querySelector('[data-stable-id="home-card-1"]');
