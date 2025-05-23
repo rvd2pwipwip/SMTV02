@@ -145,6 +145,16 @@ function Home({ onChannelSelect }) {
     }
   });
 
+  // Norigin focusable for the test primary button (correct pattern)
+  const { ref: testButtonRef, focusKey: testButtonFocusKey } = useFocusable({ 
+    focusable: true, 
+    onFocus: () => {
+    setTimeout(() => {
+      testButtonRef.current?.focus();
+    }, 0);
+  } 
+});
+
   // Add a ref for SlidingSwimlane to access its imperative handle
   const slidingSwimlaneRef = useRef(null);
 
@@ -263,6 +273,21 @@ function Home({ onChannelSelect }) {
           </div>
         </div>
         {/* End Custom Header Row */}
+        {/* 100% wide div with a primary button */}
+        <div style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: '32px 0' }}>
+          <KeyboardWrapper
+            ref={testButtonRef}
+            data-focus-key={testButtonFocusKey}
+            data-stable-id="home-test-primary-button"
+          >
+            <Button
+              variant="primary"
+              size="medium"
+            >
+              Test Primary Button
+            </Button>
+          </KeyboardWrapper>
+        </div>
         <SlidingSwimlane ref={slidingSwimlaneRef} restoring={restoring}>
           <Swimlane ref={swimlaneRef} data-focus-key={swimlaneFocusKey}>
             <KeyboardWrapper
