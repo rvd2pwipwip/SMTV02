@@ -151,9 +151,9 @@ function Home({ onChannelSelect }) {
     onFocus: () => {
     setTimeout(() => {
       testButtonRef.current?.focus();
-    }, 0);
-  } 
-});
+      }, 0);
+    } 
+  });
 
   // Add a ref for SlidingSwimlane to access its imperative handle
   const slidingSwimlaneRef = useRef(null);
