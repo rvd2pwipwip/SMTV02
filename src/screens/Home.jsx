@@ -18,41 +18,53 @@ function Home({ onChannelSelect }) {
   const [restoring, setRestoring] = useState(false);
 
   // Card focus contexts first, focusSelf for setting initial focus
-  const { ref: card1Ref, focusKey: card1FocusKey, focusSelf: focusCard1 } = useFocusable({
-    focusable: true
+  const { ref: card1Ref, focusKey: card1FocusKey } = useFocusable({
+    focusable: true,
+    onEnterPress: () => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'enter'),
   });
   const { ref: card2Ref, focusKey: card2FocusKey } = useFocusable({
-    focusable: true
+    focusable: true,
+    onEnterPress: () => handleCardClick(card2FocusKey, { id: 2, title: "Sample Channel 2" }, 'enter'),
   });
   const { ref: card3Ref, focusKey: card3FocusKey } = useFocusable({
-    focusable: true
+    focusable: true,
+    onEnterPress: () => handleCardClick(card3FocusKey, { id: 3, title: "Sample Channel 3" }, 'enter'),
   });
   const { ref: card4Ref, focusKey: card4FocusKey } = useFocusable({
-    focusable: true
+    focusable: true,
+    onEnterPress: () => handleCardClick(card4FocusKey, { id: 4, title: "Sample Channel 4" }, 'enter'),
   });
   const { ref: card5Ref, focusKey: card5FocusKey } = useFocusable({
-    focusable: true
+    focusable: true,
+    onEnterPress: () => handleCardClick(card5FocusKey, { id: 5, title: "Sample Channel 5" }, 'enter'),
   });
   const { ref: card6Ref, focusKey: card6FocusKey } = useFocusable({
-    focusable: true
+    focusable: true,
+    onEnterPress: () => handleCardClick(card6FocusKey, { id: 6, title: "Sample Channel 6" }, 'enter'),
   });
   const { ref: card7Ref, focusKey: card7FocusKey } = useFocusable({
-    focusable: true
+    focusable: true,
+    onEnterPress: () => handleCardClick(card7FocusKey, { id: 7, title: "Sample Channel 7" }, 'enter'),
   });
   const { ref: card8Ref, focusKey: card8FocusKey } = useFocusable({
-    focusable: true
+    focusable: true,
+    onEnterPress: () => handleCardClick(card8FocusKey, { id: 8, title: "Sample Channel 8" }, 'enter'),
   });
   const { ref: card9Ref, focusKey: card9FocusKey } = useFocusable({
-    focusable: true
+    focusable: true,
+    onEnterPress: () => handleCardClick(card9FocusKey, { id: 9, title: "Sample Channel 9" }, 'enter'),
   });
   const { ref: card10Ref, focusKey: card10FocusKey } = useFocusable({
-    focusable: true
+    focusable: true,
+    onEnterPress: () => handleCardClick(card10FocusKey, { id: 10, title: "Sample Channel 10" }, 'enter'),
   });
   const { ref: card11Ref, focusKey: card11FocusKey } = useFocusable({
-    focusable: true
+    focusable: true,
+    onEnterPress: () => handleCardClick(card11FocusKey, { id: 11, title: "Sample Channel 11" }, 'enter'),
   });
   const { ref: card12Ref, focusKey: card12FocusKey } = useFocusable({
-    focusable: true
+    focusable: true,
+    onEnterPress: () => handleCardClick(card12FocusKey, { id: 12, title: "Sample Channel 12" }, 'enter'),
   });
 
   // Root level focus context
@@ -70,15 +82,18 @@ function Home({ onChannelSelect }) {
 
   // Action buttons focusable refs
   const { ref: searchRef, focusKey: searchFocusKey } = useFocusable({
-    focusable: true
+    focusable: true,
+    onEnterPress: () => {/* handle search button enter */},
   });
   const { ref: infoRef, focusKey: infoFocusKey } = useFocusable({
-    focusable: true
+    focusable: true,
+    onEnterPress: () => {/* handle info button enter */},
   });
 
-  // Norigin focusable for the test primary button (correct pattern)
-  const { ref: testButtonRef, focusKey: testButtonFocusKey } = useFocusable({ 
-    focusable: true
+  // Norigin focusable for the test primary button
+  const { ref: testButtonRef, focusKey: testButtonFocusKey } = useFocusable({
+    focusable: true,
+    onEnterPress: () => {/* handle test button enter */},
   });
 
   // Add a ref for SlidingSwimlane to access its imperative handle
@@ -228,161 +243,102 @@ function Home({ onChannelSelect }) {
         {/* Swimlane */}
         <SlidingSwimlane ref={slidingSwimlaneRef} restoring={restoring}>
           <Swimlane ref={swimlaneRef} data-focus-key={swimlaneFocusKey}>
-            <KeyboardWrapper
+            <ChannelCard
               ref={card1Ref}
               data-focus-key={card1FocusKey}
               data-stable-id="home-card-1"
-              onSelect={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'enter')}
-            >
-              <ChannelCard
-                title="Sample Channel 1"    
-                thumbnailUrl="https://picsum.photos/300/300"
-                onClick={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'click')}
-              />
-            </KeyboardWrapper>
-
-            <KeyboardWrapper
+              title="Sample Channel 1"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'click')}
+            />
+            <ChannelCard
               ref={card2Ref}
               data-focus-key={card2FocusKey}
               data-stable-id="home-card-2"
-              onSelect={() => handleCardClick(card2FocusKey, { id: 2, title: "Sample Channel 2" }, 'enter')}
-            >
-              <ChannelCard
-                title="Sample Channel 2"    
-                thumbnailUrl="https://picsum.photos/300/300"
-                onClick={() => handleCardClick(card2FocusKey, { id: 2, title: "Sample Channel 2" }, 'click')}
-              />
-            </KeyboardWrapper>
-
-            <KeyboardWrapper
+              title="Sample Channel 2"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card2FocusKey, { id: 2, title: "Sample Channel 2" }, 'click')}
+            />
+            <ChannelCard
               ref={card3Ref}
               data-focus-key={card3FocusKey}
               data-stable-id="home-card-3"
-              onSelect={() => handleCardClick(card3FocusKey, { id: 3, title: "Sample Channel 3" }, 'enter')}
-            >
-              <ChannelCard
-                title="Sample Channel 3"    
-                thumbnailUrl="https://picsum.photos/300/300"
-                onClick={() => handleCardClick(card3FocusKey, { id: 3, title: "Sample Channel 3" }, 'click')}
-              />
-            </KeyboardWrapper>
-
-            <KeyboardWrapper
+              title="Sample Channel 3"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card3FocusKey, { id: 3, title: "Sample Channel 3" }, 'click')}
+            />
+            <ChannelCard
               ref={card4Ref}
               data-focus-key={card4FocusKey}
               data-stable-id="home-card-4"
-              onSelect={() => handleCardClick(card4FocusKey, { id: 4, title: "Sample Channel 4" }, 'enter')}
-            >
-              <ChannelCard
-                title="Sample Channel 4"    
-                thumbnailUrl="https://picsum.photos/300/300"
-                onClick={() => handleCardClick(card4FocusKey, { id: 4, title: "Sample Channel 4" }, 'click')}
-              />
-            </KeyboardWrapper>
-
-            <KeyboardWrapper
+              title="Sample Channel 4"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card4FocusKey, { id: 4, title: "Sample Channel 4" }, 'click')}
+            />
+            <ChannelCard
               ref={card5Ref}
               data-focus-key={card5FocusKey}
               data-stable-id="home-card-5"
-              onSelect={() => handleCardClick(card5FocusKey, { id: 5, title: "Sample Channel 5" }, 'enter')}
-            >
-              <ChannelCard
-                title="Sample Channel 5"    
-                thumbnailUrl="https://picsum.photos/300/300"
-                onClick={() => handleCardClick(card5FocusKey, { id: 5, title: "Sample Channel 5" }, 'click')}
-              />
-            </KeyboardWrapper>
-
-            <KeyboardWrapper
+              title="Sample Channel 5"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card5FocusKey, { id: 5, title: "Sample Channel 5" }, 'click')}
+            />
+            <ChannelCard
               ref={card6Ref}
               data-focus-key={card6FocusKey}
               data-stable-id="home-card-6"
-              onSelect={() => handleCardClick(card6FocusKey, { id: 6, title: "Sample Channel 6" }, 'enter')}
-            >
-              <ChannelCard
-                title="Sample Channel 6"    
-                thumbnailUrl="https://picsum.photos/300/300"
-                onClick={() => handleCardClick(card6FocusKey, { id: 6, title: "Sample Channel 6" }, 'click')}
-              />
-            </KeyboardWrapper>
-
-            <KeyboardWrapper
+              title="Sample Channel 6"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card6FocusKey, { id: 6, title: "Sample Channel 6" }, 'click')}
+            />
+            <ChannelCard
               ref={card7Ref}
               data-focus-key={card7FocusKey}
               data-stable-id="home-card-7"
-              onSelect={() => handleCardClick(card7FocusKey, { id: 7, title: "Sample Channel 7" }, 'enter')}
-            >
-              <ChannelCard
-                title="Sample Channel 7"    
-                thumbnailUrl="https://picsum.photos/300/300"
-                onClick={() => handleCardClick(card7FocusKey, { id: 7, title: "Sample Channel 7" }, 'click')}
-              />
-            </KeyboardWrapper>
-
-            <KeyboardWrapper
+              title="Sample Channel 7"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card7FocusKey, { id: 7, title: "Sample Channel 7" }, 'click')}
+            />
+            <ChannelCard
               ref={card8Ref}
               data-focus-key={card8FocusKey}
               data-stable-id="home-card-8"
-              onSelect={() => handleCardClick(card8FocusKey, { id: 8, title: "Sample Channel 8" }, 'enter')}
-            >
-              <ChannelCard
-                title="Sample Channel 8"    
-                thumbnailUrl="https://picsum.photos/300/300"
-                onClick={() => handleCardClick(card8FocusKey, { id: 8, title: "Sample Channel 8" }, 'click')}
-              />
-            </KeyboardWrapper>
-
-            <KeyboardWrapper
+              title="Sample Channel 8"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card8FocusKey, { id: 8, title: "Sample Channel 8" }, 'click')}
+            />
+            <ChannelCard
               ref={card9Ref}
               data-focus-key={card9FocusKey}
               data-stable-id="home-card-9"
-              onSelect={() => handleCardClick(card9FocusKey, { id: 9, title: "Sample Channel 9" }, 'enter')}
-            >
-              <ChannelCard
-                title="Sample Channel 9"    
-                thumbnailUrl="https://picsum.photos/300/300"
-                onClick={() => handleCardClick(card9FocusKey, { id: 9, title: "Sample Channel 9" }, 'click')}
-              />
-            </KeyboardWrapper>
-
-            <KeyboardWrapper
+              title="Sample Channel 9"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card9FocusKey, { id: 9, title: "Sample Channel 9" }, 'click')}
+            />
+            <ChannelCard
               ref={card10Ref}
               data-focus-key={card10FocusKey}
               data-stable-id="home-card-10"
-              onSelect={() => handleCardClick(card10FocusKey, { id: 10, title: "Sample Channel 10" }, 'enter')}
-            >
-              <ChannelCard
-                title="Sample Channel 10"    
-                thumbnailUrl="https://picsum.photos/300/300"
-                onClick={() => handleCardClick(card10FocusKey, { id: 10, title: "Sample Channel 10" }, 'click')}
-              />
-            </KeyboardWrapper>
-
-            <KeyboardWrapper
+              title="Sample Channel 10"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card10FocusKey, { id: 10, title: "Sample Channel 10" }, 'click')}
+            />
+            <ChannelCard
               ref={card11Ref}
               data-focus-key={card11FocusKey}
               data-stable-id="home-card-11"
-              onSelect={() => handleCardClick(card11FocusKey, { id: 11, title: "Sample Channel 11" }, 'enter')}
-            >
-              <ChannelCard
-                title="Sample Channel 11"    
-                thumbnailUrl="https://picsum.photos/300/300"
-                onClick={() => handleCardClick(card11FocusKey, { id: 11, title: "Sample Channel 11" }, 'click')}
-              />
-            </KeyboardWrapper>
-
-            <KeyboardWrapper
+              title="Sample Channel 11"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card11FocusKey, { id: 11, title: "Sample Channel 11" }, 'click')}
+            />
+            <ChannelCard
               ref={card12Ref}
               data-focus-key={card12FocusKey}
               data-stable-id="home-card-12"
-              onSelect={() => handleCardClick(card12FocusKey, { id: 12, title: "Sample Channel 12" }, 'enter')}
-            >
-              <ChannelCard
-                title="Sample Channel 12"    
-                thumbnailUrl="https://picsum.photos/300/300"
-                onClick={() => handleCardClick(card12FocusKey, { id: 12, title: "Sample Channel 12" }, 'click')}
-              />
-            </KeyboardWrapper>
+              title="Sample Channel 12"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card12FocusKey, { id: 12, title: "Sample Channel 12" }, 'click')}
+            />
           </Swimlane>
         </SlidingSwimlane>
         <AdBanner />
