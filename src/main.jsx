@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { init } from '@noriginmedia/norigin-spatial-navigation';
 import App from './App';
 import '@smtv/design-tokens/dist/design-tokens.css';
+import '@smtv/tv-component-library/dist/style.css';
 import './styles/index.css';
 
 // Initialize spatial navigation

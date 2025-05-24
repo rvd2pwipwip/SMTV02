@@ -19,100 +19,40 @@ function Home({ onChannelSelect }) {
 
   // Card focus contexts first, focusSelf for setting initial focus
   const { ref: card1Ref, focusKey: card1FocusKey, focusSelf: focusCard1 } = useFocusable({
-    focusable: true,
-    onFocus: () => {
-      setTimeout(() => {
-        card1Ref.current?.focus();
-      }, 0);
-    }
+    focusable: true
   });
   const { ref: card2Ref, focusKey: card2FocusKey } = useFocusable({
-    focusable: true,
-    onFocus: () => {
-      setTimeout(() => {
-        card2Ref.current?.focus();
-      }, 0);
-    }
+    focusable: true
   });
   const { ref: card3Ref, focusKey: card3FocusKey } = useFocusable({
-    focusable: true,
-    onFocus: () => {
-      setTimeout(() => {
-        card3Ref.current?.focus();
-      }, 0);
-    }
+    focusable: true
   });
   const { ref: card4Ref, focusKey: card4FocusKey } = useFocusable({
-    focusable: true,
-    onFocus: () => {
-      setTimeout(() => {
-        card4Ref.current?.focus();
-      }, 0);
-    }
+    focusable: true
   });
   const { ref: card5Ref, focusKey: card5FocusKey } = useFocusable({
-    focusable: true,
-    onFocus: () => {
-      setTimeout(() => {
-        card5Ref.current?.focus();
-      }, 0);
-    }
+    focusable: true
   });
   const { ref: card6Ref, focusKey: card6FocusKey } = useFocusable({
-    focusable: true,
-    onFocus: () => {
-      setTimeout(() => {
-        card6Ref.current?.focus();
-      }, 0);
-    }
+    focusable: true
   });
   const { ref: card7Ref, focusKey: card7FocusKey } = useFocusable({
-    focusable: true,
-    onFocus: () => {
-      setTimeout(() => {
-        card7Ref.current?.focus();
-      }, 0);
-    }
+    focusable: true
   });
   const { ref: card8Ref, focusKey: card8FocusKey } = useFocusable({
-    focusable: true,
-    onFocus: () => {
-      setTimeout(() => {
-        card8Ref.current?.focus();
-      }, 0);
-    }
+    focusable: true
   });
   const { ref: card9Ref, focusKey: card9FocusKey } = useFocusable({
-    focusable: true,
-    onFocus: () => {
-      setTimeout(() => {
-        card9Ref.current?.focus();
-      }, 0);
-    }
+    focusable: true
   });
   const { ref: card10Ref, focusKey: card10FocusKey } = useFocusable({
-    focusable: true,
-    onFocus: () => {
-      setTimeout(() => {
-        card10Ref.current?.focus();
-      }, 0);
-    }
+    focusable: true
   });
   const { ref: card11Ref, focusKey: card11FocusKey } = useFocusable({
-    focusable: true,
-    onFocus: () => {
-      setTimeout(() => {
-        card11Ref.current?.focus();
-      }, 0);
-    }
+    focusable: true
   });
   const { ref: card12Ref, focusKey: card12FocusKey } = useFocusable({
-    focusable: true,
-    onFocus: () => {
-      setTimeout(() => {
-        card12Ref.current?.focus();
-      }, 0);
-    }
+    focusable: true
   });
 
   // Root level focus context
@@ -124,35 +64,21 @@ function Home({ onChannelSelect }) {
   // Swimlane focus context
   const { ref: swimlaneRef, focusKey: swimlaneFocusKey } = useFocusable({
     focusable: false,
-    trackChildren: true
+    trackChildren: true,
+    autoRestoreFocus: true
   });
 
   // Action buttons focusable refs
   const { ref: searchRef, focusKey: searchFocusKey } = useFocusable({
-    focusable: true,
-    onFocus: () => {
-      setTimeout(() => {
-        searchRef.current?.focus();
-      }, 0);
-    }
+    focusable: true
   });
   const { ref: infoRef, focusKey: infoFocusKey } = useFocusable({
-    focusable: true,
-    onFocus: () => {
-      setTimeout(() => {
-        infoRef.current?.focus();
-      }, 0);
-    }
+    focusable: true
   });
 
   // Norigin focusable for the test primary button (correct pattern)
   const { ref: testButtonRef, focusKey: testButtonFocusKey } = useFocusable({ 
-    focusable: true, 
-    onFocus: () => {
-    setTimeout(() => {
-      testButtonRef.current?.focus();
-      }, 0);
-    } 
+    focusable: true
   });
 
   // Add a ref for SlidingSwimlane to access its imperative handle
@@ -192,7 +118,18 @@ function Home({ onChannelSelect }) {
       }
 
       // If no saved focus, set initial focus on first card
-      focusCard1();
+      console.log('card1Ref.current:', card1Ref.current);
+      console.log('Calling focusCard1');
+      setTimeout(() => {
+        // focusCard1();
+        // if (card1Ref.current) {
+        //   card1Ref.current.focus();
+        //   console.log('Manually called .focus() on card1Ref.current');
+        // }
+        console.log('After focusCard1, activeElement:', document.activeElement);
+        setFocus(card1FocusKey);
+        console.log('Called setFocus(card1FocusKey) for initial focus');
+      }, 0);
     }
   }, []);
 
@@ -288,6 +225,7 @@ function Home({ onChannelSelect }) {
             </Button>
           </KeyboardWrapper>
         </div>
+        {/* Swimlane */}
         <SlidingSwimlane ref={slidingSwimlaneRef} restoring={restoring}>
           <Swimlane ref={swimlaneRef} data-focus-key={swimlaneFocusKey}>
             <KeyboardWrapper
