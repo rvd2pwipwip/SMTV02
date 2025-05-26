@@ -10,7 +10,10 @@ const SlidingSwimlane = React.forwardRef(({ children, restoring = false, ...prop
   const { ref: focusRef, focusKey } = useFocusable({
     focusable: false,
     trackChildren: true,
-    ref
+    ref,
+    onFocus: () => {
+      console.log('SlidingSwimlane received focus', focusKey);
+    }
   });
 
   // Expose imperative handle for parent to get/set offset
