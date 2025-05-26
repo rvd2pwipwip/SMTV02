@@ -176,6 +176,12 @@ function Home({ onChannelSelect }) {
   // Add a ref for SlidingSwimlane to access its imperative handle
   const slidingSwimlaneRef = useRef(null);
 
+  // Main navigation focus context for header, filters, and swimlane
+  const { ref: mainNavRef, focusKey: mainNavFocusKey } = useFocusable({
+    focusable: false,
+    trackChildren: true,
+  });
+
   // Set initial focus on first card or restore saved focus
   useEffect(() => {
     if (!hasMounted.current) {
@@ -240,162 +246,160 @@ function Home({ onChannelSelect }) {
 
   return (
     <FocusContext.Provider value={{ focusKey }}>
-      {/* Custom Header Row */}
+      {/* Main navigation stack: header, filters, swimlane */}
       <div
-        className="home-header"
+        ref={mainNavRef}
+        data-focus-key={mainNavFocusKey}
+        className="main-content"
         style={{
-          width: '100%',
           display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          padding: 'var(--screen-side-padding) var(--screen-side-padding) 0 var(--screen-side-padding)',
-          minHeight: 90,
-          boxSizing: 'border-box',
+          flexDirection: 'column',
+          height: 'calc(100vh - 150px)', // 150px is the height of the ad banner
+          width: '100%',
+          justifyContent: 'flex-start',
+          alignItems: 'stretch', // Ensures children take full width
         }}
       >
-        {/* Left: Logo */}
-        <div style={{ width: 245, height: 70, display: 'flex', alignItems: 'center' }}>
-          <img src={stingrayMusicLogo} alt="Stingray Music" style={{ width: '100%', height: '100%' }} />
+        <div className="home-header" style={{ width: '100%', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', padding: 'var(--screen-side-padding) var(--screen-side-padding) 0 var(--screen-side-padding)', minHeight: 90, boxSizing: 'border-box' }}>
+          <div style={{ width: 245, height: 70, display: 'flex', alignItems: 'center' }}>
+            <img src={stingrayMusicLogo} alt="Stingray Music" style={{ width: '100%', height: '100%' }} />
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'row', gap: 24, alignItems: 'center' }}>
+            <Button
+              ref={searchRef}
+              data-focus-key={searchFocusKey}
+              data-stable-id="home-header-action-search"
+              icon={<MagnifyingGlass size={TRANS_BTN_ICON_SIZE} />}
+              showIcon
+              size="medium"
+              variant="transparent"
+              aria-label="Search"
+            />
+            <Button
+              ref={infoRef}
+              data-focus-key={infoFocusKey}
+              data-stable-id="home-header-action-info"
+              icon={<Info size={TRANS_BTN_ICON_SIZE} />}
+              showIcon
+              size="medium"
+              variant="transparent"
+              aria-label="Info"
+            />
+          </div>
         </div>
-        {/* Right: Action Buttons */}
-        <div style={{ display: 'flex', flexDirection: 'row', gap: 24, alignItems: 'center' }}>
+        <div className="home-filters" style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: '32px 0' }}>
           <Button
-            ref={searchRef}
-            data-focus-key={searchFocusKey}
-            data-stable-id="home-header-action-search"
-            icon={<MagnifyingGlass size={TRANS_BTN_ICON_SIZE} />}
-            showIcon
+            ref={testButtonRef}
+            data-focus-key={testButtonFocusKey}
+            data-stable-id="home-test-primary-button"
+            variant="primary"
             size="medium"
-            variant="transparent"
-            aria-label="Search"
-          />
-          <Button
-            ref={infoRef}
-            data-focus-key={infoFocusKey}
-            data-stable-id="home-header-action-info"
-            icon={<Info size={TRANS_BTN_ICON_SIZE} />}
-            showIcon
-            size="medium"
-            variant="transparent"
-            aria-label="Info"
-          />
+          >
+            Test Primary Button
+          </Button>
         </div>
+        <SlidingSwimlane ref={slidingSwimlaneRef} restoring={restoring}>
+          <Swimlane ref={swimlaneRef} data-focus-key={swimlaneFocusKey}>
+            <ChannelCard
+              ref={card1Ref}
+              data-focus-key={card1FocusKey}
+              data-stable-id="home-card-1"
+              title="Sample Channel 1"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'click')}
+            />
+            <ChannelCard
+              ref={card2Ref}
+              data-focus-key={card2FocusKey}
+              data-stable-id="home-card-2"
+              title="Sample Channel 2"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card2FocusKey, { id: 2, title: "Sample Channel 2" }, 'click')}
+            />
+            <ChannelCard
+              ref={card3Ref}
+              data-focus-key={card3FocusKey}
+              data-stable-id="home-card-3"
+              title="Sample Channel 3"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card3FocusKey, { id: 3, title: "Sample Channel 3" }, 'click')}
+            />
+            <ChannelCard
+              ref={card4Ref}
+              data-focus-key={card4FocusKey}
+              data-stable-id="home-card-4"
+              title="Sample Channel 4"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card4FocusKey, { id: 4, title: "Sample Channel 4" }, 'click')}
+            />
+            <ChannelCard
+              ref={card5Ref}
+              data-focus-key={card5FocusKey}
+              data-stable-id="home-card-5"
+              title="Sample Channel 5"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card5FocusKey, { id: 5, title: "Sample Channel 5" }, 'click')}
+            />
+            <ChannelCard
+              ref={card6Ref}
+              data-focus-key={card6FocusKey}
+              data-stable-id="home-card-6"
+              title="Sample Channel 6"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card6FocusKey, { id: 6, title: "Sample Channel 6" }, 'click')}
+            />
+            <ChannelCard
+              ref={card7Ref}
+              data-focus-key={card7FocusKey}
+              data-stable-id="home-card-7"
+              title="Sample Channel 7"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card7FocusKey, { id: 7, title: "Sample Channel 7" }, 'click')}
+            />
+            <ChannelCard
+              ref={card8Ref}
+              data-focus-key={card8FocusKey}
+              data-stable-id="home-card-8"
+              title="Sample Channel 8"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card8FocusKey, { id: 8, title: "Sample Channel 8" }, 'click')}
+            />
+            <ChannelCard
+              ref={card9Ref}
+              data-focus-key={card9FocusKey}
+              data-stable-id="home-card-9"
+              title="Sample Channel 9"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card9FocusKey, { id: 9, title: "Sample Channel 9" }, 'click')}
+            />
+            <ChannelCard
+              ref={card10Ref}
+              data-focus-key={card10FocusKey}
+              data-stable-id="home-card-10"
+              title="Sample Channel 10"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card10FocusKey, { id: 10, title: "Sample Channel 10" }, 'click')}
+            />
+            <ChannelCard
+              ref={card11Ref}
+              data-focus-key={card11FocusKey}
+              data-stable-id="home-card-11"
+              title="Sample Channel 11"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card11FocusKey, { id: 11, title: "Sample Channel 11" }, 'click')}
+            />
+            <ChannelCard
+              ref={card12Ref}
+              data-focus-key={card12FocusKey}
+              data-stable-id="home-card-12"
+              title="Sample Channel 12"
+              thumbnailUrl="https://picsum.photos/300/300"
+              onClick={() => handleCardClick(card12FocusKey, { id: 12, title: "Sample Channel 12" }, 'click')}
+            />
+          </Swimlane>
+        </SlidingSwimlane>
       </div>
-      {/* End Custom Header Row */}
-      {/* 100% wide div with a primary button */}
-      <div className="home-filters" style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: '32px 0' }}>
-        <Button
-          ref={testButtonRef}
-          data-focus-key={testButtonFocusKey}
-          data-stable-id="home-test-primary-button"
-          variant="primary"
-          size="medium"
-        >
-          Test Primary Button
-        </Button>
-      </div>
-      {/* Swimlane */}
-      <SlidingSwimlane ref={slidingSwimlaneRef} restoring={restoring}>
-        <Swimlane ref={swimlaneRef} data-focus-key={swimlaneFocusKey}>
-          <ChannelCard
-            ref={card1Ref}
-            data-focus-key={card1FocusKey}
-            data-stable-id="home-card-1"
-            title="Sample Channel 1"
-            thumbnailUrl="https://picsum.photos/300/300"
-            onClick={() => handleCardClick(card1FocusKey, { id: 1, title: "Sample Channel 1" }, 'click')}
-          />
-          <ChannelCard
-            ref={card2Ref}
-            data-focus-key={card2FocusKey}
-            data-stable-id="home-card-2"
-            title="Sample Channel 2"
-            thumbnailUrl="https://picsum.photos/300/300"
-            onClick={() => handleCardClick(card2FocusKey, { id: 2, title: "Sample Channel 2" }, 'click')}
-          />
-          <ChannelCard
-            ref={card3Ref}
-            data-focus-key={card3FocusKey}
-            data-stable-id="home-card-3"
-            title="Sample Channel 3"
-            thumbnailUrl="https://picsum.photos/300/300"
-            onClick={() => handleCardClick(card3FocusKey, { id: 3, title: "Sample Channel 3" }, 'click')}
-          />
-          <ChannelCard
-            ref={card4Ref}
-            data-focus-key={card4FocusKey}
-            data-stable-id="home-card-4"
-            title="Sample Channel 4"
-            thumbnailUrl="https://picsum.photos/300/300"
-            onClick={() => handleCardClick(card4FocusKey, { id: 4, title: "Sample Channel 4" }, 'click')}
-          />
-          <ChannelCard
-            ref={card5Ref}
-            data-focus-key={card5FocusKey}
-            data-stable-id="home-card-5"
-            title="Sample Channel 5"
-            thumbnailUrl="https://picsum.photos/300/300"
-            onClick={() => handleCardClick(card5FocusKey, { id: 5, title: "Sample Channel 5" }, 'click')}
-          />
-          <ChannelCard
-            ref={card6Ref}
-            data-focus-key={card6FocusKey}
-            data-stable-id="home-card-6"
-            title="Sample Channel 6"
-            thumbnailUrl="https://picsum.photos/300/300"
-            onClick={() => handleCardClick(card6FocusKey, { id: 6, title: "Sample Channel 6" }, 'click')}
-          />
-          <ChannelCard
-            ref={card7Ref}
-            data-focus-key={card7FocusKey}
-            data-stable-id="home-card-7"
-            title="Sample Channel 7"
-            thumbnailUrl="https://picsum.photos/300/300"
-            onClick={() => handleCardClick(card7FocusKey, { id: 7, title: "Sample Channel 7" }, 'click')}
-          />
-          <ChannelCard
-            ref={card8Ref}
-            data-focus-key={card8FocusKey}
-            data-stable-id="home-card-8"
-            title="Sample Channel 8"
-            thumbnailUrl="https://picsum.photos/300/300"
-            onClick={() => handleCardClick(card8FocusKey, { id: 8, title: "Sample Channel 8" }, 'click')}
-          />
-          <ChannelCard
-            ref={card9Ref}
-            data-focus-key={card9FocusKey}
-            data-stable-id="home-card-9"
-            title="Sample Channel 9"
-            thumbnailUrl="https://picsum.photos/300/300"
-            onClick={() => handleCardClick(card9FocusKey, { id: 9, title: "Sample Channel 9" }, 'click')}
-          />
-          <ChannelCard
-            ref={card10Ref}
-            data-focus-key={card10FocusKey}
-            data-stable-id="home-card-10"
-            title="Sample Channel 10"
-            thumbnailUrl="https://picsum.photos/300/300"
-            onClick={() => handleCardClick(card10FocusKey, { id: 10, title: "Sample Channel 10" }, 'click')}
-          />
-          <ChannelCard
-            ref={card11Ref}
-            data-focus-key={card11FocusKey}
-            data-stable-id="home-card-11"
-            title="Sample Channel 11"
-            thumbnailUrl="https://picsum.photos/300/300"
-            onClick={() => handleCardClick(card11FocusKey, { id: 11, title: "Sample Channel 11" }, 'click')}
-          />
-          <ChannelCard
-            ref={card12Ref}
-            data-focus-key={card12FocusKey}
-            data-stable-id="home-card-12"
-            title="Sample Channel 12"
-            thumbnailUrl="https://picsum.photos/300/300"
-            onClick={() => handleCardClick(card12FocusKey, { id: 12, title: "Sample Channel 12" }, 'click')}
-          />
-        </Swimlane>
-      </SlidingSwimlane>
+      {/* Ad banner is outside the navigation context and not focusable */}
       <AdBanner />
     </FocusContext.Provider>
   );

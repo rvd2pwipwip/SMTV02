@@ -95,6 +95,7 @@ const SlidingSwimlane = React.forwardRef(({ children, restoring = false, ...prop
       className="swimlane-viewport"
       ref={focusRef}
       data-focus-key={focusKey}
+      style={{ width: '100%' }}
     >
       <div 
         className="content-swimlane"
