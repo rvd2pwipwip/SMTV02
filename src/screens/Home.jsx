@@ -242,6 +242,7 @@ function Home({ onChannelSelect }) {
     <FocusContext.Provider value={{ focusKey }}>
       {/* Custom Header Row */}
       <div
+        className="home-header"
         style={{
           width: '100%',
           display: 'flex',
@@ -283,7 +284,7 @@ function Home({ onChannelSelect }) {
       </div>
       {/* End Custom Header Row */}
       {/* 100% wide div with a primary button */}
-      <div style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: '32px 0' }}>
+      <div className="home-filters" style={{ width: '100%', display: 'flex', justifyContent: 'center', margin: '32px 0' }}>
         <Button
           ref={testButtonRef}
           data-focus-key={testButtonFocusKey}
